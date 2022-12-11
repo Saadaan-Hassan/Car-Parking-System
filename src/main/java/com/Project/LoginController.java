@@ -13,16 +13,17 @@ public class LoginController {
     private TextField usernameTextField, passwordTextField;
     @FXML
     private Label invalidDetails;
-//    private final String USR = "admin";
-//    private final String PASS = "admin";
+    private final String USR = "admin";
+    private final String PASS = "admin";
+    private ArrayList<Users> usersArray;
 
-    private final ArrayList<String> USR = new ArrayList<>();
-    private final ArrayList<String> PASS = new ArrayList<>();
+//    private final ArrayList<String> USR = new ArrayList<>();
+//    private final ArrayList<String> PASS = new ArrayList<>();
 
     {
-        ArrayList<Users> USERS = FileHandling.readFromFile(Files.getUsersFile());
+        usersArray = FileHandling.readFromFile(Files.getUsersFile());
         for (Users u :
-                USERS) {
+                usersArray) {
             System.out.println(u);
         }
 
@@ -89,12 +90,36 @@ public class LoginController {
             Driver.getWindow().close();
 
         }
+
         // When both fields are entered incorrect
         else {
             invalidDetails.setText("Invalid username and password");
             invalidDetails.setStyle(errorMessage);
             usernameTextField.setStyle(errorStyle);
             passwordTextField.setStyle(errorStyle);
+        }
+
+        if (!(usernameTextField.getText().isBlank()) && !(passwordTextField.getText().isBlank())){
+            System.out.println("We are not empty");
+
+            String userName = usernameTextField.getText();
+            String password = passwordTextField.getText();
+
+            for (Users user:
+                 usersArray) {
+                if (user.getName().equals(userName) && user.getPassword().equals(password)) {
+                    if (user.getRole().equals("Admin")) {
+                        SystemController.getStage().show();
+                        Driver.getWindow().close();
+                        break;
+                    }
+                    else{
+                        SystemController.getStage().show();
+//                        SystemController.disableOptions();
+                        Driver.getWindow().close();
+                    }
+                }
+            }
         }
     }
 }

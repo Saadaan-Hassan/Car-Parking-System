@@ -26,14 +26,14 @@ public class Driver extends Application {
         window.setTitle("Parking System");
         window.setResizable(false);
         window.setScene(scene);
-//        window.show();
+        window.show();
 
         window.setOnCloseRequest(e ->{
             e.consume();
             closeProgram();
         });
 
-        SystemController.getStage().show();
+//        SystemController.getStage().show();
     }
 
     public static Stage getWindow() {

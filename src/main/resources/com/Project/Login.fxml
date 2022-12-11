@@ -21,7 +21,7 @@
                   <Insets />
                </VBox.margin>
                <image>
-                  <Image url="@../../../Images/Logo.png" />
+                  <Image url="@../../Images/Logo.png" />
                </image>
             </ImageView>
          </children>
@@ -35,7 +35,7 @@
                   <Insets />
                </VBox.margin>
                <children>
-                  <Label layoutX="25.0" layoutY="60.0" text="Username:" textFill="#1e2c3f" AnchorPane.leftAnchor="25.0">
+                  <Label focusTraversable="false" layoutX="25.0" layoutY="60.0" text="Username:" textFill="#1e2c3f" AnchorPane.leftAnchor="25.0">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -46,7 +46,7 @@
                         <Insets right="1.0" />
                      </padding>
                   </Label>
-                  <Label layoutX="25.0" layoutY="109.0" text="Password:" textFill="#1e2c3f">
+                  <Label focusTraversable="false" layoutX="25.0" layoutY="109.0" text="Password:" textFill="#1e2c3f">
                      <font>
                         <Font name="Arial Bold" size="15.0" />
                      </font>
