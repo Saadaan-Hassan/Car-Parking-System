@@ -8,14 +8,17 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 
 import java.io.*;
@@ -26,6 +29,21 @@ import java.util.ResourceBundle;
 public class SystemController implements Initializable, Serializable {
     private static final FXMLLoader fxmlLoader = new FXMLLoader(Driver.class.getResource("System.fxml"));
     @FXML
+    private Button SlotsOption;
+    @FXML
+    private Pagination pagination;
+    @FXML
+    private TextField tfFloorName;
+    @FXML
+    private TextField tfNumberOfSlots;
+    @FXML
+    private GridPane addFloorPane;
+
+    @FXML
+    private VBox slotsOptionPane;
+    @FXML
+    private Button logoutBtn;
+    @FXML
     private GridPane deleteUserPane;
     @FXML
     private TextField tfDeleteUserId;
@@ -34,13 +52,13 @@ public class SystemController implements Initializable, Serializable {
     @FXML
     private TableView<Users> usersTable;
     @FXML
-    private TableColumn<Users, ? extends Object> idColumn;
+    private TableColumn<Users, Integer> idColumn;
     @FXML
-    private TableColumn<Users, ? extends Object> usernameColumn;
+    private TableColumn<Users, String> usernameColumn;
     @FXML
-    private TableColumn<Users, ? extends Object> passwordColumn;
+    private TableColumn<Users, String> passwordColumn;
     @FXML
-    private TableColumn<Users, ? extends Object> roleColumn;
+    private TableColumn<Users, String> roleColumn;
     @FXML
     private AnchorPane showUserPane;
     @FXML
@@ -99,6 +117,17 @@ public class SystemController implements Initializable, Serializable {
         return stage;
     }
 
+    public void logoutBtnAction() {
+
+    }
+
+    public void showSlotsOptionPane(){
+        showPane(slotsOptionPane);
+    }
+
+    public void showSlotsPane(){
+        pagination.setVisible(!pagination.isVisible());
+    }
     //Add User Option
     public void showAddUserPane(){
         showPane(addUserPane);
@@ -113,6 +142,10 @@ public class SystemController implements Initializable, Serializable {
         showPane(deleteUserPane);
     }
 
+    public void showAddFloorPane(){
+        showPane(addFloorPane);
+    }
+
     //Exit Button Action
     public void handleExit(){
         if (ConfirmBox.display("Exit", "Are you sure you want to exit?"))
@@ -120,6 +153,17 @@ public class SystemController implements Initializable, Serializable {
     }
 
     //---------------------------------------------//
+
+    //Add Floor Button Action
+    public void addFloorBtnAction(){
+        if (tfFloorName.getText() == null || tfNumberOfSlots.getText() == null)
+            AlertBox.display("Empty Fields", "Fields are empty or role not selected!");
+        else {
+            Floor.addFloor(new Floor(tfFloorName.getText(), Integer.parseInt(tfNumberOfSlots.getText())));
+            tfFloorName.clear();
+            tfNumberOfSlots.clear();
+        }
+    }
 
     //Add User Button Action
     public void addUserBtnAction(){
@@ -135,20 +179,22 @@ public class SystemController implements Initializable, Serializable {
     }
 
     public void deleteUserBtnAction(){
-        ArrayList<Users> users = FileHandling.readFromFile(Files.getUsersFile());
+        if(ConfirmBox.display("Delete User", "Are you sure you want to delete the user?")) {
 
-        File file = new File(Files.getUsersFile());
-        file.delete();
+            ArrayList<Users> users = FileHandling.readFromFile(Files.getUsersFile());
 
-        for (Users u :
-                users) {
-            if (!(u.getId() == Integer.parseInt(tfDeleteUserId.getText()))) {
-                FileHandling.writeToFile(Files.getUsersFile(), u);
+            File file = new File(Files.getUsersFile());
+            file.delete();
+
+            for (Users u :
+                    users) {
+                if (!(u.getId() == Integer.parseInt(tfDeleteUserId.getText()))) {
+                    FileHandling.writeToFile(Files.getUsersFile(), u);
+                }
             }
+            usersTable.getItems().clear();
+            usersTable.setItems(Users.showUsers());
         }
-        usersTable.getItems().clear();
-        usersTable.setItems(Users.showUsers());
-
 
     }
 
@@ -171,6 +217,58 @@ public class SystemController implements Initializable, Serializable {
 
         usersTable.setItems(Users.showUsers());
 
+        //Showing All Parking Slots
+        pagination.setPageCount(FileHandling.readFromFile(Files.getFloorFile()).size());
+        pagination.setPageFactory(new Callback<Integer, Node>() {
+            @Override
+            public Node call(Integer pageIndex) {
+                return showFloor(pageIndex);
+            }
+        });
+
+    }
+
+    private ScrollPane showFloor(int index){
+        GridPane grid = new GridPane();
+        grid.setHgap(20);
+        grid.setVgap(20);
+        grid.setPadding(new Insets(20));
+        ArrayList<Floor> floor = FileHandling.readFromFile(Files.getFloorFile());
+
+        double numberOfSlots = floor.get(index).getSlots().length;
+        double columns = 8;
+        double rows = Math.ceil(numberOfSlots/columns);
+
+        int count = 1;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns && count <= numberOfSlots; j++) {
+                VBox vBox = new VBox(15);
+                vBox.setAlignment(Pos.CENTER);
+                vBox.setPadding(new Insets(25));
+                String status;
+
+                if (floor.get(index).getSlots()[j].isReserved()){
+                    status = "Reserved";
+                    vBox.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+                }
+                else{
+                    status = "Available";
+                    vBox.setBackground(new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
+                }
+
+                Text tStatus = new Text(status);
+                tStatus.setFill(Color.WHITE);
+                Text tSlotNumber = new Text(String.format("Slot-%d",count));
+                tSlotNumber.setFill(Color.WHITE);
+                vBox.getChildren().addAll(tStatus,tSlotNumber);
+                grid.add(vBox,j,i);
+                count++;
+            }
+        }
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(grid);
+        return scrollPane;
+
     }
 
     private static void closeProgram(){
@@ -178,10 +276,10 @@ public class SystemController implements Initializable, Serializable {
             Platform.exit();
     }
 
-    private void showPane(Pane pane){
-        if (pane.isVisible())
-            pane.setVisible(false);
+    private<T extends Pane> void showPane(T t){
+        if (t.isVisible())
+            t.setVisible(false);
         else
-            pane.setVisible(true);
+            t.setVisible(true);
     };
 }

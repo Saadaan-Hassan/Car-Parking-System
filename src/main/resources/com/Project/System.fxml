@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -19,16 +20,16 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane maxHeight="850.0" maxWidth="1800.0" minHeight="450.0" minWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Project.SystemController">
+<StackPane maxHeight="850.0" maxWidth="1800.0" minHeight="550.0" minWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Project.SystemController">
    <children>
       <BorderPane>
          <left>
-            <VBox alignment="CENTER" prefHeight="200.0" style="-fx-background-color: lightblue;" BorderPane.alignment="CENTER">
+            <VBox alignment="CENTER" style="-fx-background-color: #1e2f47;" BorderPane.alignment="TOP_LEFT">
                <children>
                   <Button fx:id="parkOption" mnemonicParsing="false" prefHeight="40.0" prefWidth="143.0" text="Park Vehicle" VBox.vgrow="ALWAYS" />
                   <Button fx:id="moveOption" mnemonicParsing="false" prefHeight="40.0" prefWidth="143.0" text="Move Vehicle" VBox.vgrow="ALWAYS" />
                   <Button fx:id="showVehiclesOption" mnemonicParsing="false" prefHeight="40.0" prefWidth="143.0" text="Show Vehicle" VBox.vgrow="ALWAYS" />
-                  <Button fx:id="showSlotsOption" mnemonicParsing="false" prefHeight="40.0" prefWidth="143.0" text="Show Parking Slots" VBox.vgrow="ALWAYS" />
+                  <Button fx:id="SlotsOption" mnemonicParsing="false" onAction="#showSlotsOptionPane" prefHeight="40.0" prefWidth="143.0" text="Parking Slots" VBox.vgrow="ALWAYS" />
                   <Button fx:id="addUserOption" mnemonicParsing="false" onAction="#showAddUserPane" prefHeight="40.0" prefWidth="143.0" text="Add User" VBox.vgrow="ALWAYS" />
                   <Button fx:id="showUserOption" mnemonicParsing="false" onAction="#showAllUser" prefHeight="40.0" prefWidth="143.0" text="Show Users" VBox.vgrow="ALWAYS" />
                   <Button fx:id="deleteUserOption" mnemonicParsing="false" onAction="#showDeleteUserPane" prefHeight="40.0" prefWidth="143.0" text="Delete Users" VBox.vgrow="ALWAYS" />
@@ -37,9 +38,9 @@
             </VBox>
          </left>
          <center>
-            <StackPane maxHeight="850.0" maxWidth="1800.0" style="-fx-background-color: lightpink;" BorderPane.alignment="CENTER">
+            <StackPane maxHeight="850.0" maxWidth="1800.0" BorderPane.alignment="CENTER">
                <children>
-                  <GridPane fx:id="addUserPane" hgap="10.0" style="-fx-background-color: orange;">
+                  <GridPane fx:id="addUserPane" hgap="10.0" style="-fx-background-color: orange;" visible="false">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                         <ColumnConstraints minWidth="10.0" />
@@ -134,6 +135,32 @@
                         </Label>
                      </children>
                   </GridPane>
+                  <GridPane fx:id="addFloorPane" visible="false">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label alignment="TOP_LEFT" text="Floor Name" GridPane.rowIndex="1" />
+                        <Label text="Number of Parking Slots" GridPane.rowIndex="2" />
+                        <TextField fx:id="tfFloorName" promptText="Enter Floor Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="tfNumberOfSlots" promptText="Enter Number of Slots" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#addFloorBtnAction" prefHeight="30.0" prefWidth="110.0" text="Add" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </GridPane>
+                  <Pagination fx:id="pagination" maxPageIndicatorCount="5" pageCount="10" prefHeight="200.0" prefWidth="200.0" />
                </children>
                <rotationAxis>
                   <Point3D />
@@ -141,19 +168,34 @@
             </StackPane>
          </center>
          <top>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: lightgreen;" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #1e2f47;" BorderPane.alignment="CENTER">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Parking System">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #EEF1EE;" text="Parking System">
                      <font>
                         <Font name="System Bold" size="40.0" />
                      </font>
                   </Text>
+                  <Button fx:id="logoutBtn" mnemonicParsing="false" onAction="#logoutBtnAction" text="Log Out" />
                </children>
             </HBox>
          </top>
          <bottom>
-            <HBox prefHeight="58.0" prefWidth="600.0" style="-fx-background-color: silver;" BorderPane.alignment="CENTER" />
+            <HBox prefHeight="58.0" prefWidth="600.0" style="-fx-background-color: #1e2f47;" BorderPane.alignment="CENTER" />
          </bottom>
+         <right>
+            <StackPane style="-fx-background-color: #1e2f47;" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox fx:id="slotsOptionPane">
+                     <children>
+                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="143.0" text="Add Slots" />
+                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="143.0" text="Delete Slots" />
+                        <Button fx:id="showSlotsOption" mnemonicParsing="false" onAction="#showSlotsPane" prefHeight="40.0" prefWidth="143.0" text="Show Slots" />
+                        <Button mnemonicParsing="false" onAction="#showAddFloorPane" prefHeight="40.0" prefWidth="143.0" text="Add Floor" />
+                     </children>
+                  </VBox>
+               </children>
+            </StackPane>
+         </right>
       </BorderPane>
    </children>
 </StackPane>

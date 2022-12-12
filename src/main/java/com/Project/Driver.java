@@ -13,8 +13,11 @@ public class Driver extends Application {
 
     private static Stage  window;
 
-    public static void main(String[] args) {
+    public static void main() {
         launch();
+
+//        Floor floor1 = new Floor("Ground Floor", 12);
+
     }
 
     @Override
