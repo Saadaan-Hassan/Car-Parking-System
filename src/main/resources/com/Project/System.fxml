@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.geometry.Point3D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Pagination?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -23,75 +24,113 @@
 <StackPane maxHeight="850.0" maxWidth="1800.0" minHeight="550.0" minWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Project.SystemController">
    <children>
       <BorderPane>
-         <left>
-            <VBox alignment="CENTER" style="-fx-background-color: #1e2f47;" BorderPane.alignment="TOP_LEFT">
-               <children>
-                  <Button fx:id="parkOption" mnemonicParsing="false" prefHeight="40.0" prefWidth="143.0" text="Park Vehicle" VBox.vgrow="ALWAYS" />
-                  <Button fx:id="moveOption" mnemonicParsing="false" prefHeight="40.0" prefWidth="143.0" text="Move Vehicle" VBox.vgrow="ALWAYS" />
-                  <Button fx:id="showVehiclesOption" mnemonicParsing="false" prefHeight="40.0" prefWidth="143.0" text="Show Vehicle" VBox.vgrow="ALWAYS" />
-                  <Button fx:id="SlotsOption" mnemonicParsing="false" onAction="#showSlotsOptionPane" prefHeight="40.0" prefWidth="143.0" text="Parking Slots" VBox.vgrow="ALWAYS" />
-                  <Button fx:id="addUserOption" mnemonicParsing="false" onAction="#showAddUserPane" prefHeight="40.0" prefWidth="143.0" text="Add User" VBox.vgrow="ALWAYS" />
-                  <Button fx:id="showUserOption" mnemonicParsing="false" onAction="#showAllUser" prefHeight="40.0" prefWidth="143.0" text="Show Users" VBox.vgrow="ALWAYS" />
-                  <Button fx:id="deleteUserOption" mnemonicParsing="false" onAction="#showDeleteUserPane" prefHeight="40.0" prefWidth="143.0" text="Delete Users" VBox.vgrow="ALWAYS" />
-                  <Button fx:id="exitBtn" mnemonicParsing="false" onAction="#handleExit" prefHeight="40.0" prefWidth="143.0" text="Exit" />
-               </children>
-            </VBox>
-         </left>
          <center>
             <StackPane maxHeight="850.0" maxWidth="1800.0" BorderPane.alignment="CENTER">
                <children>
-                  <GridPane fx:id="addUserPane" hgap="10.0" style="-fx-background-color: orange;" visible="false">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                        <ColumnConstraints minWidth="10.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="NEVER" />
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="NEVER" />
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="NEVER" />
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="NEVER" />
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="NEVER" />
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="NEVER" />
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="NEVER" />
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="NEVER" />
-                     </rowConstraints>
+                  <AnchorPane fx:id="SlotsPane">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Add User" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                           <font>
-                              <Font name="System Bold" size="30.0" />
-                           </font>
-                        </Text>
-                        <Label fx:id="nameLabel" text="Name" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="passwordLabel" text="Password" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="roleLabel" prefHeight="35.0" prefWidth="45.0" text="Role" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="tfName" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0" promptText="Enter Username" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.hgrow="NEVER" GridPane.rowIndex="2" />
-                        <PasswordField fx:id="tfPassword" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0" promptText="Enter Password" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="3" />
-                        <ComboBox fx:id="cbRole" prefHeight="25.0" prefWidth="176.0" promptText="Select Role" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="4" />
-                        <Button fx:id="addUserBtn" mnemonicParsing="false" onAction="#addUserBtnAction" prefHeight="20.0" prefWidth="100.0" text="Add" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+                        <Pagination fx:id="pagination" maxPageIndicatorCount="5" pageCount="10" prefHeight="394.0" prefWidth="514.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+                  <GridPane fx:id="addFloorPane" hgap="10.0" visible="false">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label alignment="TOP_LEFT" text="Floor Name" GridPane.rowIndex="1" />
+                        <Label text="Number of Parking Slots" GridPane.rowIndex="2" />
+                        <TextField fx:id="tfFloorName" promptText="Enter Floor Name" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                        <TextField fx:id="tfNumberOfSlots" promptText="Enter Number of Slots" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#addFloorBtnAction" prefHeight="30.0" prefWidth="110.0" text="Add" GridPane.rowIndex="3">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Button>
-                        <Text fx:id="tError" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Button fx:id="editFloorBtn" alignment="CENTER" mnemonicParsing="false" onAction="#editFloorBtnAction" prefHeight="30.0" prefWidth="110.0" text="Edit" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                            <Button fx:id="delFloorBtn" alignment="CENTER" mnemonicParsing="false" onAction="#deleteFloorBtnAction" prefHeight="30.0" prefWidth="110.0" text="Delete" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                        <TableView fx:id="tbFloors" focusTraversable="false" onMouseClicked="#selectFloorTableRow" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" GridPane.rowSpan="3">
+                          <columns>
+                            <TableColumn fx:id="floorIdCol" editable="false" prefWidth="56.0" resizable="false" text="ID" />
+                            <TableColumn fx:id="floorNameCol" editable="false" prefWidth="116.0" resizable="false" sortable="false" text="Floor Name" />
+                              <TableColumn fx:id="NoOfSlotsCol" editable="false" prefWidth="147.0" resizable="false" sortable="false" text="Number Of Slots" />
+                          </columns>
+                        </TableView>
                      </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
                   </GridPane>
-                  <AnchorPane fx:id="showUserPane" prefHeight="200.0" prefWidth="200.0" visible="false">
+                  <GridPane fx:id="UsersPane" hgap="2.0" visible="false">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="193.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="202.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="194.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="170.0" minHeight="10.0" prefHeight="65.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
                      <children>
-                        <TableView fx:id="usersTable" focusTraversable="false" layoutY="-4.0" prefHeight="332.0" prefWidth="457.0" AnchorPane.bottomAnchor="-8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <Label fx:id="roleLabel" prefHeight="35.0" prefWidth="45.0" text="Role" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="nameLabel" text="Name">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="passwordLabel" text="Password" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tfName" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0" promptText="Enter Username" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.hgrow="NEVER" />
+                        <ComboBox fx:id="cbRole" prefHeight="25.0" prefWidth="176.0" promptText="Select Role" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                        <Button fx:id="addUserBtn" mnemonicParsing="false" onAction="#addUserBtnAction" prefHeight="20.0" prefWidth="100.0" text="Add" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="deleteUserBtn" mnemonicParsing="false" onAction="#deleteUserBtnAction" prefHeight="20.0" prefWidth="143.0" text="Delete" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#editUserBtnAction" prefHeight="20.0" prefWidth="100.0" text="Edit" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                        <TableView fx:id="usersTable" focusTraversable="false" onMouseClicked="#selectUserTableRow" prefHeight="332.0" prefWidth="457.0" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowSpan="3">
                           <columns>
                               <TableColumn fx:id="idColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="78.0" resizable="false" sortable="false" text="User Id" />
                             <TableColumn fx:id="usernameColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="137.0" resizable="false" sortable="false" text="Username" />
@@ -102,65 +141,12 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
+                        <TextField fx:id="tfPassword" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0" promptText="Enter Password" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.hgrow="NEVER" GridPane.rowIndex="1" />
                      </children>
-                  </AnchorPane>
-                  <GridPane fx:id="deleteUserPane" hgap="10.0" prefHeight="82.0" prefWidth="169.0" style="-fx-background-color: yellow;" visible="false">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Delete User" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                           <font>
-                              <Font name="System Bold" size="24.0" />
-                           </font>
-                        </Text>
-                        <TextField fx:id="tfDeleteUserId" prefHeight="30.0" prefWidth="160.0" promptText="Enter User Id" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
-                        <Button fx:id="deleteUserBtn" mnemonicParsing="false" onAction="#deleteUserBtnAction" text="Delete" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Button>
-                        <Label text="User Id" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
-                     </children>
+                     <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </padding>
                   </GridPane>
-                  <GridPane fx:id="addFloorPane" visible="false">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <Label alignment="TOP_LEFT" text="Floor Name" GridPane.rowIndex="1" />
-                        <Label text="Number of Parking Slots" GridPane.rowIndex="2" />
-                        <TextField fx:id="tfFloorName" promptText="Enter Floor Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField fx:id="tfNumberOfSlots" promptText="Enter Number of Slots" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#addFloorBtnAction" prefHeight="30.0" prefWidth="110.0" text="Add" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </GridPane>
-                  <Pagination fx:id="pagination" maxPageIndicatorCount="5" pageCount="10" prefHeight="200.0" prefWidth="200.0" />
                </children>
                <rotationAxis>
                   <Point3D />
@@ -168,7 +154,7 @@
             </StackPane>
          </center>
          <top>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #1e2f47;" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #11626F;" BorderPane.alignment="CENTER">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #EEF1EE;" text="Parking System">
                      <font>
@@ -180,22 +166,31 @@
             </HBox>
          </top>
          <bottom>
-            <HBox prefHeight="58.0" prefWidth="600.0" style="-fx-background-color: #1e2f47;" BorderPane.alignment="CENTER" />
+            <HBox alignment="BOTTOM_RIGHT" prefHeight="58.0" prefWidth="600.0" style="-fx-background-color: #11626F;" BorderPane.alignment="CENTER">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #fff;" text="Created By Saadaan and Jawad" textAlignment="JUSTIFY">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Text>
+               </children></HBox>
          </bottom>
          <right>
-            <StackPane style="-fx-background-color: #1e2f47;" BorderPane.alignment="CENTER">
+            <VBox alignment="CENTER" style="-fx-background-color: #11626F;" BorderPane.alignment="CENTER">
                <children>
-                  <VBox fx:id="slotsOptionPane">
-                     <children>
-                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="143.0" text="Add Slots" />
-                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="143.0" text="Delete Slots" />
-                        <Button fx:id="showSlotsOption" mnemonicParsing="false" onAction="#showSlotsPane" prefHeight="40.0" prefWidth="143.0" text="Show Slots" />
-                        <Button mnemonicParsing="false" onAction="#showAddFloorPane" prefHeight="40.0" prefWidth="143.0" text="Add Floor" />
-                     </children>
-                  </VBox>
+                  <Button fx:id="parkOption" mnemonicParsing="false" prefHeight="40.0" prefWidth="143.0" text="Park Vehicle" VBox.vgrow="ALWAYS" />
+                  <Button fx:id="moveOption" mnemonicParsing="false" prefHeight="40.0" prefWidth="143.0" text="Move Vehicle" VBox.vgrow="ALWAYS" />
+                  <Button fx:id="showVehiclesOption" mnemonicParsing="false" prefHeight="40.0" prefWidth="143.0" text="Show Vehicle" VBox.vgrow="ALWAYS" />
+                  <Button fx:id="showSlotsOption" mnemonicParsing="false" onAction="#showSlotsPane" prefHeight="40.0" prefWidth="143.0" text="Show Slots" />
+                  <Button mnemonicParsing="false" onAction="#showAddFloorPane" prefHeight="40.0" prefWidth="143.0" text="Floors" />
+                  <Button mnemonicParsing="false" onAction="#showUsersPane" prefHeight="40.0" prefWidth="143.0" text="Users" />
+                  <Button fx:id="exitBtn" mnemonicParsing="false" onAction="#handleExit" prefHeight="40.0" prefWidth="143.0" text="Exit" />
                </children>
-            </StackPane>
+            </VBox>
          </right>
+         <left>
+            <Region prefHeight="394.0" prefWidth="143.0" style="-fx-background-color: #11626F;" BorderPane.alignment="CENTER" />
+         </left>
       </BorderPane>
    </children>
 </StackPane>

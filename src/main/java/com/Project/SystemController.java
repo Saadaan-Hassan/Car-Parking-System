@@ -4,6 +4,7 @@ import com.Boxes.AlertBox;
 import com.Boxes.ConfirmBox;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +30,24 @@ import java.util.ResourceBundle;
 public class SystemController implements Initializable, Serializable {
     private static final FXMLLoader fxmlLoader = new FXMLLoader(Driver.class.getResource("System.fxml"));
     @FXML
+    private AnchorPane SlotsPane;
+    @FXML
+    private Button delFloorBtn;
+    @FXML
+    private Button editFloorBtn;
+    @FXML
+    private GridPane UsersPane;
+    @FXML
+    private TableView<Floor> tbFloors;
+    @FXML
+    private TableColumn<Floor, Integer> floorIdCol;
+    @FXML
+    private TableColumn<Floor, String> floorNameCol;
+    @FXML
+    private TableColumn<Floor, Integer> NoOfSlotsCol;
+    @FXML
+    private AnchorPane parkingSlotPane;
+    @FXML
     private Button SlotsOption;
     @FXML
     private Pagination pagination;
@@ -38,9 +57,6 @@ public class SystemController implements Initializable, Serializable {
     private TextField tfNumberOfSlots;
     @FXML
     private GridPane addFloorPane;
-
-    @FXML
-    private VBox slotsOptionPane;
     @FXML
     private Button logoutBtn;
     @FXML
@@ -100,7 +116,6 @@ public class SystemController implements Initializable, Serializable {
     @FXML
     private Text tError;
 
-
     //Getting Scene
     public static Stage getStage() throws IOException {
         Stage stage = new Stage();
@@ -121,29 +136,16 @@ public class SystemController implements Initializable, Serializable {
 
     }
 
-    public void showSlotsOptionPane(){
-        showPane(slotsOptionPane);
-    }
-
     public void showSlotsPane(){
         pagination.setVisible(!pagination.isVisible());
     }
     //Add User Option
-    public void showAddUserPane(){
-        showPane(addUserPane);
-    }
-
-    //Show All Users Option
-    public void showAllUser(){
-        showPane(showUserPane);
-    }
-
-    public void showDeleteUserPane(){
-        showPane(deleteUserPane);
-    }
-
     public void showAddFloorPane(){
         showPane(addFloorPane);
+    }
+
+    public void showUsersPane(){
+        showPane(UsersPane);
     }
 
     //Exit Button Action
@@ -159,10 +161,33 @@ public class SystemController implements Initializable, Serializable {
         if (tfFloorName.getText() == null || tfNumberOfSlots.getText() == null)
             AlertBox.display("Empty Fields", "Fields are empty or role not selected!");
         else {
-            Floor.addFloor(new Floor(tfFloorName.getText(), Integer.parseInt(tfNumberOfSlots.getText())));
+            Floor.addFloor(new Floor(tfFloorName.getText(), Integer.parseInt(tfNumberOfSlots.getText())), tbFloors);
             tfFloorName.clear();
             tfNumberOfSlots.clear();
+
+            Slots.showSlots(pagination);
         }
+    }
+
+    //Edit Floor Button Action
+    public void editFloorBtnAction(){
+        if (selectFloorTableRow() != null)
+            Floor.editFloor(tbFloors, pagination, selectFloorTableRow());
+//
+    }
+
+    public Floor selectFloorTableRow(){
+        Floor selectedFloor = tbFloors.getSelectionModel().getSelectedItem();
+        if (selectedFloor != null){
+            tfFloorName.setText(selectedFloor.getFloorName());
+            tfNumberOfSlots.setText(Integer.toString(selectedFloor.getNoOfSlots()));
+        }
+
+    return selectedFloor;
+    }
+
+    public void deleteFloorBtnAction(){
+        Floor.delFloor(tbFloors, pagination);
     }
 
     //Add User Button Action
@@ -178,32 +203,28 @@ public class SystemController implements Initializable, Serializable {
         }
     }
 
+    //Edit User Button Action
+    public void editUserBtnAction(){
+        Users selectedUser = selectUserTableRow();
+        if (selectedUser != null)
+            Users.editUser(usersTable, selectedUser);
+    }
+
+    //Delete User Button Action
     public void deleteUserBtnAction(){
-        if(ConfirmBox.display("Delete User", "Are you sure you want to delete the user?")) {
+            Users.delUsers(usersTable);
+    }
 
-            ArrayList<Users> users = FileHandling.readFromFile(Files.getUsersFile());
-
-            File file = new File(Files.getUsersFile());
-            file.delete();
-
-            for (Users u :
-                    users) {
-                if (!(u.getId() == Integer.parseInt(tfDeleteUserId.getText()))) {
-                    FileHandling.writeToFile(Files.getUsersFile(), u);
-                }
-            }
-            usersTable.getItems().clear();
-            usersTable.setItems(Users.showUsers());
+    public Users selectUserTableRow(){
+        Users selectedUser = usersTable.getSelectionModel().getSelectedItem();
+        if (selectedUser != null){
+            tfName.setText(selectedUser.getName());
+            tfPassword.setText(selectedUser.getPassword());
+            cbRole.setValue(selectedUser.getRole());
         }
 
+        return selectedUser;
     }
-
-    public static void disableOptions(){
-        addUserOption.setDisable(true);
-        showUserOption.setDisable(true);
-        deleteUserOption.setDisable(true);
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //Adding items to Combo Box
@@ -218,57 +239,13 @@ public class SystemController implements Initializable, Serializable {
         usersTable.setItems(Users.showUsers());
 
         //Showing All Parking Slots
-        pagination.setPageCount(FileHandling.readFromFile(Files.getFloorFile()).size());
-        pagination.setPageFactory(new Callback<Integer, Node>() {
-            @Override
-            public Node call(Integer pageIndex) {
-                return showFloor(pageIndex);
-            }
-        });
+        Slots.showSlots(pagination);
 
-    }
-
-    private ScrollPane showFloor(int index){
-        GridPane grid = new GridPane();
-        grid.setHgap(20);
-        grid.setVgap(20);
-        grid.setPadding(new Insets(20));
-        ArrayList<Floor> floor = FileHandling.readFromFile(Files.getFloorFile());
-
-        double numberOfSlots = floor.get(index).getSlots().length;
-        double columns = 8;
-        double rows = Math.ceil(numberOfSlots/columns);
-
-        int count = 1;
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns && count <= numberOfSlots; j++) {
-                VBox vBox = new VBox(15);
-                vBox.setAlignment(Pos.CENTER);
-                vBox.setPadding(new Insets(25));
-                String status;
-
-                if (floor.get(index).getSlots()[j].isReserved()){
-                    status = "Reserved";
-                    vBox.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
-                }
-                else{
-                    status = "Available";
-                    vBox.setBackground(new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
-                }
-
-                Text tStatus = new Text(status);
-                tStatus.setFill(Color.WHITE);
-                Text tSlotNumber = new Text(String.format("Slot-%d",count));
-                tSlotNumber.setFill(Color.WHITE);
-                vBox.getChildren().addAll(tStatus,tSlotNumber);
-                grid.add(vBox,j,i);
-                count++;
-            }
-        }
-        ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setContent(grid);
-        return scrollPane;
-
+        //Showing All Floor on the table
+        floorIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        floorNameCol.setCellValueFactory(new PropertyValueFactory<>("floorName"));
+        NoOfSlotsCol.setCellValueFactory(new PropertyValueFactory<>("noOfSlots"));
+        tbFloors.setItems(Floor.showFloor());
     }
 
     private static void closeProgram(){
