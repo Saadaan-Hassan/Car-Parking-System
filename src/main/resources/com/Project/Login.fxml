@@ -14,14 +14,14 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Project.LoginController">
    <left>
-      <VBox alignment="CENTER" prefHeight="400.0" prefWidth="249.0" style="-fx-background-color: #1E2C3F;" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="400.0" prefWidth="249.0" style="-fx-background-color: #17b978;" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="78.0" fitWidth="237.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="NEVER">
+            <ImageView fitHeight="152.0" fitWidth="196.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="NEVER">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
                <image>
-                  <Image url="@../../Images/Logo.png" />
+                  <Image url="@../../Images/Screenshot%20from%202022-12-14%2008-12-29.png" />
                </image>
             </ImageView>
          </children>
@@ -35,7 +35,7 @@
                   <Insets />
                </VBox.margin>
                <children>
-                  <Label focusTraversable="false" layoutX="25.0" layoutY="60.0" text="Username:" textFill="#1e2c3f" AnchorPane.leftAnchor="25.0">
+                  <Label focusTraversable="false" layoutX="25.0" layoutY="60.0" text="Username:" textFill="#17b978" AnchorPane.leftAnchor="25.0">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -46,13 +46,13 @@
                         <Insets right="1.0" />
                      </padding>
                   </Label>
-                  <Label focusTraversable="false" layoutX="25.0" layoutY="109.0" text="Password:" textFill="#1e2c3f">
+                  <Label focusTraversable="false" layoutX="25.0" layoutY="109.0" text="Password:" textFill="#17b978">
                      <font>
                         <Font name="Arial Bold" size="15.0" />
                      </font>
                   </Label>
                   <TextField fx:id="usernameTextField" layoutX="110.0" layoutY="56.0" promptText="Username" AnchorPane.leftAnchor="116.0" />
-                  <Button fx:id="loginBtn" contentDisplay="CENTER" defaultButton="true" layoutX="147.0" layoutY="173.0" mnemonicParsing="false" onAction="#checkValidity" style="-fx-background-color: #1E2C3F;" text="Login" textAlignment="CENTER" textFill="#eef1ee">
+                  <Button fx:id="loginBtn" contentDisplay="CENTER" defaultButton="true" layoutX="147.0" layoutY="173.0" mnemonicParsing="false" onAction="#checkValidity" style="-fx-background-color: #17b978;" text="Login" textAlignment="CENTER" textFill="#eef1ee">
                      <font>
                         <Font name="Arial Bold" size="14.0" />
                      </font>

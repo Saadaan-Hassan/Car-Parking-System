@@ -154,7 +154,7 @@
             </StackPane>
          </center>
          <top>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #11626F;" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #17b978;" BorderPane.alignment="CENTER">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #EEF1EE;" text="Parking System">
                      <font>
@@ -166,7 +166,7 @@
             </HBox>
          </top>
          <bottom>
-            <HBox alignment="BOTTOM_RIGHT" prefHeight="58.0" prefWidth="600.0" style="-fx-background-color: #11626F;" BorderPane.alignment="CENTER">
+            <HBox alignment="BOTTOM_RIGHT" prefHeight="58.0" prefWidth="600.0" style="-fx-background-color: #17b978;" BorderPane.alignment="CENTER">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #fff;" text="Created By Saadaan and Jawad" textAlignment="JUSTIFY">
                      <font>
@@ -176,20 +176,44 @@
                </children></HBox>
          </bottom>
          <right>
-            <VBox alignment="CENTER" style="-fx-background-color: #11626F;" BorderPane.alignment="CENTER">
+            <VBox alignment="CENTER" spacing="3.0" style="-fx-background-color: #17b978;" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="parkOption" mnemonicParsing="false" prefHeight="40.0" prefWidth="143.0" text="Park Vehicle" VBox.vgrow="ALWAYS" />
-                  <Button fx:id="moveOption" mnemonicParsing="false" prefHeight="40.0" prefWidth="143.0" text="Move Vehicle" VBox.vgrow="ALWAYS" />
-                  <Button fx:id="showVehiclesOption" mnemonicParsing="false" prefHeight="40.0" prefWidth="143.0" text="Show Vehicle" VBox.vgrow="ALWAYS" />
-                  <Button fx:id="showSlotsOption" mnemonicParsing="false" onAction="#showSlotsPane" prefHeight="40.0" prefWidth="143.0" text="Show Slots" />
-                  <Button mnemonicParsing="false" onAction="#showAddFloorPane" prefHeight="40.0" prefWidth="143.0" text="Floors" />
-                  <Button mnemonicParsing="false" onAction="#showUsersPane" prefHeight="40.0" prefWidth="143.0" text="Users" />
-                  <Button fx:id="exitBtn" mnemonicParsing="false" onAction="#handleExit" prefHeight="40.0" prefWidth="143.0" text="Exit" />
+                  <Button fx:id="parkOption" mnemonicParsing="false" prefHeight="40.0" prefWidth="143.0" style="-fx-background-color: #14915e;" text="Park Vehicle" textFill="#eef1ee" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Button>
+                  <Button fx:id="moveOption" mnemonicParsing="false" prefHeight="40.0" prefWidth="143.0" style="-fx-background-color: #14915e;" text="Move Vehicle" textFill="#eef1ee" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Button>
+                  <Button fx:id="showVehiclesOption" mnemonicParsing="false" prefHeight="40.0" prefWidth="143.0" style="-fx-background-color: #14915e;" text="Show Vehicle" textFill="#eef1ee" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Button>
+                  <Button fx:id="showSlotsOption" mnemonicParsing="false" onAction="#showSlotsPane" prefHeight="40.0" prefWidth="143.0" style="-fx-background-color: #14915e;" text="Show Slots" textFill="#eef1ee">
+                   <font>
+                       <Font name="System Bold" size="13.0" />
+                   </font></Button>
+                  <Button mnemonicParsing="false" onAction="#showAddFloorPane" prefHeight="40.0" prefWidth="143.0" style="-fx-background-color: #14915e;" text="Floors" textFill="#eef1ee">
+                      <font>
+                          <Font name="System Bold" size="13.0" />
+                      </font></Button>
+                  <Button mnemonicParsing="false" onAction="#showUsersPane" prefHeight="40.0" prefWidth="143.0" style="-fx-background-color: #14915e;" text="Users" textFill="#eef1ee">
+                      <font>
+                          <Font name="System Bold" size="13.0" />
+                      </font></Button>
+                  <Button fx:id="exitBtn" focusTraversable="false" mnemonicParsing="false" onAction="#handleExit" prefHeight="40.0" prefWidth="143.0" style="-fx-background-color: #14915e;" text="Exit" textFill="#eef1ee">
+                      <font>
+                          <Font name="System Bold" size="13.0" />
+                      </font></Button>
                </children>
+               <padding>
+                  <Insets left="4.0" right="4.0" />
+               </padding>
             </VBox>
          </right>
          <left>
-            <Region prefHeight="394.0" prefWidth="143.0" style="-fx-background-color: #11626F;" BorderPane.alignment="CENTER" />
+            <Region prefHeight="394.0" prefWidth="143.0" style="-fx-background-color: #17b978;" BorderPane.alignment="CENTER" />
          </left>
       </BorderPane>
    </children>

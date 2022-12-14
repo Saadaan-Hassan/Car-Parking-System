@@ -180,7 +180,7 @@ public class Floor implements Serializable {
 
         Scene scene = new Scene(grid, 330, 150);
 
-        stage.setTitle("Delete Floor");
+        stage.setTitle("Edit Floor");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.showAndWait();
