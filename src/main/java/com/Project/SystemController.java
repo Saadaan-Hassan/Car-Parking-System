@@ -3,28 +3,18 @@ package com.Project;
 import com.Boxes.AlertBox;
 import com.Boxes.ConfirmBox;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Callback;
-
 
 import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class SystemController implements Initializable, Serializable {
@@ -136,14 +126,17 @@ public class SystemController implements Initializable, Serializable {
 
     }
 
+    //Toggling Slots Pane
     public void showSlotsPane(){
         pagination.setVisible(!pagination.isVisible());
     }
-    //Add User Option
+
+    ////Toggling Floor Pane
     public void showAddFloorPane(){
         showPane(addFloorPane);
     }
 
+    //Toggling User Pane
     public void showUsersPane(){
         showPane(UsersPane);
     }
@@ -159,8 +152,9 @@ public class SystemController implements Initializable, Serializable {
     //Add Floor Button Action
     public void addFloorBtnAction(){
         if (tfFloorName.getText() == null || tfNumberOfSlots.getText() == null)
-            AlertBox.display("Empty Fields", "Fields are empty or role not selected!");
+            AlertBox.display("Empty Fields", "Fields are empty!");
         else {
+            //Calls the addFloor Function from the Floor Class
             Floor.addFloor(new Floor(tfFloorName.getText(), Integer.parseInt(tfNumberOfSlots.getText())), tbFloors);
             tfFloorName.clear();
             tfNumberOfSlots.clear();
@@ -172,10 +166,10 @@ public class SystemController implements Initializable, Serializable {
     //Edit Floor Button Action
     public void editFloorBtnAction(){
         if (selectFloorTableRow() != null)
-            Floor.editFloor(tbFloors, pagination, selectFloorTableRow());
-//
+            Floor.editFloor(tbFloors, pagination, selectFloorTableRow());   //Calls the editFloor Function from the Floor Class
     }
 
+    //Selects the Row in Floors Table and returns the selected object as Floor
     public Floor selectFloorTableRow(){
         Floor selectedFloor = tbFloors.getSelectionModel().getSelectedItem();
         if (selectedFloor != null){
@@ -186,8 +180,9 @@ public class SystemController implements Initializable, Serializable {
     return selectedFloor;
     }
 
+    ////Delete Floor Button Action
     public void deleteFloorBtnAction(){
-        Floor.delFloor(tbFloors, pagination);
+        Floor.delFloor(tbFloors, pagination);   //Calls the delFloor Function from the Floor Class
     }
 
     //Add User Button Action
@@ -195,6 +190,7 @@ public class SystemController implements Initializable, Serializable {
         if (tfName.getText() == null || tfPassword.getText() == null || cbRole.getValue() == null)
             AlertBox.display("Empty Fields", "Fields are empty or role not selected!");
         else {
+            //Calls the addUser Function from the Users Class
             Users.addUser(new Users(tfName.getText(), tfPassword.getText(), cbRole.getValue()), usersTable);
 
             // Clearing the Fields
@@ -207,14 +203,16 @@ public class SystemController implements Initializable, Serializable {
     public void editUserBtnAction(){
         Users selectedUser = selectUserTableRow();
         if (selectedUser != null)
-            Users.editUser(usersTable, selectedUser);
+            Users.editUser(usersTable, selectedUser);   //Calls the editUser Function from the Users Class
     }
 
     //Delete User Button Action
     public void deleteUserBtnAction(){
+        //Calls the delUser Function from the Users Class
             Users.delUsers(usersTable);
     }
 
+    //Selects the Row in Floors Table and returns the selected object as Floor
     public Users selectUserTableRow(){
         Users selectedUser = usersTable.getSelectionModel().getSelectedItem();
         if (selectedUser != null){
@@ -225,6 +223,7 @@ public class SystemController implements Initializable, Serializable {
 
         return selectedUser;
     }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //Adding items to Combo Box
@@ -248,11 +247,13 @@ public class SystemController implements Initializable, Serializable {
         tbFloors.setItems(Floor.showFloor());
     }
 
+    //This method is called when the program is tried to close other than using exit button
     private static void closeProgram(){
         if (ConfirmBox.display("Exit", "Are you sure you want to exit?"))
             Platform.exit();
     }
 
+    //This method toggles the visibility of Panes
     private<T extends Pane> void showPane(T t){
         if (t.isVisible())
             t.setVisible(false);
