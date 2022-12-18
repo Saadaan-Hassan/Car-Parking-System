@@ -14,54 +14,55 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Project.LoginController">
    <left>
-      <VBox alignment="CENTER" prefHeight="400.0" prefWidth="249.0" style="-fx-background-color: #17b978;" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="152.0" fitWidth="196.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="NEVER">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-               <image>
-                  <Image url="@../../Images/Screenshot%20from%202022-12-14%2008-12-29.png" />
-               </image>
-            </ImageView>
-         </children>
+      <VBox alignment="CENTER" prefHeight="400.0" prefWidth="550.0" style="-fx-background-color: #17b978;" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets left="50.0" right="50.0" />
+         </padding>
+         <ImageView fitHeight="259.0" fitWidth="395.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+            <VBox.margin>
+               <Insets />
+            </VBox.margin>
+            <Image url="@../../Images/Screenshot%20from%202022-12-14%2008-12-29.png" />
+         </ImageView>
       </VBox>
    </left>
    <center>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #EEF1EE;" BorderPane.alignment="CENTER">
-         <children>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0">
-               <VBox.margin>
+      <VBox alignment="CENTER" prefHeight="200.0" style="-fx-background-color: #EEF1EE;" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets left="30.0" right="30.0" />
+         </padding>
+         <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <VBox.margin>
+               <Insets />
+            </VBox.margin>
+            <Label focusTraversable="false" layoutX="25.0" layoutY="60.0" text="Username:" textFill="#17b978" AnchorPane.leftAnchor="25.0">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+               <opaqueInsets>
                   <Insets />
-               </VBox.margin>
-               <children>
-                  <Label focusTraversable="false" layoutX="25.0" layoutY="60.0" text="Username:" textFill="#17b978" AnchorPane.leftAnchor="25.0">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <padding>
-                        <Insets right="1.0" />
-                     </padding>
-                  </Label>
-                  <Label focusTraversable="false" layoutX="25.0" layoutY="109.0" text="Password:" textFill="#17b978">
-                     <font>
-                        <Font name="Arial Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="usernameTextField" layoutX="110.0" layoutY="56.0" promptText="Username" AnchorPane.leftAnchor="116.0" />
-                  <Button fx:id="loginBtn" contentDisplay="CENTER" defaultButton="true" layoutX="147.0" layoutY="173.0" mnemonicParsing="false" onAction="#checkValidity" style="-fx-background-color: #17b978;" text="Login" textAlignment="CENTER" textFill="#eef1ee">
-                     <font>
-                        <Font name="Arial Bold" size="14.0" />
-                     </font>
-                  </Button>
-                  <PasswordField fx:id="passwordTextField" layoutX="116.0" layoutY="106.0" promptText="Password" />
-                  <Label fx:id="invalidDetails" alignment="CENTER" contentDisplay="TOP" ellipsisString="" layoutX="25.0" layoutY="145.0" nodeOrientation="LEFT_TO_RIGHT" />
-               </children>
-            </AnchorPane>
-         </children>
+               </opaqueInsets>
+               <padding>
+                  <Insets right="1.0" />
+               </padding>
+            </Label>
+            <Label focusTraversable="false" layoutX="25.0" layoutY="109.0" text="Password:" textFill="#17b978">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="usernameTextField" layoutX="128.0" layoutY="55.0" prefHeight="32.0" prefWidth="219.0" promptText="Username" AnchorPane.leftAnchor="128.0" />
+            <PasswordField fx:id="passwordTextField" layoutX="128.0" layoutY="104.0" prefHeight="32.0" prefWidth="219.0" promptText="Password" />
+            <Button fx:id="loginBtn" contentDisplay="CENTER" defaultButton="true" layoutX="147.0" layoutY="173.0" mnemonicParsing="false" onAction="#checkValidity" style="-fx-background-color: #17b978;" text="Login" textAlignment="CENTER" textFill="#eef1ee" AnchorPane.topAnchor="173.0">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+               <padding>
+                  <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
+               </padding>
+            </Button>
+            <Label fx:id="invalidDetails" layoutX="25.0" layoutY="149.0" />
+         </AnchorPane>
       </VBox>
    </center>
 </BorderPane>

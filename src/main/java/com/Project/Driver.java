@@ -1,6 +1,5 @@
 package com.Project;
 
-import com.Boxes.ConfirmBox;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -8,16 +7,14 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Driver extends Application {
 
     private static Stage  window;
 
-    public static void main() {
+    public static void main(String[] args) {
         launch();
-
-//        Floor floor1 = new Floor("Ground Floor", 12);
-
     }
 
     @Override
@@ -27,8 +24,9 @@ public class Driver extends Application {
         Scene scene = new Scene(fxmlLoader.load());
 
         window.setTitle("Parking System");
-        window.setResizable(false);
         window.setScene(scene);
+        window.setMaximized(true);
+        window.setResizable(false);
         window.show();
 
         window.setOnCloseRequest(e ->{
@@ -36,7 +34,6 @@ public class Driver extends Application {
             closeProgram();
         });
 
-//        SystemController.getStage().show();
     }
 
     public static Stage getWindow() {
@@ -44,7 +41,7 @@ public class Driver extends Application {
     }
 
     private void closeProgram(){
-        if (ConfirmBox.display("Exit", "Are you sure you want to exit?"))
+        if (Boxes.confirmBox("Exit", "Are you sure you want to exit?"))
             Platform.exit();
     }
 

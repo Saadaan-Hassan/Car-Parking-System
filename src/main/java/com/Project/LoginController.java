@@ -1,6 +1,9 @@
 package com.Project;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
@@ -9,16 +12,12 @@ import java.util.ArrayList;
 
 public class LoginController {
 
+    public Button loginBtn;
     @FXML
     private TextField usernameTextField, passwordTextField;
     @FXML
     private Label invalidDetails;
-    private final String USR = "admin";
-    private final String PASS = "admin";
-    private ArrayList<Users> usersArray;
-
-//    private final ArrayList<String> USR = new ArrayList<>();
-//    private final ArrayList<String> PASS = new ArrayList<>();
+    private final ArrayList<Users> usersArray;
 
     {
         usersArray = FileHandling.readFromFile(Files.getUsersFile());
@@ -48,78 +47,42 @@ public class LoginController {
             usernameTextField.setStyle(errorStyle);
             passwordTextField.setStyle(errorStyle);
         }
-
-        // When the username is blank and password is entered
-        else if(usernameTextField.getText().isBlank()){
-            usernameTextField.setStyle(errorStyle);
-
-            // If password is entered correctly
-            if (passwordTextField.getText().equals(PASS)){
-                passwordTextField.setStyle(successStyle);
-                invalidDetails.setText("Username is required");
-            }
-            // if password is incorrect
-            else{
-                passwordTextField.setStyle(errorStyle);
-                invalidDetails.setText("Invalid username and password");
-            }
-        }
-        // When the password is blank and username is entered correctly
-        else if (passwordTextField.getText().isBlank()) {
-            passwordTextField.setStyle(errorStyle);
-
-            // If username is correct
-            if (usernameTextField.getText().equals(USR)){
-                usernameTextField.setStyle(successStyle);
-                invalidDetails.setText("Password is required");
-            }
-            // If username is incorrect
-            else {
-                usernameTextField.setStyle(errorStyle);
-                invalidDetails.setText("Invalid username and password");
-            }
-        }
         //When both field are correctly entered
-        else if (usernameTextField.getText().equals(USR) && passwordTextField.getText().equals(PASS)){
-            invalidDetails.setText("Login Successful!");
-            invalidDetails.setStyle(successMessage);
-            usernameTextField.setStyle(successStyle);
-            passwordTextField.setStyle(successStyle);
+        else if (!(usernameTextField.getText().isBlank()) && !(passwordTextField.getText().isBlank())){
+                invalidDetails.setText("Login Successful!");
+                invalidDetails.setStyle(successMessage);
+                usernameTextField.setStyle(successStyle);
+                passwordTextField.setStyle(successStyle);
 
-            SystemController.getStage().show();
-            Driver.getWindow().close();
+                String userName = usernameTextField.getText();
+                String password = passwordTextField.getText();
 
-        }
+                boolean status = false;
 
-        // When both fields are entered incorrect
-        else {
-            invalidDetails.setText("Invalid username and password");
-            invalidDetails.setStyle(errorMessage);
-            usernameTextField.setStyle(errorStyle);
-            passwordTextField.setStyle(errorStyle);
-        }
-
-        if (!(usernameTextField.getText().isBlank()) && !(passwordTextField.getText().isBlank())){
-            System.out.println("We are not empty");
-
-            String userName = usernameTextField.getText();
-            String password = passwordTextField.getText();
-
-            for (Users user:
-                 usersArray) {
-                if (user.getName().equals(userName) && user.getPassword().equals(password)) {
-                    if (user.getRole().equals("Admin")) {
-                        SystemController.getStage().show();
-                        Driver.getWindow().close();
-                        break;
-                    }
-                    else{
-                        SystemController.getStage().show();
-//                        SystemController.disableOptions();
-                        Driver.getWindow().close();
+                for (Users user:
+                        usersArray) {
+                    if (user.getName().equals(userName) && user.getPassword().equals(password)) {
+                        if (user.getRole().equals("Admin")) {
+                            Driver.getWindow().setScene(SystemController.getAdminControl());
+                            status = true;
+                            break;
+                        }
+                        else{
+                            Driver.getWindow().setScene(SystemController.getControllerControl());
+                            status = true;
+                            break;
+                        }
                     }
                 }
+
+
+            // When both fields are entered incorrect
+            if (!status){
+                invalidDetails.setText("Invalid username and password");
+                invalidDetails.setStyle(errorMessage);
+                usernameTextField.setStyle(errorStyle);
+                passwordTextField.setStyle(errorStyle);
             }
-        }
+            }
     }
 }

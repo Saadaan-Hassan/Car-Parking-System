@@ -57,7 +57,11 @@ public class FileHandling {
 
         try {
             FileInputStream fis = new FileInputStream(file);
-            ObjectInputStream ois = new ObjectInputStream(fis);
+            ObjectInputStream ois = null;
+            if (fis.available() > 0)
+                ois = new ObjectInputStream(fis);
+            else
+                return arr;
 
             while ((fis.available() > 0)) {
                 obj = ois.readObject();
@@ -76,4 +80,5 @@ public class FileHandling {
         System.out.println("============================");
         return arr;
     }
+
 }

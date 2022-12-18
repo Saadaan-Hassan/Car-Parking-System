@@ -1,7 +1,5 @@
 package com.Project;
 
-import com.Boxes.AlertBox;
-import com.Boxes.ConfirmBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -16,6 +14,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.Serial;
 import java.io.Serializable;
 import java.security.SecureRandom;
@@ -31,10 +30,16 @@ public class Users implements Serializable {
     @Serial
     private static final long serialVersionUID = 5030062279249430796L;
 
+    public Users(int id, String name, String password, String role) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.role = role;
+    }
     public Users(String name, String password, String role) {
         SecureRandom random = new SecureRandom();
         ArrayList<Users> users = FileHandling.readFromFile(Files.getUsersFile());
-        int ran = random.nextInt(1,1000);
+        int ran = random.nextInt(1,10000);
 
         for (Users u :
                 users) {
@@ -46,17 +51,18 @@ public class Users implements Serializable {
         this.password = password;
         this.role = role;
     }
-    //Add User
 
+    //Add User
     public static void addUser(Users newUser, TableView<Users> table) {
         FileHandling.appendToFile(Files.getUsersFile(), newUser);
 
         table.getItems().add(newUser);
 
-        AlertBox.display("", "New User Added Successfully");
+        Boxes.alertBox("", "New User Added Successfully");
 
     }
 
+    //Show Users
     public static ObservableList<Users> showUsers() {
         ArrayList<Users> usersArray = FileHandling.readFromFile(Files.getUsersFile());
         return FXCollections.observableList(usersArray);
@@ -64,8 +70,6 @@ public class Users implements Serializable {
 
     //Edit Floor Function
     public static void editUser(TableView<Users> table, Users editUser){
-        ArrayList<Users> usersArray = FileHandling.readFromFile(Files.getUsersFile());
-
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setX(100);
@@ -106,7 +110,7 @@ public class Users implements Serializable {
         grid.add(labelRole, 0, 3);
 
         ObservableList<String> roles = FXCollections.observableArrayList("Admin", "Controller");
-        ComboBox comboBox = new ComboBox(roles  );
+        ComboBox comboBox = new ComboBox(roles);
         comboBox.setValue(editUser.getRole());
         grid.add(comboBox, 1,3);
 
@@ -120,20 +124,27 @@ public class Users implements Serializable {
         grid.add(hBox, 0,4, 2,1);
 
         btn.setOnAction(e ->{
-            if (ConfirmBox.display("Edit User", "Do you want to save changes?")) {
-                File file = new File(Files.getUsersFile());
-                file.delete();
 
-                for (Users u :
-                        usersArray) {
-                    if (u.id == Integer.parseInt(tId.getText())) {
-                        FileHandling.writeToFile(Files.getUsersFile(), new Users(tfName.getText(), tfPassword.getText(), comboBox.getValue().toString()));
-                    } else
-                        FileHandling.writeToFile(Files.getUsersFile(), u);
+            if (tfName.getText().isEmpty() || tfPassword.getText().isEmpty() || comboBox.getValue() == null){
+                Boxes.alertBox("Empty Fields", "Fields are empty!");
+            }
+            else {
+                ArrayList<Users> usersArray = FileHandling.readFromFile(Files.getUsersFile());
+                if (Boxes.confirmBox("Edit User", "Do you want to save changes?")) {
+                    File file = new File(Files.getUsersFile());
+                    file.delete();
+
+                    for (Users u :
+                            usersArray) {
+                        if (u.id == Integer.parseInt(tId.getText())) {
+                            FileHandling.writeToFile(Files.getUsersFile(), new Users(u.id, tfName.getText(), tfPassword.getText(), comboBox.getValue().toString()));
+                        } else
+                            FileHandling.writeToFile(Files.getUsersFile(), u);
+                    }
+
+                    table.getItems().clear();
+                    table.setItems(Users.showUsers());
                 }
-
-                table.getItems().clear();
-                table.setItems(Users.showUsers());
             }
         });
 
@@ -146,10 +157,8 @@ public class Users implements Serializable {
 
     }
 
-
+    //Delete User
     public static void delUsers(TableView<Users> table){
-        ArrayList<Users> users = FileHandling.readFromFile(Files.getUsersFile());
-
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setX(100);
@@ -168,25 +177,41 @@ public class Users implements Serializable {
         btn.setPrefWidth(110);
         btn.setPrefHeight(30);
         btn.setOnAction(e->{
-            if (ConfirmBox.display("Delete User", "Are you sure you want to delete User?")) {
-                File file = new File(Files.getUsersFile());
-                file.delete();
-                System.out.println("User File Deleted");
-                for (Users u :
-                        users) {
-                    System.out.println(u);
-                    if (!(u.id == Integer.parseInt(textField.getText()))) {
-                        FileHandling.writeToFile(Files.getUsersFile(), u);
-                    }
-
-                }
-                table.getItems().clear();
-                table.setItems(Users.showUsers());
-
-                textField.clear();
-
+            ArrayList<Users> users = FileHandling.readFromFile(Files.getUsersFile());
+            if (textField.getText().isEmpty()){
+                Boxes.alertBox("Empty Field", "Enter the ID!");
             }
-           });
+            else {
+                if (users.size() == 1 && users.get(0).role.equals("Admin"))
+                    Boxes.alertBox("", "At least one Admin is required!");
+                else {
+                    if (Boxes.confirmBox("Delete User", "Are you sure you want to delete User?")) {
+                        File file = new File(Files.getUsersFile());
+                        file.delete();
+
+                        for (Users u :
+                                users) {
+                            if (!(u.id == Integer.parseInt(textField.getText())))
+                                FileHandling.writeToFile(Files.getUsersFile(), u);
+                        }
+
+                        if (!(file.exists())) {
+                            try {
+                                file.createNewFile();
+                            } catch (IOException ex) {
+                                throw new RuntimeException(ex);
+                            }
+                        }
+
+                        textField.clear();
+                        table.getItems().clear();
+                        table.setItems(Users.showUsers());
+
+
+                    }
+                }
+            }
+        });
 
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.CENTER);

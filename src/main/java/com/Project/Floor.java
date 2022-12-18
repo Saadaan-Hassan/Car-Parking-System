@@ -1,7 +1,5 @@
 package com.Project;
 
-import com.Boxes.AlertBox;
-import com.Boxes.ConfirmBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -15,6 +13,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.Serial;
 import java.io.Serializable;
 import java.security.SecureRandom;
@@ -24,16 +23,29 @@ public class Floor implements Serializable {
     @Serial
     private static final long serialVersionUID = 733648599315947096L;
     private final String floorName;
-    private final Slots [] slots;
+    private final ArrayList<Slots> slots;
     private final int noOfSlots;
 
     private int id;
+
+    Floor(int id, String floorName, int slotsNumber) {
+
+        this.id = id;
+
+        this.floorName = floorName;
+        slots = new ArrayList<>(slotsNumber);
+        for (int i = 0; i < slotsNumber; i++) {
+            slots.add(new Slots());
+        }
+
+        this.noOfSlots = slotsNumber;
+    }
 
     //Constructor
     Floor(String floorName, int slotsNumber) {
         SecureRandom random = new SecureRandom();
         ArrayList<Floor> floors = FileHandling.readFromFile(Files.getFloorFile());
-        int ran = random.nextInt(1,1000);
+        int ran = random.nextInt(1,10000);
 
         for (Floor f :
                 floors) {
@@ -44,44 +56,62 @@ public class Floor implements Serializable {
         }
 
         this.floorName = floorName;
-        slots = new Slots[slotsNumber];
-        for (int i = 0; i < slots.length; i++) {
-            slots[i] = new Slots();
+        slots = new ArrayList<>(slotsNumber);
+        for (int i = 0; i < slotsNumber; i++) {
+            slots.add(new Slots());
         }
 
         this.noOfSlots = slotsNumber;
     }
 
     //Add Floor Function
-    public static void addFloor(Floor newFloor, TableView<Floor> table){
+    public static void addFloor(Floor newFloor, TableView<Floor> table, ComboBox<String> cbFloor){
         FileHandling.appendToFile(Files.getFloorFile(), newFloor);
 
-        AlertBox.display("", "New floor Added Successfully");
+//        FileHandling.writeToFile(Files.getSlotsFile(), newFloor.getSlots());
 
+        Boxes.alertBox("", "New floor Added Successfully");
+
+        cbFloor.getItems().add(newFloor.getFloorName());
         table.getItems().add(newFloor);
     }
 
-    //Show Floor Functions
+    /*Show Floor Functions
+    * This Function returns the Scroll Pane which shows the parking slots.
+    * If a slot is reserved, then it is shown with red color.
+    * If a slot is available, then it is shown with green color.
+    * */
     public static ScrollPane showFloor(int index){
         GridPane grid = new GridPane();
-        grid.setHgap(20);
+        grid.setHgap(15);
         grid.setVgap(20);
-        grid.setPadding(new Insets(20));
-        ArrayList<Floor> floor = FileHandling.readFromFile(Files.getFloorFile());
+        grid.setPadding(new Insets(20, 20, 20, 10));
 
-        double numberOfSlots = floor.get(index).getSlots().length;
+        //Reads the floors Slots from File Data file
+        ArrayList<Floor> floor = FileHandling.readFromFile(Files.getFloorFile());
+        ArrayList<Slots> slots = floor.get(index).getSlots();
+
+        //Stores the number of slots of the selected floor
+        double numberOfSlots = floor.get(index).getSlots().size();
+
+        // Columns of grid pane
         double columns = 8;
+
+        //Rows for grid pane
         double rows = Math.ceil(numberOfSlots/columns);
 
-        int count = 1;
+        //The below code is showing the slots on the screen. If a slot is reserved then it is shown in "Red Color" otherwise in "Green Color"
+        int count = 0;
         for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns && count <= numberOfSlots; j++) {
+            for (int j = 0; j < columns && count < numberOfSlots; j++) {
+                //Vbox is used to show slot on screen.
                 VBox vBox = new VBox(15);
                 vBox.setAlignment(Pos.CENTER);
                 vBox.setPadding(new Insets(25));
-                String status;
 
-                if (floor.get(index).getSlots()[j].isReserved()){
+                String status;  //It is used to store status of slots i.e. reserved/available.
+
+                if (slots.get(count).isReserved()){
                     status = "Reserved";
                     vBox.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
                 }
@@ -94,11 +124,13 @@ public class Floor implements Serializable {
                 tStatus.setFill(Color.WHITE);
                 Text tSlotNumber = new Text(String.format("Slot-%d",count));
                 tSlotNumber.setFill(Color.WHITE);
+
                 vBox.getChildren().addAll(tStatus,tSlotNumber);
                 grid.add(vBox,j,i);
                 count++;
             }
         }
+
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(grid);
         return scrollPane;
@@ -111,8 +143,6 @@ public class Floor implements Serializable {
 
     //Edit Floor Function
     public static void editFloor(TableView<Floor> table, Pagination pagination, Floor editFloor){
-        ArrayList<Floor> floorsArray = FileHandling.readFromFile(Files.getFloorFile());
-
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setX(100);
@@ -159,23 +189,30 @@ public class Floor implements Serializable {
         grid.add(hBox, 0,3, 2,1);
 
         btn.setOnAction(e ->{
-        if (ConfirmBox.display("Edit Floor", "Do you want to save changes?")) {
-            File file = new File(Files.getFloorFile());
-            file.delete();
 
-            for (Floor f :
-                    floorsArray) {
-                if (f.id == Integer.parseInt(tId.getText())) {
-                    FileHandling.writeToFile(Files.getFloorFile(), new Floor(tfName.getText(), Integer.parseInt(tfSlots.getText())));
-                } else
-                    FileHandling.writeToFile(Files.getFloorFile(), f);
+            if (tfName.getText().isEmpty() || tfSlots.getText().isEmpty()){
+                Boxes.alertBox("Empty Field", "Enter the ID!");
             }
+            else {
+                ArrayList<Floor> floorsArray = FileHandling.readFromFile(Files.getFloorFile());
+                if (Boxes.confirmBox("Edit Floor", "Do you want to save changes?")) {
+                    File file = new File(Files.getFloorFile());
+                    file.delete();
 
-            table.getItems().clear();
-            table.setItems(Floor.showFloor());
+                    for (Floor f :
+                            floorsArray) {
+                        if (f.id == Integer.parseInt(tId.getText())) {
+                            FileHandling.writeToFile(Files.getFloorFile(), new Floor(f.id,tfName.getText(), Integer.parseInt(tfSlots.getText())));
+                        } else
+                            FileHandling.writeToFile(Files.getFloorFile(), f);
+                    }
 
-            Slots.showSlots(pagination);
-        }
+                    table.getItems().clear();
+                    table.setItems(Floor.showFloor());
+
+                    Slots.showSlots(pagination);
+                }
+            }
         });
 
         Scene scene = new Scene(grid, 330, 150);
@@ -189,8 +226,6 @@ public class Floor implements Serializable {
 
     //Delete floor Function
     public static void delFloor(TableView<Floor> table, Pagination pagination){
-        ArrayList<Floor> floorsArray = FileHandling.readFromFile(Files.getFloorFile());
-
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setX(100);
@@ -209,22 +244,41 @@ public class Floor implements Serializable {
         btn.setPrefWidth(110);
         btn.setPrefHeight(30);
         btn.setOnAction(e->{
-            if (ConfirmBox.display("Delete Floor", "Are you sure you want to delete Floor?")) {
-                File file = new File(Files.getFloorFile());
-                file.delete();
+            ArrayList<Floor> floorsArray = FileHandling.readFromFile(Files.getFloorFile());
 
-                for (Floor f :
-                        floorsArray) {
-                    if (!(f.id == Integer.parseInt(textField.getText()))) {
-                        FileHandling.writeToFile(Files.getFloorFile(), f);
+            if (textField.getText().isEmpty()){
+                Boxes.alertBox("Empty Field", "Enter the ID!");
+            }
+            else {
+                if (floorsArray.size() == 1)
+                    Boxes.alertBox("", "At least one Floor is required!");
+                else {
+                    if (Boxes.confirmBox("Delete Floor", "Are you sure you want to delete Floor?")) {
+                        File file = new File(Files.getFloorFile());
+                        file.delete();
+
+                        for (Floor f :
+                                floorsArray) {
+                            if (!(f.id == Integer.parseInt(textField.getText()))) {
+                                FileHandling.writeToFile(Files.getFloorFile(), f);
+                            }
+                        }
+
+
+                        if (!(file.exists())) {
+                            try {
+                                file.createNewFile();
+                            } catch (IOException ex) {
+                                throw new RuntimeException(ex);
+                            }
+                        }
+
+                        textField.clear();
+                        table.getItems().clear();
+                        table.setItems(Floor.showFloor());
+                        Slots.showSlots(pagination);
                     }
                 }
-
-                textField.clear();
-
-                table.getItems().clear();
-                table.setItems(Floor.showFloor());
-                Slots.showSlots(pagination);
             }
         });
 
@@ -250,16 +304,21 @@ public class Floor implements Serializable {
         return id;
     }
 
-    public Slots[] getSlots() {
+//    public Slots[] getSlots() {
+//        return slots;
+//    }
+
+
+    public ArrayList<Slots> getSlots() {
         return slots;
     }
 
     public int getNoOfSlots() {
-        return noOfSlots;
+        return slots.size();
     }
 
     @Override
     public String toString() {
-        return String.format("%d %s %d", id, floorName, slots.length);
+        return String.format("%d %s %d", id, floorName, slots.size());
     }
 }
