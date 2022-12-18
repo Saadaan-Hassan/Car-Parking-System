@@ -18,6 +18,7 @@ public class Driver extends Application {
     }
 
     @Override
+
     public void start(Stage stage) throws IOException {
         window = stage;
         FXMLLoader fxmlLoader = new FXMLLoader(Driver.class.getResource("Login.fxml"));

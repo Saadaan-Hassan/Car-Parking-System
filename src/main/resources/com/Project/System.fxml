@@ -28,7 +28,7 @@
                 <rotationAxis>
                     <Point3D />
                 </rotationAxis>
-                <GridPane fx:id="vehicleEntryPane">
+                <GridPane fx:id="vehicleEntryPane" visible="false">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="199.0" minWidth="10.0" prefWidth="152.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="331.0" minWidth="10.0" prefWidth="193.0" />
@@ -76,7 +76,7 @@
                         </font>
                     </Button>
                 </GridPane>
-                <GridPane fx:id="unparkVehiclePane" hgap="5.0" visible="false">
+                <GridPane fx:id="unparkVehiclePane" hgap="5.0">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="122.0" minWidth="10.0" prefWidth="122.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="104.0" minWidth="10.0" prefWidth="98.0" />
@@ -85,6 +85,7 @@
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -113,7 +114,7 @@
                     <Text fx:id="tFloor" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                     <Text fx:id="tTotalBill" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
                     <Text fx:id="tPricePerHour" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                    <TableView fx:id="tbUnparkVehicle" onMouseClicked="#selectUnparkTableRow" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="1" GridPane.rowSpan="5" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                    <TableView fx:id="tbUnparkVehicle" onMouseClicked="#selectUnparkTableRow" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.rowSpan="5" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                         <columns>
                             <TableColumn fx:id="vehicleIdCol" prefWidth="50.0" resizable="false" text="ID" />
                             <TableColumn fx:id="vehicleCustomerCol" prefWidth="129.0" resizable="false" text="Customer Name" />

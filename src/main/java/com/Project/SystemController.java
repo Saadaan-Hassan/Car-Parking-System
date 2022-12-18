@@ -9,7 +9,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.URL;
@@ -17,7 +16,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class SystemController implements Initializable, Serializable {
-    private static final FXMLLoader fxmlLoader = new FXMLLoader(Driver.class.getResource("System.fxml"));
     @FXML
     private Button showVehicleHistoryBtn;
     @FXML
@@ -138,29 +136,43 @@ public class SystemController implements Initializable, Serializable {
 
     //If user is entered as "Admin"
     public static Scene getAdminControl() throws IOException {
+        status = "Admin";
         FXMLLoader fxmlLoader = new FXMLLoader(Driver.class.getResource("System.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        return scene;
+        return new Scene(fxmlLoader.load());
     }
 
     //If user is entered as "Controller"
     public static Scene getControllerControl() throws IOException {
         status = "Controller";
         FXMLLoader fxmlLoader = new FXMLLoader(Driver.class.getResource("System.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        return scene;
+        return new Scene(fxmlLoader.load());
     }
 
-    //Disable option
+    //Disable options for "Controller"
     public void disableOptions(){
         showVehicleHistoryBtn.setDisable(true);
         floorsBtn.setDisable(true);
         userBtn.setDisable(true);
     }
 
+    //Enable options for "Admin"
+    public void enableOptions(){
+        showVehicleHistoryBtn.setDisable(false);
+        floorsBtn.setDisable(false);
+        userBtn.setDisable(false);
+    }
+
     //================================================================================================//
 
     /*======================================== Panes Toggling ========================================*/
+
+    //This method toggles the visibility of Panes
+    private<T extends Pane> void showPane(T t){
+        for (Pane p :
+                allPanes) {
+            p.setVisible(t == p);
+        }
+    }
 
     //Toggling Vehicle Entry Pane
     public void showVehicleEntryPane(){
@@ -213,19 +225,21 @@ public class SystemController implements Initializable, Serializable {
     /*======================================== Vehicle Entry Pane ========================================*/
     //Taking Entry of Vehicle
     public void addVehicleEntryBtnAction(){
+        //If any field is empty it will an alert box is displayed
         if (tfPersonName.getText().equals("") || tfMobileNo.getText().equals("") || tfVehiclePlateNo.getText().equals("") || tfTimeIn.getText().equals("") || cbVehicleType.getValue() == null)
             Boxes.alertBox("Empty Fields", "Fields are empty!");
         else if (Miscellaneous.timeValidity(tfTimeIn.getText())){
             Vehicle.addVehicle(new Vehicle(tfPersonName.getText(), Long.parseLong(tfMobileNo.getText()), tfVehiclePlateNo.getText(), cbVehicleType.getValue(), tfTimeIn.getText(), Miscellaneous.setDate(), cbFloor.getValue(), Integer.parseInt(tSlotNo.getText())), tbUnparkVehicle);
 
+            //Clearing the fields after entering the Vehicle data
             tfPersonName.clear();
             tfMobileNo.clear();
             tfVehiclePlateNo.clear();
             tfTimeIn.clear();
-            cbVehicleType.setPromptText("Select Vehicle Type");
             tSlotNo.setText("");
             tvehiclePrice.setText("");
 
+            //Updating the Slots Pane
             Slots.showSlots(pagination);
         }
     }
@@ -240,7 +254,7 @@ public class SystemController implements Initializable, Serializable {
         Miscellaneous.setTime(tfTimeOut);
     }
 
-    //Calculates the Bill for parking vehicle
+    //Sets the Bill for parking vehicle in tTotalBill
     public void calculateBillBtnAction(){
         tTotalBill.setText(String.format("Rs. %.2f", Vehicle.calculateTotalBill(Double.parseDouble(tPricePerHour.getText().split(" ")[1]), tTimeIn.getText(), tfTimeOut.getText())));
     }
@@ -251,14 +265,16 @@ public class SystemController implements Initializable, Serializable {
 
     //Un-Park Vehicle Btn Action
     public void unparkVehicleBtnAction(){
+        //Check if the un-park table row is selected or not
         if (selectUnparkTableRow() != null) {
+            //Check if the timeOut field is empty or not
             if (tfTimeOut.getText().isEmpty())
                 Boxes.alertBox("Empty Fields", "Enter Time Out of Vehicle!");
             else {
                 if (Boxes.confirmBox("Pay Bill", "Does bill has been paid?"))
                     Vehicle.unparkVehicle(tbUnparkVehicle, tbVehicleHistory, selectUnparkTableRow(), tfTimeOut.getText());   //Calls the unparkVehicle Function from the Vehicle Class
 
-                //Clearing the data after un-parking the car;
+                //Clearing the data from the field after un-parking the car
                 tCustomerName.setText("");
                 tMobileNo.setText("");
                 tVehiclePlateNo.setText("");
@@ -274,8 +290,11 @@ public class SystemController implements Initializable, Serializable {
 
     }
 
+    //Selects the Row in Un-Park Table and returns the selected object as Vehicle
     public Vehicle selectUnparkTableRow(){
         Vehicle selectedVehicle = tbUnparkVehicle.getSelectionModel().getSelectedItem();
+
+        //Sets the values of selected vehicle in the Un-Park Vehicle Pane text fields and texts
         if (selectedVehicle != null){
             tCustomerName.setText(selectedVehicle.getCustomerName());
             tMobileNo.setText(Long.toString(selectedVehicle.getMobileNumber()));
@@ -304,14 +323,18 @@ public class SystemController implements Initializable, Serializable {
 
     //Add Floor Button Action
     public void addFloorBtnAction(){
+        //Check if the floor name and number of slots fields are empty or not
         if (tfFloorName.getText().equals("") || tfNumberOfSlots.getText().equals(""))
             Boxes.alertBox("Empty Fields", "Fields are empty!");
         else {
             //Calls the addFloor Function from the Floor Class
             Floor.addFloor(new Floor(tfFloorName.getText(), Integer.parseInt(tfNumberOfSlots.getText())), tbFloors, cbFloor);
+
+            //Clearing the data from the fields after adding the floor
             tfFloorName.clear();
             tfNumberOfSlots.clear();
 
+            //Updating the Slots Pane
             Slots.showSlots(pagination);
         }
     }
@@ -319,13 +342,15 @@ public class SystemController implements Initializable, Serializable {
     //Edit Floor Button Action
     public void editFloorBtnAction(){
         if (selectFloorTableRow() != null)
-            Floor.editFloor(tbFloors, pagination, selectFloorTableRow());   //Calls the editFloor Function from the Floor Class
+            //Calls the editFloor Function from the Floor Class
+            Floor.editFloor(tbFloors, pagination, selectFloorTableRow());
     }
 
     //Selects the Row in Floors Table and returns the selected object as Floor
     public Floor selectFloorTableRow(){
         Floor selectedFloor = tbFloors.getSelectionModel().getSelectedItem();
         if (selectedFloor != null){
+            //Sets the values of selected floor in the Floor Pane text fields
             tfFloorName.setText(selectedFloor.getFloorName());
             tfNumberOfSlots.setText(Integer.toString(selectedFloor.getNoOfSlots()));
         }
@@ -344,6 +369,7 @@ public class SystemController implements Initializable, Serializable {
 
     //Add User Button Action
     public void addUserBtnAction(){
+        //Check if the Username, Password, and Role fields are empty or not
         if (tfName.getText().equals("") || tfPassword.getText().equals("") || cbRole.getValue() == null)
             Boxes.alertBox("Empty Fields", "Fields are empty or role not selected!");
         else {
@@ -366,13 +392,14 @@ public class SystemController implements Initializable, Serializable {
     //Delete User Button Action
     public void deleteUserBtnAction(){
         //Calls the delUser Function from the Users Class
-            Users.delUsers(usersTable);
+        Users.delUsers(usersTable);
     }
 
-    //Selects the Row in Floors Table and returns the selected object as Floor
+    //Selects the User in User Table and returns the selected object as Users
     public Users selectUserTableRow(){
         Users selectedUser = usersTable.getSelectionModel().getSelectedItem();
         if (selectedUser != null){
+            //Sets the values of selected user in the User Pane text fields
             tfName.setText(selectedUser.getName());
             tfPassword.setText(selectedUser.getPassword());
             cbRole.setValue(selectedUser.getRole());
@@ -387,8 +414,14 @@ public class SystemController implements Initializable, Serializable {
     private ArrayList<Pane> allPanes;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if (status == "Controller")
+        //Checking if the Logged-In user is Admin or Controller
+        if (status.equals("Controller"))
             disableOptions();
+        else if (status.equals("Admin")) {
+            enableOptions();
+        }
+
+        //==============================================================================//
 
         //Adding all the panes to the arraylist of Pane to handle the visibility of panes
         allPanes = new ArrayList<>();
@@ -398,6 +431,8 @@ public class SystemController implements Initializable, Serializable {
         allPanes.add(SlotsPane);
         allPanes.add(floorPane);
         allPanes.add(UsersPane);
+
+        //=====================================================================================//
 
         /*==================== Initializing fields on Vehicle Entry Pane ====================*/
 
@@ -427,6 +462,8 @@ public class SystemController implements Initializable, Serializable {
                 tvehiclePrice.setText("Rs. 200");
         });
 
+        //=====================================================================================//
+
         /*==================== Initializing Table on Un-Park Vehicle Pane ====================*/
 
         //Showing All Vehicles on the Table
@@ -436,7 +473,10 @@ public class SystemController implements Initializable, Serializable {
         vehicleTimeInCol.setCellValueFactory(new PropertyValueFactory<>("timeIn"));
         tbUnparkVehicle.setItems(Vehicle.showVehicles());
 
+        //=====================================================================================//
+
         /*==================== Initializing Table on Vehicles History Pane ====================*/
+
         customerNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         mobileNoCol.setCellValueFactory(new PropertyValueFactory<>("mobileNumber"));
         vehicleTypeCol.setCellValueFactory(new PropertyValueFactory<>("vehicleType"));
@@ -449,11 +489,14 @@ public class SystemController implements Initializable, Serializable {
 
         tbVehicleHistory.setItems(Vehicle.showVehiclesHistory());
 
+        //===============================================================================//
+
         /*==================== Initializing Pagination on Slots Pane ====================*/
         //Showing All Parking Slots
         Slots.showSlots(pagination);
 
-        /*==================== Initializing Table on Floors Pane ====================*/
+        //===============================================================================//
+        /*====================== Initializing Table on Floors Pane ======================*/
 
         //Showing All Floor on the table
         floorIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -461,6 +504,7 @@ public class SystemController implements Initializable, Serializable {
         NoOfSlotsCol.setCellValueFactory(new PropertyValueFactory<>("noOfSlots"));
         tbFloors.setItems(Floor.showFloor());
 
+        //=============================================================================================//
         /*=============== Initializing Table and Combo Box on Un-Park Vehicle Pane ====================*/
 
         //Adding items to Combo Box on Users Pane
@@ -473,19 +517,5 @@ public class SystemController implements Initializable, Serializable {
         roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
 
         usersTable.setItems(Users.showUsers());
-    }
-
-    //This method is called when the program is tried to close other than using exit button
-    private static void closeProgram(){
-        if (Boxes.confirmBox("Exit", "Are you sure you want to exit?"))
-            Platform.exit();
-    }
-
-    //This method toggles the visibility of Panes
-    private<T extends Pane> void showPane(T t){
-        for (Pane p :
-                allPanes) {
-            p.setVisible(t == p);
-        }
     }
 }

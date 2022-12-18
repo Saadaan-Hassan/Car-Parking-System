@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serial;
 import java.io.Serializable;
+import java.lang.reflect.Constructor;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 
@@ -30,6 +31,7 @@ public class Users implements Serializable {
     @Serial
     private static final long serialVersionUID = 5030062279249430796L;
 
+    /*======================================== Constructors ========================================*/
     public Users(int id, String name, String password, String role) {
         this.id = id;
         this.name = name;
@@ -52,7 +54,9 @@ public class Users implements Serializable {
         this.role = role;
     }
 
-    //Add User
+    /*=============================================================================================*/
+
+    /*========================================= Add User ==========================================*/
     public static void addUser(Users newUser, TableView<Users> table) {
         FileHandling.appendToFile(Files.getUsersFile(), newUser);
 
@@ -62,13 +66,17 @@ public class Users implements Serializable {
 
     }
 
-    //Show Users
+    /*==============================================================================================*/
+
+    /*========================================= Show Users =========================================*/
     public static ObservableList<Users> showUsers() {
         ArrayList<Users> usersArray = FileHandling.readFromFile(Files.getUsersFile());
         return FXCollections.observableList(usersArray);
     }
 
-    //Edit Floor Function
+    /*==============================================================================================*/
+
+    /*========================================= Edit Users =========================================*/
     public static void editUser(TableView<Users> table, Users editUser){
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -110,7 +118,7 @@ public class Users implements Serializable {
         grid.add(labelRole, 0, 3);
 
         ObservableList<String> roles = FXCollections.observableArrayList("Admin", "Controller");
-        ComboBox comboBox = new ComboBox(roles);
+        ComboBox<String> comboBox = new ComboBox<>(roles);
         comboBox.setValue(editUser.getRole());
         grid.add(comboBox, 1,3);
 
@@ -157,7 +165,9 @@ public class Users implements Serializable {
 
     }
 
-    //Delete User
+    /*==============================================================================================*/
+
+    /*======================================== Delete Users ========================================*/
     public static void delUsers(TableView<Users> table){
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -225,6 +235,10 @@ public class Users implements Serializable {
         stage.setResizable(false);
         stage.showAndWait();
     }
+
+    /*==============================================================================================*/
+
+    /*========================================== Getters ===========================================*/
 
     public int getId() {
         return id;
