@@ -7,13 +7,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class Driver extends Application {
 
     private static Stage  window;
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         launch();
     }
 
@@ -21,7 +20,7 @@ public class Driver extends Application {
 
     public void start(Stage stage) throws IOException {
         window = stage;
-        FXMLLoader fxmlLoader = new FXMLLoader(Driver.class.getResource("Login.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Driver.class.getResource("/com/Project/Login.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
         window.setTitle("Parking System");

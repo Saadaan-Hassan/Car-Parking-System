@@ -8,22 +8,18 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 
 public class Slots implements Serializable {
-
     @Serial
     private static final long serialVersionUID = 4494659944483709061L;
     private boolean reserved;
 
-    public Slots() {
+    /*======================================== Constructors ========================================*/
+    Slots() {
         this.reserved = false;
     }
 
-    public void setReserved(boolean reserved) {
-        this.reserved = reserved;
-    }
+    //==============================================================================================//
 
-    public boolean isReserved() {
-        return reserved;
-    }
+    /*========================================= Show Slots =========================================*/
 
     //This method show the slots on the screen
     public static void showSlots(Pagination pagination){
@@ -31,12 +27,18 @@ public class Slots implements Serializable {
         pagination.setPageFactory(pageIndex -> Floor.showFloor(pageIndex));
     }
 
+    //==============================================================================================//
+
+    /*========================================= Allocate Slots =========================================*/
+
     //This method allots the slot number to vehicles for parking
     public static void allocateSlot(String selectedFloor, Text slotNo){
         SecureRandom random = new SecureRandom();
+
+        //Reading the floors data from the FloorsData.ser
         ArrayList<Floor> floors = FileHandling.readFromFile(Files.getFloorFile());
 
-        int assignSlot = 0;
+        int assignSlot;
         for (Floor f:
                 floors) {
             if (f.getFloorName().equals(selectedFloor)){
@@ -46,6 +48,22 @@ public class Slots implements Serializable {
                 slotNo.setText(Integer.toString(assignSlot));
             }
         }
+    }
+
+    /*=============================================================================================*/
+
+    /*========================================== Setter ===========================================*/
+
+    public void setReserved(boolean reserved) {
+        this.reserved = reserved;
+    }
+
+    /*==============================================================================================*/
+
+    /*========================================== Getters ===========================================*/
+
+    public boolean isReserved() {
+        return reserved;
     }
 
     @Override

@@ -17,19 +17,18 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serial;
 import java.io.Serializable;
-import java.lang.reflect.Constructor;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 
 public class Users implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 5030062279249430796L;
     private final String name;
     private final String password;
     private final String role;
     private int id;
 
 
-    @Serial
-    private static final long serialVersionUID = 5030062279249430796L;
 
     /*======================================== Constructors ========================================*/
     public Users(int id, String name, String password, String role) {
@@ -54,27 +53,31 @@ public class Users implements Serializable {
         this.role = role;
     }
 
-    /*=============================================================================================*/
+    //=============================================================================================//
 
     /*========================================= Add User ==========================================*/
     public static void addUser(Users newUser, TableView<Users> table) {
-        FileHandling.appendToFile(Files.getUsersFile(), newUser);
+        //Write new User data on UserData.ser
+        FileHandling.writeToFile(Files.getUsersFile(), newUser);
 
+        //Add new Floor to Table of Floor Pane
         table.getItems().add(newUser);
 
         Boxes.alertBox("", "New User Added Successfully");
 
     }
 
-    /*==============================================================================================*/
+    //==============================================================================================//
 
     /*========================================= Show Users =========================================*/
+
+    //Reads all the Users from the UserData.ser and return them as ObservableList
     public static ObservableList<Users> showUsers() {
         ArrayList<Users> usersArray = FileHandling.readFromFile(Files.getUsersFile());
         return FXCollections.observableList(usersArray);
     }
 
-    /*==============================================================================================*/
+    //==============================================================================================//
 
     /*========================================= Edit Users =========================================*/
     public static void editUser(TableView<Users> table, Users editUser){
@@ -88,7 +91,7 @@ public class Users implements Serializable {
         grid.setVgap(10);
         grid.setHgap(10);
 
-        //Id Area
+        //----- Id Area -----
         Label labelId = new Label("ID");
         grid.add(labelId, 0,0);
 
@@ -96,7 +99,7 @@ public class Users implements Serializable {
         tId.setText(Integer.toString(editUser.id));
         grid.add(tId, 1,0);
 
-        //Name Area
+        //----- Name Area -----
         Label labelName = new Label("User Name");
         grid.add(labelName, 0,1);
 
@@ -105,7 +108,7 @@ public class Users implements Serializable {
         tfName.setText(editUser.name);
         grid.add(tfName, 1,1);
 
-        //Slots Area
+        //----- Password Area -----
         Label labelPassword = new Label("Password");
         grid.add(labelPassword, 0,2);
 
@@ -114,6 +117,7 @@ public class Users implements Serializable {
         tfPassword.setText(editUser.password);
         grid.add(tfPassword, 1,2);
 
+        //----- Role Area -----
         Label labelRole = new Label("Role");
         grid.add(labelRole, 0, 3);
 
@@ -122,7 +126,7 @@ public class Users implements Serializable {
         comboBox.setValue(editUser.getRole());
         grid.add(comboBox, 1,3);
 
-        //Button
+        //----- Button -----
         Button btn = new Button("OK");
         btn.setPrefWidth(110);
         btn.setPrefHeight(30);
@@ -137,19 +141,23 @@ public class Users implements Serializable {
                 Boxes.alertBox("Empty Fields", "Fields are empty!");
             }
             else {
-                ArrayList<Users> usersArray = FileHandling.readFromFile(Files.getUsersFile());
+
                 if (Boxes.confirmBox("Edit User", "Do you want to save changes?")) {
+                    //Reading the users data from UserData.ser
+                    ArrayList<Users> usersArray = FileHandling.readFromFile(Files.getUsersFile());
+
                     File file = new File(Files.getUsersFile());
                     file.delete();
 
                     for (Users u :
                             usersArray) {
                         if (u.id == Integer.parseInt(tId.getText())) {
-                            FileHandling.writeToFile(Files.getUsersFile(), new Users(u.id, tfName.getText(), tfPassword.getText(), comboBox.getValue().toString()));
+                            FileHandling.writeToFile(Files.getUsersFile(), new Users(u.id, tfName.getText(), tfPassword.getText(), comboBox.getValue()));
                         } else
                             FileHandling.writeToFile(Files.getUsersFile(), u);
                     }
 
+                    //Updating the User Table in User Pane
                     table.getItems().clear();
                     table.setItems(Users.showUsers());
                 }
@@ -165,7 +173,7 @@ public class Users implements Serializable {
 
     }
 
-    /*==============================================================================================*/
+    //==============================================================================================//
 
     /*======================================== Delete Users ========================================*/
     public static void delUsers(TableView<Users> table){
@@ -187,13 +195,17 @@ public class Users implements Serializable {
         btn.setPrefWidth(110);
         btn.setPrefHeight(30);
         btn.setOnAction(e->{
-            ArrayList<Users> users = FileHandling.readFromFile(Files.getUsersFile());
+
             if (textField.getText().isEmpty()){
                 Boxes.alertBox("Empty Field", "Enter the ID!");
             }
             else {
-                if (users.size() == 1 && users.get(0).role.equals("Admin"))
+                //Reading the users data from UserData.ser
+                ArrayList<Users> users = FileHandling.readFromFile(Files.getUsersFile());
+
+                if (users.size() == 1 && users.get(0).role.equals("Admin")) {
                     Boxes.alertBox("", "At least one Admin is required!");
+                }
                 else {
                     if (Boxes.confirmBox("Delete User", "Are you sure you want to delete User?")) {
                         File file = new File(Files.getUsersFile());
@@ -213,11 +225,12 @@ public class Users implements Serializable {
                             }
                         }
 
+                        //Clearing the text field
                         textField.clear();
+
+                        //Updating the User table in User Pane
                         table.getItems().clear();
                         table.setItems(Users.showUsers());
-
-
                     }
                 }
             }
@@ -236,7 +249,7 @@ public class Users implements Serializable {
         stage.showAndWait();
     }
 
-    /*==============================================================================================*/
+    //==============================================================================================//
 
     /*========================================== Getters ===========================================*/
 

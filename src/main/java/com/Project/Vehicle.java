@@ -25,7 +25,7 @@ public class Vehicle implements Serializable {
     private final String floorName;
     private final int slotNo;
 
-    //Constructor
+    /*======================================== Constructors ========================================*/
     public Vehicle(String customerName, long mobileNumber, String vehicleNo, String vehicleType, String timeIn, String date, String floorName, int slotNo) {
 
         SecureRandom random = new SecureRandom();
@@ -68,6 +68,10 @@ public class Vehicle implements Serializable {
         this.slotNo = slotNo;
     }
 
+    //================================================================================================//
+
+    /*========================================= Add Vehicle ==========================================*/
+
     //Adding new vehicle entry
     public static void addVehicle(Vehicle newVehicle, TableView<Vehicle> table){
         //Writing new vehicle to VehicleData.ser
@@ -100,6 +104,11 @@ public class Vehicle implements Serializable {
 
         Boxes.alertBox("", "New Vehicle Added Successfully");
     }
+
+
+    //====================================================================================================//
+
+    /*========================================= Un-Park Vehicle ==========================================*/
 
     /*Un-park Vehicle Function
     * This function is used to remove/un-park a vehicle from the slot/system*/
@@ -161,12 +170,20 @@ public class Vehicle implements Serializable {
 
     }
 
+    //=================================================================================================//
+
+    /*========================================= Show Vehicle ==========================================*/
+
     /*Show Vehicles
     * This function returns the Observable list of Vehicle to show data in the table*/
     public static ObservableList<Vehicle> showVehicles() {
         ArrayList<Vehicle> vehicles = FileHandling.readFromFile(Files.getVehiclesFile());
         return FXCollections.observableList(vehicles);
     }
+
+    //==========================================================================================================//
+
+    /*========================================= Show Vehicles History ==========================================*/
 
     /*Show Vehicles History
      * This function returns the Observable list of Vehicles History to show data in the table*/
@@ -175,9 +192,13 @@ public class Vehicle implements Serializable {
         return FXCollections.observableList(vehicles);
     }
 
+    //===================================================================================================//
+
+    /*========================================= Calculate Bill ==========================================*/
+
     //Calculating total bill for parking vehicles
     public static double calculateTotalBill(double pricePerHour, String timeIn, String timeOut){
-        double result = 0;
+        double result;
         double pricePerMinute = pricePerHour / 60;  //Converting pricePerHour to pricePerMinute
 
         ////Splitting timeIn and timeOut to get hours, minutes, and seconds
@@ -199,10 +220,10 @@ public class Vehicle implements Serializable {
         return result;
     }
 
+    //============================================================================================//
 
-    //----------------------------------------------------------//
+    /*========================================= Getters ==========================================*/
 
-    //Getters
     public int getId() {
         return id;
     }

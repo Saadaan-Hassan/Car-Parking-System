@@ -137,14 +137,14 @@ public class SystemController implements Initializable, Serializable {
     //If user is entered as "Admin"
     public static Scene getAdminControl() throws IOException {
         status = "Admin";
-        FXMLLoader fxmlLoader = new FXMLLoader(Driver.class.getResource("System.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Driver.class.getResource("/com/Project/System.fxml"));
         return new Scene(fxmlLoader.load());
     }
 
     //If user is entered as "Controller"
     public static Scene getControllerControl() throws IOException {
         status = "Controller";
-        FXMLLoader fxmlLoader = new FXMLLoader(Driver.class.getResource("System.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Driver.class.getResource("/com/Project/System.fxml"));
         return new Scene(fxmlLoader.load());
     }
 
@@ -228,8 +228,8 @@ public class SystemController implements Initializable, Serializable {
         //If any field is empty it will an alert box is displayed
         if (tfPersonName.getText().equals("") || tfMobileNo.getText().equals("") || tfVehiclePlateNo.getText().equals("") || tfTimeIn.getText().equals("") || cbVehicleType.getValue() == null)
             Boxes.alertBox("Empty Fields", "Fields are empty!");
-        else if (Miscellaneous.timeValidity(tfTimeIn.getText())){
-            Vehicle.addVehicle(new Vehicle(tfPersonName.getText(), Long.parseLong(tfMobileNo.getText()), tfVehiclePlateNo.getText(), cbVehicleType.getValue(), tfTimeIn.getText(), Miscellaneous.setDate(), cbFloor.getValue(), Integer.parseInt(tSlotNo.getText())), tbUnparkVehicle);
+        else if (DateTime.timeValidity(tfTimeIn.getText())){
+            Vehicle.addVehicle(new Vehicle(tfPersonName.getText(), Long.parseLong(tfMobileNo.getText()), tfVehiclePlateNo.getText(), cbVehicleType.getValue(), tfTimeIn.getText(), DateTime.setDate(), cbFloor.getValue(), Integer.parseInt(tSlotNo.getText())), tbUnparkVehicle);
 
             //Clearing the fields after entering the Vehicle data
             tfPersonName.clear();
@@ -246,12 +246,12 @@ public class SystemController implements Initializable, Serializable {
 
     //Setting Current Time in TimeIn Field of Vehicle Entry Pane
     public void setTimeInBtnAction(){
-        Miscellaneous.setTime(tfTimeIn);
+        DateTime.setTime(tfTimeIn);
     }
 
     //Setting Current Time in TimeOut Field in Unpark Pane
     public void setTimeOutBtnAction(){
-        Miscellaneous.setTime(tfTimeOut);
+        DateTime.setTime(tfTimeOut);
     }
 
     //Sets the Bill for parking vehicle in tTotalBill

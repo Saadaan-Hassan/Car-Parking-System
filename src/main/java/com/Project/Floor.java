@@ -25,9 +25,9 @@ public class Floor implements Serializable {
     private final String floorName;
     private final ArrayList<Slots> slots;
     private final int noOfSlots;
-
     private int id;
 
+    /*======================================== Constructors ========================================*/
     Floor(int id, String floorName, int slotsNumber) {
 
         this.id = id;
@@ -41,7 +41,6 @@ public class Floor implements Serializable {
         this.noOfSlots = slotsNumber;
     }
 
-    //Constructor
     Floor(String floorName, int slotsNumber) {
         SecureRandom random = new SecureRandom();
         ArrayList<Floor> floors = FileHandling.readFromFile(Files.getFloorFile());
@@ -64,30 +63,39 @@ public class Floor implements Serializable {
         this.noOfSlots = slotsNumber;
     }
 
-    //Add Floor Function
-    public static void addFloor(Floor newFloor, TableView<Floor> table, ComboBox<String> cbFloor){
-        FileHandling.appendToFile(Files.getFloorFile(), newFloor);
+    //==============================================================================================//
 
-//        FileHandling.writeToFile(Files.getSlotsFile(), newFloor.getSlots());
+    /*========================================= Add Floor ==========================================*/
+    public static void addFloor(Floor newFloor, TableView<Floor> table, ComboBox<String> cbFloor){
+        //Write new Floor data on FloorsData.ser
+        FileHandling.writeToFile(Files.getFloorFile(), newFloor);
+
+        //Add new Floor to Combo Box of Vehicle Entry Pane
+        cbFloor.getItems().add(newFloor.getFloorName());
+
+        //Add new Floor to Table of Floor Pane
+        table.getItems().add(newFloor);
 
         Boxes.alertBox("", "New floor Added Successfully");
-
-        cbFloor.getItems().add(newFloor.getFloorName());
-        table.getItems().add(newFloor);
     }
 
-    /*Show Floor Functions
+    //===============================================================================================//
+
+    /*========================================= Show Floors =========================================*/
+
+    /*
+    ------ Show Floor Functions ------
     * This Function returns the Scroll Pane which shows the parking slots.
     * If a slot is reserved, then it is shown with red color.
     * If a slot is available, then it is shown with green color.
-    * */
+    */
     public static ScrollPane showFloor(int index){
         GridPane grid = new GridPane();
         grid.setHgap(15);
         grid.setVgap(20);
         grid.setPadding(new Insets(20, 20, 20, 10));
 
-        //Reads the floors Slots from File Data file
+        //Reads the Floor's slots from FloorsData.ser file
         ArrayList<Floor> floor = FileHandling.readFromFile(Files.getFloorFile());
         ArrayList<Slots> slots = floor.get(index).getSlots();
 
@@ -136,12 +144,16 @@ public class Floor implements Serializable {
         return scrollPane;
     }
 
+    //Reads all the Floors from the FloorsData.ser and return them as ObservableList
     public static ObservableList<Floor> showFloor() {
         ArrayList<Floor> floorsArray = FileHandling.readFromFile(Files.getFloorFile());
         return FXCollections.observableList(floorsArray);
     }
 
-    //Edit Floor Function
+    //===============================================================================================//
+
+    /*========================================= Edit Floors =========================================*/
+
     public static void editFloor(TableView<Floor> table, Pagination pagination, Floor editFloor){
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -153,7 +165,7 @@ public class Floor implements Serializable {
         grid.setVgap(10);
         grid.setHgap(10);
 
-        //Id Area
+        //----- Id Area -----
         Label labelId = new Label("ID");
         grid.add(labelId, 0,0);
 
@@ -161,7 +173,7 @@ public class Floor implements Serializable {
         tId.setText(Integer.toString(editFloor.id));
         grid.add(tId, 1,0);
 
-        //Name Area
+        //----- Name Area -----
         Label labelName = new Label("Floor Name");
         grid.add(labelName, 0,1);
 
@@ -170,7 +182,7 @@ public class Floor implements Serializable {
         tfName.setText(editFloor.floorName);
         grid.add(tfName, 1,1);
 
-        //Slots Area
+        //----- Slots Area -----
         Label labelSlots = new Label("Number of Slots");
         grid.add(labelSlots, 0,2);
 
@@ -179,7 +191,7 @@ public class Floor implements Serializable {
         tfSlots.setText(Integer.toString(editFloor.noOfSlots));
         grid.add(tfSlots, 1,2);
 
-        //Button
+        //----- Button -----
         Button btn = new Button("OK");
         btn.setPrefWidth(110);
         btn.setPrefHeight(30);
@@ -191,11 +203,14 @@ public class Floor implements Serializable {
         btn.setOnAction(e ->{
 
             if (tfName.getText().isEmpty() || tfSlots.getText().isEmpty()){
-                Boxes.alertBox("Empty Field", "Enter the ID!");
+                Boxes.alertBox("Empty Field", "Fields Cannot Be Empty!");
             }
             else {
-                ArrayList<Floor> floorsArray = FileHandling.readFromFile(Files.getFloorFile());
                 if (Boxes.confirmBox("Edit Floor", "Do you want to save changes?")) {
+
+                    //Reading Floors data from FloorsData.ser
+                    ArrayList<Floor> floorsArray = FileHandling.readFromFile(Files.getFloorFile());
+
                     File file = new File(Files.getFloorFile());
                     file.delete();
 
@@ -207,9 +222,11 @@ public class Floor implements Serializable {
                             FileHandling.writeToFile(Files.getFloorFile(), f);
                     }
 
+                    //Updating the floor table in Floors Pane
                     table.getItems().clear();
                     table.setItems(Floor.showFloor());
 
+                    //Updating the Slots in Slots Pane
                     Slots.showSlots(pagination);
                 }
             }
@@ -224,7 +241,10 @@ public class Floor implements Serializable {
 
     }
 
-    //Delete floor Function
+    //==============================================================================================//
+
+    /*======================================== Delete Users ========================================*/
+
     public static void delFloor(TableView<Floor> table, Pagination pagination){
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -244,12 +264,13 @@ public class Floor implements Serializable {
         btn.setPrefWidth(110);
         btn.setPrefHeight(30);
         btn.setOnAction(e->{
-            ArrayList<Floor> floorsArray = FileHandling.readFromFile(Files.getFloorFile());
 
             if (textField.getText().isEmpty()){
                 Boxes.alertBox("Empty Field", "Enter the ID!");
             }
             else {
+                //Reading floors data from the FloorData.ser
+                ArrayList<Floor> floorsArray = FileHandling.readFromFile(Files.getFloorFile());
                 if (floorsArray.size() == 1)
                     Boxes.alertBox("", "At least one Floor is required!");
                 else {
@@ -273,9 +294,14 @@ public class Floor implements Serializable {
                             }
                         }
 
+                        //Clears the textField
                         textField.clear();
+
+                        //Updating the floor table in Floor Pane
                         table.getItems().clear();
                         table.setItems(Floor.showFloor());
+
+                        //Updating the Slots in Slots Pane
                         Slots.showSlots(pagination);
                     }
                 }
@@ -295,6 +321,9 @@ public class Floor implements Serializable {
         stage.showAndWait();
     }
 
+    //==============================================================================================//
+
+    /*========================================== Getters ===========================================*/
 
     public String getFloorName() {
         return floorName;
@@ -303,11 +332,6 @@ public class Floor implements Serializable {
     public int getId() {
         return id;
     }
-
-//    public Slots[] getSlots() {
-//        return slots;
-//    }
-
 
     public ArrayList<Slots> getSlots() {
         return slots;

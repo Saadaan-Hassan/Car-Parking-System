@@ -13,8 +13,14 @@ import javafx.stage.Stage;
 
 import java.util.concurrent.atomic.AtomicReference;
 
+/*  This class contains the two boxes i.e.
+    1- Alert Box : To display alerts in the program
+    2- Confirm Box : To ask for user confirmation in the program
+* */
+
 public class Boxes {
-    //Alert Box
+
+    /*================================== Alert Box ==================================*/
     public static void alertBox(String title, String message){
         Stage box = new Stage();
 
@@ -28,9 +34,7 @@ public class Boxes {
         Button btn = new Button("OK");
         btn.setPrefWidth(80);
         btn.setPrefHeight(25);
-        btn.setOnAction(e ->{
-            box.close();
-        });
+        btn.setOnAction(e ->box.close());
 
         VBox vBox = new VBox(15);
         vBox.setAlignment(Pos.CENTER);
@@ -43,7 +47,9 @@ public class Boxes {
         box.showAndWait();
     }
 
-    //Confirm Box
+    //==================================================================================//
+
+    /*================================== Confirm Box ================================== */
     public static boolean confirmBox(String title, String message){
         AtomicReference<Boolean> answer = new AtomicReference<>(false);
 

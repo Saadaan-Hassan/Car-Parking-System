@@ -4,12 +4,17 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class FileHandling {
-    static FileOutputStream fos = null;
 
+    /*=================================== Write To File ===================================*/
+
+    //Generic Function to write all types of objects in the provided file.
     public static <T> void writeToFile(String fileName, T t) {
         File file = new File(fileName);
+        FileOutputStream fos;
 
         try {
+            if (!file.exists()) file.createNewFile();
+
             if (file.length() == 0) {
                 fos = new FileOutputStream(file);
                 ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -27,29 +32,11 @@ public class FileHandling {
             throw new RuntimeException(e);
         }
     }
+    //======================================================================================//
 
-    public static <T> void appendToFile(String fileName, T t) {
-        File file = new File(fileName);
+    /*=================================== Read From File ===================================*/
 
-        try {
-            fos = new FileOutputStream(file, true);
-
-            if (file.length() == 0) {
-                ObjectOutputStream oos = new ObjectOutputStream(fos);
-                oos.writeObject(t);
-                oos.close();
-            } else {
-                MyObjectOutputStream oos = new MyObjectOutputStream(fos);
-                oos.writeObject(t);
-                oos.close();
-            }
-
-            fos.close();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
+    //Generic Function to read all the objects of any type from the provided file and return them as an ArrayList.
     public static <T> ArrayList<T> readFromFile(String fileName) {
         File file = new File(fileName);
         ArrayList<T> arr = new ArrayList<>();
@@ -57,7 +44,8 @@ public class FileHandling {
 
         try {
             FileInputStream fis = new FileInputStream(file);
-            ObjectInputStream ois = null;
+            ObjectInputStream ois;
+
             if (fis.available() > 0)
                 ois = new ObjectInputStream(fis);
             else
@@ -75,9 +63,6 @@ public class FileHandling {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("In file handling java file");
-        System.out.println(arr);
-        System.out.println("============================");
         return arr;
     }
 

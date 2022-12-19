@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
+/* Using this class to write serialized objects in append mode
+* This class is indirectly used by FileHandling writeToFile() function */
+
 public class MyObjectOutputStream extends ObjectOutputStream {
 
     public MyObjectOutputStream(OutputStream o) throws IOException {
@@ -11,7 +14,7 @@ public class MyObjectOutputStream extends ObjectOutputStream {
     }
 
     @Override
-    public void writeStreamHeader() throws IOException{
+    public void writeStreamHeader() {
 
     }
 }

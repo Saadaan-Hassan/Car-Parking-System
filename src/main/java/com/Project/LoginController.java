@@ -1,8 +1,6 @@
 package com.Project;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -17,16 +15,6 @@ public class LoginController {
     private TextField usernameTextField, passwordTextField;
     @FXML
     private Label invalidDetails;
-    private final ArrayList<Users> usersArray;
-
-    {
-        usersArray = FileHandling.readFromFile(Files.getUsersFile());
-        for (Users u :
-                usersArray) {
-            System.out.println(u);
-        }
-
-    }
 
     // Strings which hold css elements to easily re-use in the application
     protected
@@ -47,31 +35,37 @@ public class LoginController {
             usernameTextField.setStyle(errorStyle);
             passwordTextField.setStyle(errorStyle);
         }
-        //When both field are correctly entered
+
         else if (!(usernameTextField.getText().isBlank()) && !(passwordTextField.getText().isBlank())){
                 invalidDetails.setText("Login Successful!");
                 invalidDetails.setStyle(successMessage);
                 usernameTextField.setStyle(successStyle);
                 passwordTextField.setStyle(successStyle);
 
+
                 String userName = usernameTextField.getText();
                 String password = passwordTextField.getText();
+
+                //Reading users data from the UserData.ser
+                ArrayList<Users> usersArray = FileHandling.readFromFile(Files.getUsersFile());
 
                 boolean status = false;
 
                 for (Users user:
                         usersArray) {
+                    //When both field are correctly entered
                     if (user.getName().equals(userName) && user.getPassword().equals(password)) {
+
+                        //If the user is Admin
                         if (user.getRole().equals("Admin")) {
                             Driver.getWindow().setScene(SystemController.getAdminControl());
-                            status = true;
-                            break;
                         }
+                        //if the user is Controller
                         else{
                             Driver.getWindow().setScene(SystemController.getControllerControl());
-                            status = true;
-                            break;
                         }
+                        status = true;
+                        break;
                     }
                 }
 
