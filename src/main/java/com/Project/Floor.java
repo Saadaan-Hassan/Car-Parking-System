@@ -44,7 +44,7 @@ public class Floor implements Serializable {
     Floor(String floorName, int slotsNumber) {
         SecureRandom random = new SecureRandom();
         ArrayList<Floor> floors = FileHandling.readFromFile(Files.getFloorFile());
-        int ran = random.nextInt(1,10000);
+        int ran = random.nextInt(1, 10000);
 
         for (Floor f :
                 floors) {
@@ -66,7 +66,7 @@ public class Floor implements Serializable {
     //==============================================================================================//
 
     /*========================================= Add Floor ==========================================*/
-    public static void addFloor(Floor newFloor, TableView<Floor> table, ComboBox<String> cbFloor){
+    public static void addFloor(Floor newFloor, TableView<Floor> table, ComboBox<String> cbFloor) {
         //Write new Floor data on FloorsData.ser
         FileHandling.writeToFile(Files.getFloorFile(), newFloor);
 
@@ -89,7 +89,7 @@ public class Floor implements Serializable {
     * If a slot is reserved, then it is shown with red color.
     * If a slot is available, then it is shown with green color.
     */
-    public static ScrollPane showFloor(int index){
+    public static ScrollPane showFloor(int index, Text floorName) {
         GridPane grid = new GridPane();
         grid.setHgap(15);
         grid.setVgap(20);
@@ -106,7 +106,7 @@ public class Floor implements Serializable {
         double columns = 8;
 
         //Rows for grid pane
-        double rows = Math.ceil(numberOfSlots/columns);
+        double rows = Math.ceil(numberOfSlots / columns);
 
         //The below code is showing the slots on the screen. If a slot is reserved then it is shown in "Red Color" otherwise in "Green Color"
         int count = 0;
@@ -119,25 +119,26 @@ public class Floor implements Serializable {
 
                 String status;  //It is used to store status of slots i.e. reserved/available.
 
-                if (slots.get(count).isReserved()){
+                if (slots.get(count).isReserved()) {
                     status = "Reserved";
                     vBox.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
-                }
-                else{
+                } else {
                     status = "Available";
                     vBox.setBackground(new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
                 }
 
                 Text tStatus = new Text(status);
                 tStatus.setFill(Color.WHITE);
-                Text tSlotNumber = new Text(String.format("Slot-%d",count));
+                Text tSlotNumber = new Text(String.format("Slot-%d", count));
                 tSlotNumber.setFill(Color.WHITE);
 
-                vBox.getChildren().addAll(tStatus,tSlotNumber);
-                grid.add(vBox,j,i);
+                vBox.getChildren().addAll(tStatus, tSlotNumber);
+                grid.add(vBox, j, i);
                 count++;
             }
         }
+
+        floorName.setText(floor.get(index).floorName);
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(grid);
@@ -154,7 +155,7 @@ public class Floor implements Serializable {
 
     /*========================================= Edit Floors =========================================*/
 
-    public static void editFloor(TableView<Floor> table, Pagination pagination, Floor editFloor){
+    public static void editFloor(TableView<Floor> table, Pagination pagination, Floor editFloor, Text floorName) {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setX(100);
@@ -167,29 +168,29 @@ public class Floor implements Serializable {
 
         //----- Id Area -----
         Label labelId = new Label("ID");
-        grid.add(labelId, 0,0);
+        grid.add(labelId, 0, 0);
 
         Text tId = new Text();
         tId.setText(Integer.toString(editFloor.id));
-        grid.add(tId, 1,0);
+        grid.add(tId, 1, 0);
 
         //----- Name Area -----
         Label labelName = new Label("Floor Name");
-        grid.add(labelName, 0,1);
+        grid.add(labelName, 0, 1);
 
         TextField tfName = new TextField();
         tfName.setPromptText("Enter Floor Name");
         tfName.setText(editFloor.floorName);
-        grid.add(tfName, 1,1);
+        grid.add(tfName, 1, 1);
 
         //----- Slots Area -----
         Label labelSlots = new Label("Number of Slots");
-        grid.add(labelSlots, 0,2);
+        grid.add(labelSlots, 0, 2);
 
         TextField tfSlots = new TextField();
         tfSlots.setPromptText("Enter Number of Slots");
         tfSlots.setText(Integer.toString(editFloor.noOfSlots));
-        grid.add(tfSlots, 1,2);
+        grid.add(tfSlots, 1, 2);
 
         //----- Button -----
         Button btn = new Button("OK");
@@ -198,14 +199,13 @@ public class Floor implements Serializable {
         HBox hBox = new HBox(btn);
         hBox.setAlignment(Pos.CENTER);
 
-        grid.add(hBox, 0,3, 2,1);
+        grid.add(hBox, 0, 3, 2, 1);
 
-        btn.setOnAction(e ->{
+        btn.setOnAction(e -> {
 
-            if (tfName.getText().isEmpty() || tfSlots.getText().isEmpty()){
+            if (tfName.getText().isEmpty() || tfSlots.getText().isEmpty()) {
                 Boxes.alertBox("Empty Field", "Fields Cannot Be Empty!");
-            }
-            else {
+            } else {
                 if (Boxes.confirmBox("Edit Floor", "Do you want to save changes?")) {
 
                     //Reading Floors data from FloorsData.ser
@@ -217,7 +217,7 @@ public class Floor implements Serializable {
                     for (Floor f :
                             floorsArray) {
                         if (f.id == Integer.parseInt(tId.getText())) {
-                            FileHandling.writeToFile(Files.getFloorFile(), new Floor(f.id,tfName.getText(), Integer.parseInt(tfSlots.getText())));
+                            FileHandling.writeToFile(Files.getFloorFile(), new Floor(f.id, tfName.getText(), Integer.parseInt(tfSlots.getText())));
                         } else
                             FileHandling.writeToFile(Files.getFloorFile(), f);
                     }
@@ -227,7 +227,7 @@ public class Floor implements Serializable {
                     table.setItems(Floor.showFloor());
 
                     //Updating the Slots in Slots Pane
-                    Slots.showSlots(pagination);
+                    Slots.showSlots(pagination, floorName);
                 }
             }
         });
@@ -245,7 +245,7 @@ public class Floor implements Serializable {
 
     /*======================================== Delete Users ========================================*/
 
-    public static void delFloor(TableView<Floor> table, Pagination pagination){
+    public static void delFloor(TableView<Floor> table, Pagination pagination, Text floorName) {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setX(100);
@@ -258,55 +258,88 @@ public class Floor implements Serializable {
 
         HBox hBox = new HBox(10);
         hBox.setAlignment(Pos.CENTER);
-        hBox.getChildren().addAll(label,textField);
+        hBox.getChildren().addAll(label, textField);
 
         Button btn = new Button("OK");
         btn.setPrefWidth(110);
         btn.setPrefHeight(30);
-        btn.setOnAction(e->{
+        btn.setOnAction(e -> {
 
-            if (textField.getText().isEmpty()){
+            if (textField.getText().isEmpty()) {
                 Boxes.alertBox("Empty Field", "Enter the ID!");
-            }
-            else {
+            } else {
                 //Reading floors data from the FloorData.ser
                 ArrayList<Floor> floorsArray = FileHandling.readFromFile(Files.getFloorFile());
                 if (floorsArray.size() == 1)
                     Boxes.alertBox("", "At least one Floor is required!");
                 else {
-                    if (Boxes.confirmBox("Delete Floor", "Are you sure you want to delete Floor?")) {
-                        File file = new File(Files.getFloorFile());
-                        file.delete();
 
-                        for (Floor f :
-                                floorsArray) {
-                            if (!(f.id == Integer.parseInt(textField.getText()))) {
-                                FileHandling.writeToFile(Files.getFloorFile(), f);
+                    if (validateId(floorsArray, Integer.parseInt(textField.getText()))) {
+
+                        if (Boxes.confirmBox("Delete Floor", "Are you sure you want to delete Floor?")) {
+                            ArrayList<Slots> slots = null;
+
+                            //Reading Slots data of the floor being deleted
+                            for (Floor floor : floorsArray) {
+                                if (floor.id == Integer.parseInt(textField.getText())) {
+                                    slots = floor.getSlots();
+                                    break;
+                                }
                             }
-                        }
 
+                            boolean status = true;
 
-                        if (!(file.exists())) {
-                            try {
-                                file.createNewFile();
-                            } catch (IOException ex) {
-                                throw new RuntimeException(ex);
+                            //Checking if the slots of the being deleted are reserved or not
+                            assert slots != null;
+                            for (Slots s :
+                                    slots) {
+                                if (s.isReserved()) {
+                                    Boxes.alertBox("Delete Floor", "Cars are Parked. Cannot Delete the Floor!");
+                                    status = false;
+                                    break;
+                                }
                             }
+
+                            //If the all slots are not reserved then the floor is deleted
+                            if (status) {
+
+                                File file = new File(Files.getFloorFile());
+                                file.delete();
+
+                                for (Floor f :
+                                        floorsArray) {
+                                    if (!(f.id == Integer.parseInt(textField.getText()))) {
+                                        FileHandling.writeToFile(Files.getFloorFile(), f);
+                                    }
+                                }
+
+                                if (!(file.exists())) {
+                                    try {
+                                        file.createNewFile();
+                                    } catch (IOException ex) {
+                                        throw new RuntimeException(ex);
+                                    }
+                                }
+                            }
+
+                            //Clears the textField
+                            textField.clear();
+
+                            //Updating the floor table in Floor Pane
+                            table.getItems().clear();
+                            table.setItems(Floor.showFloor());
+
+                            //Updating the Slots in Slots Pane
+                            Slots.showSlots(pagination, floorName);
                         }
-
-                        //Clears the textField
-                        textField.clear();
-
-                        //Updating the floor table in Floor Pane
-                        table.getItems().clear();
-                        table.setItems(Floor.showFloor());
-
-                        //Updating the Slots in Slots Pane
-                        Slots.showSlots(pagination);
                     }
+                    else
+                        Boxes.alertBox("Delete Floor", "Invalid ID!");
                 }
             }
+
         });
+
 
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.CENTER);
@@ -321,6 +354,20 @@ public class Floor implements Serializable {
         stage.showAndWait();
     }
 
+    //Method to check if the id exist or not
+    private static boolean validateId(ArrayList<Floor> floorsArray, Integer id) {
+        boolean status = false;
+
+        //Checking if the entered id is valid or not
+        for (Floor f :
+                floorsArray) {
+            if (f.id == id) {
+                status = true;
+                break;
+            }
+        }
+        return status;
+    }
     //==============================================================================================//
 
     /*========================================== Getters ===========================================*/

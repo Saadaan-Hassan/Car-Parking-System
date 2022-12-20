@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="Project:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="93a21d9d-3014-4d4e-abc1-58c71fde57c9" name="Changes" comment="Complete the project's Commenting">
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Project/Floor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Project/Floor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Project/Slots.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Project/Slots.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Project/SystemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Project/SystemController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Project/Users.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Project/Users.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/Project/Files/FloorsData.ser" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/Project/Files/FloorsData.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/Project/Files/UserData.ser" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/Project/Files/UserData.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/Project/Files/VehicleData.ser" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/Project/Files/VehicleData.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/Project/Files/VehiclesHistoryData.ser" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/Project/Files/VehiclesHistoryData.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/Project/System.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/Project/System.fxml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+        <option value="FxmlFile" />
+        <option value="Enum" />
+        <option value="Class" />
+        <option value="package.json" />
+        <option value="package-info" />
+        <option value="module-info" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="workspaceImportEnabled" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectId" id="2IJrqSKYCBo9U7W1uTJ72wGUOYu" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/saadaan/Softwares/openjfx-19_windows-x64_bin-sdk/javafx-sdk-19/lib/javafx.web.jar&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pathVariables&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/com/Project" />
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+      <recent name="$PROJECT_DIR$/src/main/java/com/example/Semester_Project" />
+      <recent name="$PROJECT_DIR$/src/main/example" />
+      <recent name="$PROJECT_DIR$/src/main/resources/com/example/demo" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="" />
+      <recent name="com.example" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Launcher">
+    <configuration name="Driver" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="$USER_HOME$/.jdks/openjdk-19.0.1" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="com.Project.Driver" />
+      <module name="Project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.Semester_Project.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Launcher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="$USER_HOME$/.jdks/openjdk-19.0.1" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="Launcher" />
+      <module name="Project" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;$PATH_TO_JAVAFX$&quot; --add-modules javafx.controls,javafx.fxml" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Launcher" />
+      <item itemvalue="Application.Driver" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Launcher" />
+        <item itemvalue="Application.Driver" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="93a21d9d-3014-4d4e-abc1-58c71fde57c9" name="Changes" comment="" />
+      <created>1669910721889</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1669910721889</updated>
+      <workItem from="1669910724267" duration="13191000" />
+      <workItem from="1669953084454" duration="2547000" />
+      <workItem from="1669986420926" duration="2676000" />
+      <workItem from="1670059730508" duration="7601000" />
+      <workItem from="1670300245156" duration="3099000" />
+      <workItem from="1670319371848" duration="392000" />
+      <workItem from="1670419373325" duration="14021000" />
+      <workItem from="1670595063708" duration="216000" />
+      <workItem from="1670638947489" duration="10503000" />
+      <workItem from="1670654131427" duration="20441000" />
+      <workItem from="1670744267651" duration="2285000" />
+      <workItem from="1670746932357" duration="371000" />
+      <workItem from="1670747590798" duration="2678000" />
+      <workItem from="1670755152990" duration="6002000" />
+      <workItem from="1670769626181" duration="11505000" />
+      <workItem from="1670785907342" duration="345000" />
+      <workItem from="1670819781314" duration="3153000" />
+      <workItem from="1670854738072" duration="3454000" />
+      <workItem from="1670896806101" duration="14790000" />
+      <workItem from="1670924681039" duration="1479000" />
+      <workItem from="1670926653660" duration="1762000" />
+      <workItem from="1670937029099" duration="15663000" />
+      <workItem from="1670983999364" duration="4440000" />
+      <workItem from="1670994898974" duration="1314000" />
+      <workItem from="1671037667645" duration="591000" />
+      <workItem from="1671038419512" duration="324000" />
+      <workItem from="1671039508525" duration="658000" />
+      <workItem from="1671102028283" duration="22323000" />
+      <workItem from="1671181646713" duration="2468000" />
+      <workItem from="1671196266454" duration="19998000" />
+      <workItem from="1671253469186" duration="20377000" />
+      <workItem from="1671295031851" duration="12451000" />
+      <workItem from="1671308791295" duration="4482000" />
+      <workItem from="1671342082478" duration="22597000" />
+      <workItem from="1671368230869" duration="1553000" />
+      <workItem from="1671370986200" duration="8144000" />
+      <workItem from="1671383087406" duration="446000" />
+      <workItem from="1671383569197" duration="7719000" />
+      <workItem from="1671417796325" duration="7492000" />
+      <workItem from="1671426366536" duration="1643000" />
+      <workItem from="1671454996435" duration="8794000" />
+      <workItem from="1671470590447" duration="8305000" />
+      <workItem from="1671506618216" duration="6266000" />
+    </task>
+    <task id="LOCAL-00001" summary="Add via upload">
+      <created>1670654277160</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1670654277160</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Add Users add, delete and show functions">
+      <created>1670749806464</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1670749806464</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Add Floor Section functionality and add show slots option functionality&#10;The user will be able to add a new floor and can see the number of floors and slots available for parking.">
+      <created>1670820357705</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1670820357705</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Finalize the Users, Floors and Slots sections">
+      <created>1670960752470</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1670960752470</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Add Comments">
+      <created>1670985953600</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1670985953600</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Correct the titles of Alert Boxes in Users.java and Floors.java&#10;Change the layout of Login.fxml and System.fxml&#10;Add LOGO for Login.fxml">
+      <created>1670998914968</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1670998914968</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Complete the project">
+      <created>1671367983930</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1671367983930</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Complete the project">
+      <created>1671391316529</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1671391316529</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Complete the project's Commenting">
+      <created>1671480911280</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1671480911280</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Add via upload" />
+    <MESSAGE value="Add Users add, delete and show functions" />
+    <MESSAGE value="Add Floor Section functionality and add show slots option functionality&#10;The user will be able to add a new floor and can see the number of floors and slots available for parking." />
+    <MESSAGE value="Finalize the Users, Floors and Slots sections" />
+    <MESSAGE value="Add Comments" />
+    <MESSAGE value="Correct the titles of Alert Boxes in Users.java and Floors.java&#10;Change the layout of Login.fxml and System.fxml&#10;Add LOGO for Login.fxml" />
+    <MESSAGE value="Complete the project" />
+    <MESSAGE value="Complete the project's Commenting" />
+    <option name="LAST_COMMIT_MESSAGE" value="Complete the project's Commenting" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Project_Semester_2$com_Project_Driver.ic" NAME="com.Project.Driver Coverage Results" MODIFIED="1671200127719" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.example.Semester_Project.*</FILTER>
+    </SUITE>
+  </component>
+</project>

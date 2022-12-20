@@ -1,6 +1,7 @@
 package com.Project;
 
 import javafx.scene.control.Pagination;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 import java.io.*;
@@ -22,9 +23,9 @@ public class Slots implements Serializable {
     /*========================================= Show Slots =========================================*/
 
     //This method show the slots on the screen
-    public static void showSlots(Pagination pagination){
+    public static void showSlots(Pagination pagination, Text floorName){
         pagination.setPageCount(FileHandling.readFromFile(Files.getFloorFile()).size());
-        pagination.setPageFactory(pageIndex -> Floor.showFloor(pageIndex));
+        pagination.setPageFactory(pageIndex -> Floor.showFloor(pageIndex, floorName));
     }
 
     //==============================================================================================//
@@ -43,9 +44,13 @@ public class Slots implements Serializable {
                 floors) {
             if (f.getFloorName().equals(selectedFloor)){
                 int slots = f.getNoOfSlots();
-                assignSlot = random.nextInt(0,slots + 1);
 
-                slotNo.setText(Integer.toString(assignSlot));
+                assignSlot = random.nextInt(0,slots);
+
+                //Checking if the slot being assigned is reserved ot not
+                if (!(f.getSlots().get(assignSlot).isReserved()))
+                    slotNo.setText(Integer.toString(assignSlot));
+
             }
         }
     }

@@ -17,6 +17,8 @@ import java.util.ResourceBundle;
 
 public class SystemController implements Initializable, Serializable {
     @FXML
+    private Text floorName;
+    @FXML
     private Button showVehicleHistoryBtn;
     @FXML
     private Button floorsBtn;
@@ -240,7 +242,7 @@ public class SystemController implements Initializable, Serializable {
             tvehiclePrice.setText("");
 
             //Updating the Slots Pane
-            Slots.showSlots(pagination);
+            Slots.showSlots(pagination, floorName);
         }
     }
 
@@ -335,7 +337,7 @@ public class SystemController implements Initializable, Serializable {
             tfNumberOfSlots.clear();
 
             //Updating the Slots Pane
-            Slots.showSlots(pagination);
+            Slots.showSlots(pagination, floorName);
         }
     }
 
@@ -343,7 +345,7 @@ public class SystemController implements Initializable, Serializable {
     public void editFloorBtnAction(){
         if (selectFloorTableRow() != null)
             //Calls the editFloor Function from the Floor Class
-            Floor.editFloor(tbFloors, pagination, selectFloorTableRow());
+            Floor.editFloor(tbFloors, pagination, selectFloorTableRow(), floorName);
     }
 
     //Selects the Row in Floors Table and returns the selected object as Floor
@@ -360,7 +362,7 @@ public class SystemController implements Initializable, Serializable {
 
     //Delete Floor Button Action
     public void deleteFloorBtnAction(){
-        Floor.delFloor(tbFloors, pagination);   //Calls the delFloor Function from the Floor Class
+        Floor.delFloor(tbFloors, pagination, floorName);   //Calls the delFloor Function from the Floor Class
     }
 
     //============================================================================================//
@@ -493,7 +495,7 @@ public class SystemController implements Initializable, Serializable {
 
         /*==================== Initializing Pagination on Slots Pane ====================*/
         //Showing All Parking Slots
-        Slots.showSlots(pagination);
+        Slots.showSlots(pagination, floorName);
 
         //===============================================================================//
         /*====================== Initializing Table on Floors Pane ======================*/

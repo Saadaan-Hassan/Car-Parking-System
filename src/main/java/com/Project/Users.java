@@ -203,36 +203,38 @@ public class Users implements Serializable {
                 //Reading the users data from UserData.ser
                 ArrayList<Users> users = FileHandling.readFromFile(Files.getUsersFile());
 
-                if (users.size() == 1 && users.get(0).role.equals("Admin")) {
-                    Boxes.alertBox("", "At least one Admin is required!");
-                }
-                else {
-                    if (Boxes.confirmBox("Delete User", "Are you sure you want to delete User?")) {
-                        File file = new File(Files.getUsersFile());
-                        file.delete();
+                if (validateId(users, Integer.parseInt(textField.getText()))) {
+                    if (users.size() == 1 && users.get(0).role.equals("Admin")) {
+                        Boxes.alertBox("", "At least one Admin is required!");
+                    } else {
+                        if (Boxes.confirmBox("Delete User", "Are you sure you want to delete User?")) {
+                            File file = new File(Files.getUsersFile());
+                            file.delete();
 
-                        for (Users u :
-                                users) {
-                            if (!(u.id == Integer.parseInt(textField.getText())))
-                                FileHandling.writeToFile(Files.getUsersFile(), u);
-                        }
-
-                        if (!(file.exists())) {
-                            try {
-                                file.createNewFile();
-                            } catch (IOException ex) {
-                                throw new RuntimeException(ex);
+                            for (Users u :
+                                    users) {
+                                if (!(u.id == Integer.parseInt(textField.getText())))
+                                    FileHandling.writeToFile(Files.getUsersFile(), u);
                             }
+
+                            if (!(file.exists())) {
+                                try {
+                                    file.createNewFile();
+                                } catch (IOException ex) {
+                                    throw new RuntimeException(ex);
+                                }
+                            }
+
+                            //Clearing the text field
+                            textField.clear();
+
+                            //Updating the User table in User Pane
+                            table.getItems().clear();
+                            table.setItems(Users.showUsers());
                         }
-
-                        //Clearing the text field
-                        textField.clear();
-
-                        //Updating the User table in User Pane
-                        table.getItems().clear();
-                        table.setItems(Users.showUsers());
                     }
-                }
+                }else
+                    Boxes.alertBox("Delete User", "Invalid ID!");
             }
         });
 
@@ -247,6 +249,19 @@ public class Users implements Serializable {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.showAndWait();
+    }
+
+    private static boolean validateId(ArrayList<Users> usersArray, Integer id) {
+        boolean status = false;
+
+        //Checking if the entered id is valid or not
+        for (Users u : usersArray) {
+            if (u.id == id) {
+                status = true;
+                break;
+            }
+        }
+        return status;
     }
 
     //==============================================================================================//
