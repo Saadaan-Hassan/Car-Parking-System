@@ -212,6 +212,9 @@ public class SystemController implements Initializable, Serializable {
         if (Boxes.confirmBox("Logout", "Are you sure you want to logout?")) {
             FXMLLoader fxmlLoader = new FXMLLoader(Driver.class.getResource("Login.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
+
+            Driver.windowSetting();
+            Driver.getWindow().setResizable(false);
             Driver.getWindow().setScene(scene);
         }
     }

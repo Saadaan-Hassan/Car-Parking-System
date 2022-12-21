@@ -4,16 +4,20 @@ public class Files {
 
     /*=================================== Files Paths ===================================*/
     //File to store users data
-    private static final String usersFile = "src/main/resources/com/Project/Files/UserData.ser";
+    private static final String usersFile = "src/main/resources/Files/UserData.ser";
+//    private static final String usersFile = "/Files/UserData.ser";
 
     //File to store floors data
-    private static final String floorFile = "src/main/resources/com/Project/Files/FloorsData.ser";
+    private static final String floorFile = "src/main/resources/Files/FloorsData.ser";
+//    private static final String floorFile = "/Files/FloorsData.ser";
 
     //File to store vehicles data
-    private static final String vehiclesFile = "src/main/resources/com/Project/Files/VehicleData.ser";
+    private static final String vehiclesFile = "src/main/resources/Files/VehicleData.ser";
+//    private static final String vehiclesFile = "/Files/VehicleData.ser";
 
     //File to store vehicles history data
-    private static final String vehiclesHistoryFile = "src/main/resources/com/Project/Files/VehiclesHistoryData.ser";
+    private static final String vehiclesHistoryFile = "src/main/resources/Files/VehiclesHistoryData.ser";
+//    private static final String vehiclesHistoryFile = "/Files/VehiclesHistoryData.ser";
 
     //=====================================================================================//
 

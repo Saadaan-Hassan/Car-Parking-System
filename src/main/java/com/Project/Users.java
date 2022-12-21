@@ -208,6 +208,8 @@ public class Users implements Serializable {
                         Boxes.alertBox("", "At least one Admin is required!");
                     } else {
                         if (Boxes.confirmBox("Delete User", "Are you sure you want to delete User?")) {
+
+
                             File file = new File(Files.getUsersFile());
                             file.delete();
 

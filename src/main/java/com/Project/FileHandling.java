@@ -39,10 +39,12 @@ public class FileHandling {
     //Generic Function to read all the objects of any type from the provided file and return them as an ArrayList.
     public static <T> ArrayList<T> readFromFile(String fileName) {
         File file = new File(fileName);
+
         ArrayList<T> arr = new ArrayList<>();
         Object obj;
 
         try {
+//            InputStream is = FileHandling.class.getResourceAsStream(fileName);
             FileInputStream fis = new FileInputStream(file);
             ObjectInputStream ois;
 

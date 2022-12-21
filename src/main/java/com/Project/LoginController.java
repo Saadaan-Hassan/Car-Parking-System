@@ -44,10 +44,11 @@ public class LoginController {
 
 
                 String userName = usernameTextField.getText();
-                String password = passwordTextField.getText();
+                String password = passwordTextField.getText();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
 
                 //Reading users data from the UserData.ser
                 ArrayList<Users> usersArray = FileHandling.readFromFile(Files.getUsersFile());
+//                ArrayList<Users> usersArray = FileHandling.readFromFile("Files/UserData.ser");
 
                 boolean status = false;
 
@@ -59,10 +60,17 @@ public class LoginController {
                         //If the user is Admin
                         if (user.getRole().equals("Admin")) {
                             Driver.getWindow().setScene(SystemController.getAdminControl());
-                        }
+
+                            Driver.windowSetting();
+                            Driver.getWindow().setResizable(false);
+                       }
+
                         //if the user is Controller
                         else{
                             Driver.getWindow().setScene(SystemController.getControllerControl());
+
+                            Driver.windowSetting();
+                            Driver.getWindow().setResizable(false);
                         }
                         status = true;
                         break;

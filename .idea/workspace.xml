@@ -9,16 +9,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93a21d9d-3014-4d4e-abc1-58c71fde57c9" name="Changes" comment="Complete the project's Commenting">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Project/Floor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Project/Floor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Project/Slots.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Project/Slots.java" afterDir="false" />
+    <list default="true" id="93a21d9d-3014-4d4e-abc1-58c71fde57c9" name="Changes" comment="Fix GUI displaying bug occurring while running program on Windows 10 but not on Ubuntu">
+      <change afterPath="$PROJECT_DIR$/Project_Expansion_Ideas.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/artifacts/Project_jar/Project.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/artifacts/Project_jar/Run.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Files/VehicleData.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Project_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/Project_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Launcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Launcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Project/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Project/Driver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Project/FileHandling.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Project/FileHandling.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Project/Files.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Project/Files.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Project/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Project/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/Project/SystemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Project/SystemController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/Project/Users.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Project/Users.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/Project/Files/FloorsData.ser" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/Project/Files/FloorsData.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/Project/Files/UserData.ser" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/Project/Files/UserData.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/Project/Files/VehicleData.ser" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/Project/Files/VehicleData.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/Project/Files/VehiclesHistoryData.ser" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/Project/Files/VehiclesHistoryData.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/Project/System.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/Project/System.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/Project/Files/FloorsData.ser" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Files/FloorsData.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/Project/Files/UserData.ser" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Files/UserData.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/Project/Files/VehicleData.ser" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Files/Test.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/Project/Files/VehiclesHistoryData.ser" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Files/VehiclesHistoryData.ser" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,15 +40,28 @@
         <option value="CSS File" />
         <option value="FxmlFile" />
         <option value="Enum" />
-        <option value="Class" />
         <option value="package.json" />
-        <option value="package-info" />
         <option value="module-info" />
+        <option value="Class" />
+        <option value="package-info" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="91e24f35-de50-4e38-9fb8-0cbe748a01b3" />
+        <option name="url" value="https://github.com/Saadaan-Hassan/Project-Semester-2.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -68,36 +90,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/saadaan/Softwares/openjfx-19_windows-x64_bin-sdk/javafx-sdk-19/lib/javafx.web.jar&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pathVariables&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/home/saadaan/Softwares/openjfx-19_windows-x64_bin-sdk/javafx-sdk-19/bin/vcruntime140_1.dll",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "copyright",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/resources/com/Project" />
+      <recent name="$PROJECT_DIR$/target/classes/Files" />
       <recent name="$PROJECT_DIR$/src/main/resources" />
-      <recent name="$PROJECT_DIR$/src/main/java/com/example/Semester_Project" />
-      <recent name="$PROJECT_DIR$/src/main/example" />
-      <recent name="$PROJECT_DIR$/src/main/resources/com/example/demo" />
+      <recent name="$PROJECT_DIR$/src/main/java" />
+      <recent name="$PROJECT_DIR$/src/main" />
+      <recent name="$PROJECT_DIR$/src/main/resources/com/Project" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
@@ -105,7 +128,7 @@
     </key>
   </component>
   <component name="RunManager" selected="Application.Launcher">
-    <configuration name="Driver" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="Driver" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="$USER_HOME$/.jdks/openjdk-19.0.1" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="com.Project.Driver" />
@@ -121,18 +144,16 @@
       </method>
     </configuration>
     <configuration name="Launcher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="ALTERNATIVE_JRE_PATH" value="$USER_HOME$/.jdks/openjdk-19.0.1" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="Launcher" />
       <module name="Project" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;$PATH_TO_JAVAFX$&quot; --add-modules javafx.controls,javafx.fxml" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;$PATH_TO_JAVAFX$&quot; --add-modules javafx.controls,javafx.fxml,javafx.graphics" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Launcher" />
       <item itemvalue="Application.Driver" />
+      <item itemvalue="Application.Launcher" />
     </list>
     <recent_temporary>
       <list>
@@ -191,7 +212,12 @@
       <workItem from="1671426366536" duration="1643000" />
       <workItem from="1671454996435" duration="8794000" />
       <workItem from="1671470590447" duration="8305000" />
-      <workItem from="1671506618216" duration="6266000" />
+      <workItem from="1671506618216" duration="6441000" />
+      <workItem from="1671529598239" duration="3040000" />
+      <workItem from="1671535016617" duration="1545000" />
+      <workItem from="1671538160099" duration="483000" />
+      <workItem from="1671542859407" duration="13540000" />
+      <workItem from="1671628345202" duration="4878000" />
     </task>
     <task id="LOCAL-00001" summary="Add via upload">
       <created>1670654277160</created>
@@ -256,7 +282,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671480911280</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Fix some bugs">
+      <created>1671514682523</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1671514682523</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -283,7 +316,9 @@
     <MESSAGE value="Correct the titles of Alert Boxes in Users.java and Floors.java&#10;Change the layout of Login.fxml and System.fxml&#10;Add LOGO for Login.fxml" />
     <MESSAGE value="Complete the project" />
     <MESSAGE value="Complete the project's Commenting" />
-    <option name="LAST_COMMIT_MESSAGE" value="Complete the project's Commenting" />
+    <MESSAGE value="Fix some bugs" />
+    <MESSAGE value="Fix GUI displaying bug occurring while running program on Windows 10 but not on Ubuntu" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix GUI displaying bug occurring while running program on Windows 10 but not on Ubuntu" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Project_Semester_2$com_Project_Driver.ic" NAME="com.Project.Driver Coverage Results" MODIFIED="1671200127719" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
