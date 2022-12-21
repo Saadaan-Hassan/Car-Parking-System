@@ -1,4 +1,5 @@
 1- Add bill system:
 	allowm user to enter amount enter the parking money and show return balance
 	
-2- Multi-User usage at the same time (Socket Programming)
+2- Multiple users can access this program at the same time (Socket Programming)
+3- Send message contianing "the slot and floor number" to the customer who's vehicle has been parked

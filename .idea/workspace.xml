@@ -10,24 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="93a21d9d-3014-4d4e-abc1-58c71fde57c9" name="Changes" comment="Fix GUI displaying bug occurring while running program on Windows 10 but not on Ubuntu">
-      <change afterPath="$PROJECT_DIR$/Project_Expansion_Ideas.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/Project_jar/Project.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/Project_jar/Run.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Files/VehicleData.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Project_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/Project_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Launcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Launcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Project/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Project/Driver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Project/FileHandling.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Project/FileHandling.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Project/Files.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Project/Files.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Project/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Project/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Project/SystemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Project/SystemController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Project/Users.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Project/Users.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/Project/Files/FloorsData.ser" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Files/FloorsData.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/Project/Files/UserData.ser" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Files/UserData.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/Project/Files/VehicleData.ser" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Files/Test.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/Project/Files/VehiclesHistoryData.ser" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Files/VehiclesHistoryData.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Files/FloorsData.ser" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Files/FloorsData.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Files/VehicleData.ser" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Files/VehicleData.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Files/VehiclesHistoryData.ser" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Files/VehiclesHistoryData.ser" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -217,7 +203,7 @@
       <workItem from="1671535016617" duration="1545000" />
       <workItem from="1671538160099" duration="483000" />
       <workItem from="1671542859407" duration="13540000" />
-      <workItem from="1671628345202" duration="4878000" />
+      <workItem from="1671628345202" duration="8425000" />
     </task>
     <task id="LOCAL-00001" summary="Add via upload">
       <created>1670654277160</created>
@@ -289,7 +275,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671514682523</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Fix GUI displaying bug occurring while running program on Windows 10 but not on Ubuntu">
+      <created>1671636332956</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1671636332956</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
