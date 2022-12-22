@@ -245,7 +245,7 @@ public class Floor implements Serializable {
 
     /*======================================== Delete Users ========================================*/
 
-    public static void delFloor(TableView<Floor> table, Pagination pagination, Text floorName) {
+    public static void delFloor(TableView<Floor> table, ComboBox<String> cbFloor, Pagination pagination, Text floorName) {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setX(100);
@@ -308,6 +308,8 @@ public class Floor implements Serializable {
 
                                 for (Floor f :
                                         floorsArray) {
+                                    if (f.id == Integer.parseInt(textField.getText()))
+                                        cbFloor.getItems().remove(f.getFloorName());
                                     if (!(f.id == Integer.parseInt(textField.getText()))) {
                                         FileHandling.writeToFile(Files.getFloorFile(), f);
                                     }

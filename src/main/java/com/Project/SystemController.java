@@ -17,6 +17,22 @@ import java.util.ResourceBundle;
 
 public class SystemController implements Initializable, Serializable {
     @FXML
+    private Button showVehicleTypePriceBtn;
+    @FXML
+    private GridPane vehicleTypePricePane;
+    @FXML
+    private TableView<TypesAndPrices> tbVehicleTypePrice;
+    @FXML
+    private TableColumn<TypesAndPrices, Integer> vehicleTypeIdCol;
+    @FXML
+    private TableColumn<TypesAndPrices, Double> pricePerHourCol;
+    @FXML
+    private TableColumn<TypesAndPrices, String > vehiclesTypeCol;
+    @FXML
+    private TextField tfVehicleType;
+    @FXML
+    private TextField tfVehiclePrice;
+    @FXML
     private Text floorName;
     @FXML
     private Button showVehicleHistoryBtn;
@@ -153,6 +169,7 @@ public class SystemController implements Initializable, Serializable {
     //Disable options for "Controller"
     public void disableOptions(){
         showVehicleHistoryBtn.setDisable(true);
+        showVehicleTypePriceBtn.setDisable(true);
         floorsBtn.setDisable(true);
         userBtn.setDisable(true);
     }
@@ -160,6 +177,7 @@ public class SystemController implements Initializable, Serializable {
     //Enable options for "Admin"
     public void enableOptions(){
         showVehicleHistoryBtn.setDisable(false);
+        showVehicleTypePriceBtn.setDisable(false);
         floorsBtn.setDisable(false);
         userBtn.setDisable(false);
     }
@@ -189,6 +207,11 @@ public class SystemController implements Initializable, Serializable {
     //Toggling Vehicle History Pane
     public void showVehicleHistoyPane(){
         showPane(vehicleHistoryPane);
+    }
+
+    //Toggling Vehicle Type and Price Pane
+    public void showVehicleTypePricePane(){
+        showPane(vehicleTypePricePane);
     }
 
     //Toggling Slots Pane
@@ -322,7 +345,52 @@ public class SystemController implements Initializable, Serializable {
         return selectedVehicle;
     }
 
-    //=======================================================================================================//
+    //=============================================================================================================//
+
+    /*======================================== Vehicle Type And Price Pane ========================================*/
+
+    //Add Vehicle Type Button Action
+    public void addVehicleTypeBtnAction(){
+        //Check if the floor name and number of slots fields are empty or not
+        if (tfVehicleType.getText().equals("") || tfVehiclePrice.getText().equals(""))
+            Boxes.alertBox("Empty Fields", "Fields are empty!");
+        else {
+            //Calls the addTypesAndPrices Function from the TypeAndPrice Class
+            TypesAndPrices.addTypesAndPrices(new TypesAndPrices(tfVehicleType.getText(), Double.parseDouble(tfVehiclePrice.getText())), tbVehicleTypePrice, cbVehicleType);
+
+            //Clearing the data from the fields after adding the Vehicle Type and Price
+            tfVehicleType.clear();
+            tfVehiclePrice.clear();
+        }
+    }
+
+    //Edit Vehicle Type Button Action
+    public void editVehicleTypeBtnAction(){
+        TypesAndPrices selectTypeAndPrice = selectTypeAndPrice();
+        if (selectTypeAndPrice != null)
+            //Calls the editTypesAndPrices Function from the TypesAndPrices Class
+            TypesAndPrices.editTypesAndPrices(tbVehicleTypePrice, selectTypeAndPrice);
+    }
+
+    //Delete Vehicle Type Button Action
+    public void deleteVehicleTypeBtnAction(){
+        //Calls the delTypesAndPrices Function from the TypesAndPrices Class
+        TypesAndPrices.delTypesAndPrices(tbVehicleTypePrice, cbVehicleType);
+    }
+
+    //Selects the VehicleTypeAndPrice in Vehicle Type and Price Table and returns the selected object as TypeAndPrice
+    public TypesAndPrices selectTypeAndPrice(){
+        TypesAndPrices selectedTypesAndPrices = tbVehicleTypePrice.getSelectionModel().getSelectedItem();
+        if (selectedTypesAndPrices != null){
+            //Sets the values of selected user in the User Pane text fields
+            tfVehicleType.setText(selectedTypesAndPrices.getVehicleType());
+            tfVehiclePrice.setText(Double.toString(selectedTypesAndPrices.getPricePerHour()));
+        }
+
+        return selectedTypesAndPrices;
+    }
+
+    //==============================================================================================//
 
     /*======================================== Floors Pane ========================================*/
 
@@ -365,7 +433,8 @@ public class SystemController implements Initializable, Serializable {
 
     //Delete Floor Button Action
     public void deleteFloorBtnAction(){
-        Floor.delFloor(tbFloors, pagination, floorName);   //Calls the delFloor Function from the Floor Class
+        //Calls the delFloor Function from the Floor Class
+        Floor.delFloor(tbFloors, cbFloor, pagination, floorName);
     }
 
     //============================================================================================//
@@ -391,7 +460,8 @@ public class SystemController implements Initializable, Serializable {
     public void editUserBtnAction(){
         Users selectedUser = selectUserTableRow();
         if (selectedUser != null)
-            Users.editUser(usersTable, selectedUser);   //Calls the editUser Function from the Users Class
+            //Calls the editUser Function from the Users Class
+            Users.editUser(usersTable, selectedUser);
     }
 
     //Delete User Button Action
@@ -433,16 +503,14 @@ public class SystemController implements Initializable, Serializable {
         allPanes.add(vehicleEntryPane);
         allPanes.add(unparkVehiclePane);
         allPanes.add(vehicleHistoryPane);
+        allPanes.add(vehicleTypePricePane);
         allPanes.add(SlotsPane);
         allPanes.add(floorPane);
         allPanes.add(UsersPane);
 
         //=====================================================================================//
 
-        /*==================== Initializing fields on Vehicle Entry Pane ====================*/
-
-        //Adding items to "Vehicle Type" Combo Box on Vehicle Entry Pane
-        cbVehicleType.getItems().addAll("Car", "Bike", "Rickshaw", "Commercial Vehicle");
+        /*==================== Initializing Combo Boxes on Vehicle Entry Pane ====================*/
 
         //Adding items to "Floor No." Combo box on Vehicle Entry Pane
         ArrayList<Floor> floors = FileHandling.readFromFile(Files.getFloorFile());
@@ -454,17 +522,27 @@ public class SystemController implements Initializable, Serializable {
 
         cbFloor.setOnAction(event -> Slots.allocateSlot(cbFloor.getValue(), tSlotNo));
 
+        //Adding items to "Vehicle Type" Combo Box on Vehicle Entry Pane
+        ArrayList<TypesAndPrices> typesAndPrices = FileHandling.readFromFile(Files.getTypesAndPricesFile());
+        for (TypesAndPrices tp :
+                typesAndPrices) {
+            cbVehicleType.getItems().add(tp.getVehicleType());
+
+        }
+
+//        cbVehicleType.getItems().addAll("Car", "Bike", "Rickshaw", "Commercial Vehicle");
+
 
         //Setting prices of vehicle
         cbVehicleType.setOnAction(event -> {
-            if (cbVehicleType.getValue().equals("Rickshaw"))
-                tvehiclePrice.setText("Rs. 75");
-            else if (cbVehicleType.getValue().equals("Bike"))
-                tvehiclePrice.setText("Rs. 100");
-            else if (cbVehicleType.getValue().equals("Car"))
-                tvehiclePrice.setText("Rs. 150");
-            else if (cbVehicleType.getValue().equals("Commercial Vehicle"))
-                tvehiclePrice.setText("Rs. 200");
+            ArrayList<TypesAndPrices> typesAndPricesArrayList = FileHandling.readFromFile(Files.getTypesAndPricesFile());
+
+            for (TypesAndPrices tp :
+                    typesAndPricesArrayList) {
+                if (cbVehicleType.getValue().equals(tp.getVehicleType()))
+                    tvehiclePrice.setText("Rs. " + tp.getPricePerHour());
+            }
+
         });
 
         //=====================================================================================//
@@ -493,6 +571,15 @@ public class SystemController implements Initializable, Serializable {
         dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
 
         tbVehicleHistory.setItems(Vehicle.showVehiclesHistory());
+
+        //=====================================================================================//
+
+        /*==================== Initializing Table on Vehicles History Pane ====================*/
+        vehicleTypeIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        vehiclesTypeCol.setCellValueFactory(new PropertyValueFactory<>("vehicleType"));
+        pricePerHourCol.setCellValueFactory(new PropertyValueFactory<>("pricePerHour"));
+
+        tbVehicleTypePrice.setItems(TypesAndPrices.showTypesAndPrices());
 
         //===============================================================================//
 

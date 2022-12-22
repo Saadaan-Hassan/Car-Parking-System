@@ -19,6 +19,8 @@ public class Files {
     private static final String vehiclesHistoryFile = "src/main/resources/Files/VehiclesHistoryData.ser";
 //    private static final String vehiclesHistoryFile = "/Files/VehiclesHistoryData.ser";
 
+    private static final String typesAndPricesFile = "src/main/resources/Files/TypesAndPricesData.ser";
+
     //=====================================================================================//
 
     /*=================================== Files Getters ===================================*/
@@ -38,5 +40,7 @@ public class Files {
         return vehiclesHistoryFile;
     }
 
-
+    public static String getTypesAndPricesFile(){
+        return typesAndPricesFile;
+    }
 }

@@ -9,11 +9,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93a21d9d-3014-4d4e-abc1-58c71fde57c9" name="Changes" comment="Fix GUI displaying bug occurring while running program on Windows 10 but not on Ubuntu">
+    <list default="true" id="93a21d9d-3014-4d4e-abc1-58c71fde57c9" name="Changes" comment="Add Project Report.pdf">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/Project/TypesAndPrices.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Files/TypesAndPricesData.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Project/Files.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Project/Files.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Project/Floor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Project/Floor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Project/SystemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Project/SystemController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/Files/FloorsData.ser" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Files/FloorsData.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Files/UserData.ser" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Files/UserData.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/Files/VehicleData.ser" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Files/VehicleData.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/Files/VehiclesHistoryData.ser" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Files/VehiclesHistoryData.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/Project/System.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/Project/System.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,8 +36,8 @@
         <option value="Enum" />
         <option value="package.json" />
         <option value="module-info" />
-        <option value="Class" />
         <option value="package-info" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -76,27 +84,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/saadaan/Softwares/openjfx-19_windows-x64_bin-sdk/javafx-sdk-19/bin/vcruntime140_1.dll",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "copyright",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/saadaan/Softwares/openjfx-19_windows-x64_bin-sdk/javafx-sdk-19/bin/vcruntime140_1.dll&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;copyright&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main" />
@@ -203,7 +211,8 @@
       <workItem from="1671535016617" duration="1545000" />
       <workItem from="1671538160099" duration="483000" />
       <workItem from="1671542859407" duration="13540000" />
-      <workItem from="1671628345202" duration="8425000" />
+      <workItem from="1671628345202" duration="9216000" />
+      <workItem from="1671706463864" duration="10496000" />
     </task>
     <task id="LOCAL-00001" summary="Add via upload">
       <created>1670654277160</created>
@@ -282,7 +291,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671636332956</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Add Project Report.pdf">
+      <created>1671650517533</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1671650517533</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -311,7 +327,8 @@
     <MESSAGE value="Complete the project's Commenting" />
     <MESSAGE value="Fix some bugs" />
     <MESSAGE value="Fix GUI displaying bug occurring while running program on Windows 10 but not on Ubuntu" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix GUI displaying bug occurring while running program on Windows 10 but not on Ubuntu" />
+    <MESSAGE value="Add Project Report.pdf" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Project Report.pdf" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Project_Semester_2$com_Project_Driver.ic" NAME="com.Project.Driver Coverage Results" MODIFIED="1671200127719" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
