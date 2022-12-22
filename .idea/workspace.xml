@@ -9,19 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93a21d9d-3014-4d4e-abc1-58c71fde57c9" name="Changes" comment="Add Project Report.pdf">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/Project/TypesAndPrices.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Files/TypesAndPricesData.ser" afterDir="false" />
+    <list default="true" id="93a21d9d-3014-4d4e-abc1-58c71fde57c9" name="Changes" comment="Add Vehicle Types And Price Feature">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Project/Files.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Project/Files.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Project/Floor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Project/Floor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Project/Slots.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Project/Slots.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/Project/SystemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Project/SystemController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/Files/FloorsData.ser" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Files/FloorsData.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Files/UserData.ser" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Files/UserData.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/Files/VehicleData.ser" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Files/VehicleData.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/Files/VehiclesHistoryData.ser" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Files/VehiclesHistoryData.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/Project/System.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/Project/System.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -212,7 +206,7 @@
       <workItem from="1671538160099" duration="483000" />
       <workItem from="1671542859407" duration="13540000" />
       <workItem from="1671628345202" duration="9216000" />
-      <workItem from="1671706463864" duration="10496000" />
+      <workItem from="1671706463864" duration="14471000" />
     </task>
     <task id="LOCAL-00001" summary="Add via upload">
       <created>1670654277160</created>
@@ -298,7 +292,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671650517533</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Add Vehicle Types And Price Feature">
+      <created>1671719245516</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1671719245516</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -328,7 +329,8 @@
     <MESSAGE value="Fix some bugs" />
     <MESSAGE value="Fix GUI displaying bug occurring while running program on Windows 10 but not on Ubuntu" />
     <MESSAGE value="Add Project Report.pdf" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Project Report.pdf" />
+    <MESSAGE value="Add Vehicle Types And Price Feature" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Vehicle Types And Price Feature" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Project_Semester_2$com_Project_Driver.ic" NAME="com.Project.Driver Coverage Results" MODIFIED="1671200127719" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
