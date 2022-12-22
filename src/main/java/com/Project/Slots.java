@@ -55,6 +55,17 @@ public class Slots implements Serializable {
         }
     }
 
+    public static boolean checkAvailability(ArrayList<Slots> slots){
+        boolean status = false;
+        for (Slots s :
+                slots) {
+            if (!(s.isReserved()))
+                status = true;
+        }
+
+        return status;
+    }
+
     /*=============================================================================================*/
 
     /*========================================== Setter ===========================================*/

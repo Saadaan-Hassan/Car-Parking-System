@@ -1,6 +1,7 @@
 package com.Project;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -299,8 +300,22 @@ public class SystemController implements Initializable, Serializable {
             if (tfTimeOut.getText().isEmpty())
                 Boxes.alertBox("Empty Fields", "Enter Time Out of Vehicle!");
             else {
-                if (Boxes.confirmBox("Pay Bill", "Does bill has been paid?"))
+                if (Boxes.confirmBox("Pay Bill", "Does bill has been paid?")) {
                     Vehicle.unparkVehicle(tbUnparkVehicle, tbVehicleHistory, selectUnparkTableRow(), tfTimeOut.getText());   //Calls the unparkVehicle Function from the Vehicle Class
+
+                    ArrayList<Floor> floors = FileHandling.readFromFile(Files.getFloorFile());
+                    ArrayList<Slots> slots;
+
+                    for (Floor f :
+                            floors) {
+                        slots = f.getSlots();
+
+                            if(!(cbFloor.getItems().contains(f.getFloorName()))){
+                                    if (Slots.checkAvailability(slots))
+                                        cbFloor.getItems().add(f.getFloorName());
+                        }
+                    }
+                }
 
                 //Clearing the data from the field after un-parking the car
                 tCustomerName.setText("");
@@ -514,10 +529,13 @@ public class SystemController implements Initializable, Serializable {
 
         //Adding items to "Floor No." Combo box on Vehicle Entry Pane
         ArrayList<Floor> floors = FileHandling.readFromFile(Files.getFloorFile());
+        ArrayList<Slots> slots;
         for (Floor f :
                 floors) {
-            cbFloor.getItems().add(f.getFloorName());
+            slots = f.getSlots();
 
+            if (Slots.checkAvailability(slots))
+                cbFloor.getItems().add(f.getFloorName());
         }
 
         cbFloor.setOnAction(event -> Slots.allocateSlot(cbFloor.getValue(), tSlotNo));
