@@ -285,7 +285,10 @@ public class SystemController implements Initializable, Serializable {
 
     //Sets the Bill for parking vehicle in tTotalBill
     public void calculateBillBtnAction(){
-        tTotalBill.setText(String.format("Rs. %.2f", Vehicle.calculateTotalBill(Double.parseDouble(tPricePerHour.getText().split(" ")[1]), tTimeIn.getText(), tfTimeOut.getText())));
+        if (tfTimeOut.getText().equals(""))
+            Boxes.alertBox("Empty Fields", "Enter Time Out of Vehicle!");
+        else
+            tTotalBill.setText(String.format("Rs. %.2f", Vehicle.calculateTotalBill(Double.parseDouble(tPricePerHour.getText().split(" ")[1]), tTimeIn.getText(), tfTimeOut.getText())));
     }
 
     //======================================================================================================//
@@ -298,7 +301,7 @@ public class SystemController implements Initializable, Serializable {
         if (selectUnparkTableRow() != null) {
             //Check if the timeOut field is empty or not
             if (tfTimeOut.getText().isEmpty())
-                Boxes.alertBox("Empty Fields", "Enter Time Out of Vehicle!");
+                Boxes.alertBox("Empty Fields", "Calculate the Vehicle's Parking Bill");
             else {
                 if (Boxes.confirmBox("Pay Bill", "Does bill has been paid?")) {
                     Vehicle.unparkVehicle(tbUnparkVehicle, tbVehicleHistory, selectUnparkTableRow(), tfTimeOut.getText());   //Calls the unparkVehicle Function from the Vehicle Class
