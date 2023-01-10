@@ -68,15 +68,6 @@ public class DatabaseHandling {
         return allVehicles;
     }
 
-    public static void deleteVehiclesEntry(String query){
-        try {
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     //=========================================================================================================//
 
     /*======================================== Vehicle History Section ========================================*/
@@ -161,26 +152,6 @@ public class DatabaseHandling {
         return allTypesAndPrices;
     }
 
-    public static void editTypesAndPricesInfo(String query){
-        try {
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static void deleteTypeAndPrice(String query){
-        try {
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-
     //================================================================================================//
 
     /*======================================== Floors Section ========================================*/
@@ -217,37 +188,9 @@ public class DatabaseHandling {
         return allFloors;
     }
 
-    public static void editFloorInfo(String query){
-        try {
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static void deleteFloor(String query){
-        try {
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     //===============================================================================================//
 
     /*======================================== Users Section ========================================*/
-
-    public static void createSlotsTable(String query1){
-        try {
-            PreparedStatement ps = con.prepareStatement(query1);
-            ps.executeUpdate();
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public static ArrayList<Slots> readFromSlotsTable(String slotsTableName){
         ArrayList<Slots> allSlots = new ArrayList<>();
@@ -265,15 +208,6 @@ public class DatabaseHandling {
 
         return allSlots;
     }
-public static void deleteSlotsTable(String query){
-        try {
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 
     //===============================================================================================//
 
@@ -311,24 +245,6 @@ public static void deleteSlotsTable(String query){
         }
 
         return allUsers;
-    }
-
-    public static void editUserInfo(String query){
-        try {
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static void deleteUser(String query){
-        try {
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public static Connection getCon() {

@@ -49,10 +49,7 @@ public class LoginController {
 
 
                 String userName = usernameTextField.getText();
-                String password = passwordTextField.getText();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
-
-                //Reading users data from the UserData.ser
-//                ArrayList<Users> usersArray = FileHandling.readFromFile(Files.getUsersFile());
+                String password = passwordTextField.getText();
 
                 boolean status = false;
 

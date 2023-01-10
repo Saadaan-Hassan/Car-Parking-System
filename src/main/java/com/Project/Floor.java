@@ -54,10 +54,10 @@ public class Floor implements Serializable {
 
         this.floorName = floorName;
         slots = new ArrayList<>(slotsNumber);
-        DatabaseHandling.createSlotsTable("create table " + floorName.replace(" ","") + "Slots (SlotsID INT PRIMARY KEY, ReservedStatus TINYINT(1));");
+        DatabaseHandling.performQuery("create table " + floorName.replace(" ","") + "Slots (SlotsID INT PRIMARY KEY, ReservedStatus TINYINT(1));");
         for (int i = 0; i < slotsNumber; i++) {
 //            slots.add(new Slots());
-            DatabaseHandling.createSlotsTable("insert into "+ floorName.replace(" ","") + "Slots (SlotsID, ReservedStatus) values('" + i + "', '0');");
+            DatabaseHandling.performQuery("insert into "+ floorName.replace(" ","") + "Slots (SlotsID, ReservedStatus) values('" + i + "', '0');");
         }
 
         this.noOfSlots = slotsNumber;
@@ -208,7 +208,7 @@ public class Floor implements Serializable {
             } else {
                 if (Boxes.confirmBox("Edit Floor", "Do you want to save changes?")) {
 
-                    DatabaseHandling.editFloorInfo("update Floors set FloorName='" + tfName.getText() + "' ,SlotsNumber='" + tfSlots.getText() + "' where FloorID=" + tId.getText());
+                    DatabaseHandling.performQuery("update Floors set FloorName='" + tfName.getText() + "' ,SlotsNumber='" + tfSlots.getText() + "' where FloorID=" + tId.getText());
 
                     //Updating the floor table in Floors Pane
                     table.getItems().clear();
@@ -292,7 +292,7 @@ public class Floor implements Serializable {
 
                             //If the all slots are not reserved then the floor is deleted
                             if (status) {
-                                DatabaseHandling.deleteFloor("delete from Floors where FloorID=" + Integer.parseInt(textField.getText()));
+                                DatabaseHandling.performQuery("delete from Floors where FloorID=" + Integer.parseInt(textField.getText()));
                                 cbFloors.getItems().remove(fName);
                             }
                             //Clears the textField
@@ -305,7 +305,7 @@ public class Floor implements Serializable {
                             //Updating the Slots in Slots Pane
                             Slots.showSlots(pagination, floorName);
 
-                            DatabaseHandling.deleteSlotsTable("DROP TABLE "+fName.replace(" ", "") + "Slots;");
+                            DatabaseHandling.performQuery("DROP TABLE "+fName.replace(" ", "") + "Slots;");
                         }
                     }
                     else

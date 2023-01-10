@@ -129,7 +129,7 @@ public class TypesAndPrices implements Serializable {
             else {
 
                 if (Boxes.confirmBox("Edit Vehicle Type And Price", "Do you want to save changes?")) {
-                    DatabaseHandling.editTypesAndPricesInfo("update TypesAndPrices set VehicleType='" + tfType.getText() + "' ,PricePerHour='" + tfPrice.getText() + "' where ID=" + Integer.parseInt(tId.getText()));
+                    DatabaseHandling.performQuery("update TypesAndPrices set VehicleType='" + tfType.getText() + "' ,PricePerHour='" + tfPrice.getText() + "' where ID=" + Integer.parseInt(tId.getText()));
 
                     //Updating the Types And Prices Table in Types And Prices Pane
                     table.getItems().clear();
@@ -182,7 +182,7 @@ public class TypesAndPrices implements Serializable {
                         Boxes.alertBox("", "At least one Type is required!");
                     } else {
                         if (Boxes.confirmBox("Delete Type And Price", "Are you sure you want to delete Vehicle Type and Price?")) {
-                            DatabaseHandling.deleteTypeAndPrice("delete from TypesAndPrices where ID=" + Integer.parseInt(textField.getText()));
+                            DatabaseHandling.performQuery("delete from TypesAndPrices where ID=" + Integer.parseInt(textField.getText()));
                             for (TypesAndPrices tp :
                                     typesAndPrices) {
                                 if (tp.id == Integer.parseInt(textField.getText())) {

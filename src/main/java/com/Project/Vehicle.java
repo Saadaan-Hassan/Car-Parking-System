@@ -128,7 +128,7 @@ public class Vehicle implements Serializable {
     * This function is used to remove/un-park a vehicle from the slot/system */
     public static void unparkVehicle(TableView<Vehicle> tbUnpark, TableView<Vehicle> tbVehicleHistory, Vehicle unparkVehicle, String timeOut){
 
-        DatabaseHandling.deleteVehiclesEntry("delete from VehicleEntry where VehicleID=" + unparkVehicle.id);
+        DatabaseHandling.performQuery("delete from VehicleEntry where VehicleID=" + unparkVehicle.id);
         DatabaseHandling.performQuery("update " + unparkVehicle.floorName.replace(" ", "") + "Slots set ReservedStatus ='0' where SlotsID=" + unparkVehicle.slotNo);
 
 

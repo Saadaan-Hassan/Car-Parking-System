@@ -143,7 +143,7 @@ public class Users implements Serializable {
                 if (Boxes.confirmBox("Edit User", "Do you want to save changes?")) {
 
                     //Updating user info in the Users Table of database
-                    DatabaseHandling.editUserInfo("update Users set UserName='" + tfName.getText() + "' ,UserPassword='" + tfPassword.getText() + "' ,UserRole='" + comboBox.getValue() +"' where UserID=" + Integer.parseInt(tId.getText()));
+                    DatabaseHandling.performQuery("update Users set UserName='" + tfName.getText() + "' ,UserPassword='" + tfPassword.getText() + "' ,UserRole='" + comboBox.getValue() +"' where UserID=" + Integer.parseInt(tId.getText()));
 
                     //Updating the User Table in User Pane
                     table.getItems().clear();
@@ -195,7 +195,7 @@ public class Users implements Serializable {
                         Boxes.alertBox("", "At least one Admin is required!");
                     } else {
                         if (Boxes.confirmBox("Delete User", "Are you sure you want to delete User?")) {
-                            DatabaseHandling.deleteUser("delete from Users where UserID=" + Integer.parseInt(textField.getText()));
+                            DatabaseHandling.performQuery("delete from Users where UserID=" + Integer.parseInt(textField.getText()));
 
                             //Clearing the text field
                             textField.clear();

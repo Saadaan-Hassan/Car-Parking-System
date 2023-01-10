@@ -243,16 +243,19 @@ public class SystemController implements Initializable, Serializable {
 
         if (Boxes.confirmBox("Logout", "Are you sure you want to logout?")) {
             FXMLLoader fxmlLoader = new FXMLLoader(SystemController.class.getResource("Login.fxml"));
-            Scene scene;
+            System.out.println(fxmlLoader);
             try {
-                scene = new Scene(fxmlLoader.load());
+                Scene scene = new Scene(fxmlLoader.load());
+                Driver.windowSetting();
+                Driver.getWindow().setResizable(false);
+                Driver.getWindow().close();
+                Driver.getWindow().setScene(scene);
+                Driver.getWindow().show();
+                System.out.println("yes");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
-            Driver.windowSetting();
-            Driver.getWindow().setResizable(false);
-            Driver.getWindow().setScene(scene);
         }
     }
 
@@ -552,15 +555,9 @@ public class SystemController implements Initializable, Serializable {
 
         //Adding items to "Floor No." Combo box on Vehicle Entry Pane
         ArrayList<Floor> floors = DatabaseHandling.readFromFloorsTable();
-        ArrayList<Slots> slots;
         for (Floor f :
                 floors) {
-            slots = f.getSlots();
-
-            if (Slots.checkAvailability(slots) >  1) {
-                System.out.println(f.getFloorName());
-                cbFloor.getItems().add(f.getFloorName());
-            }
+            cbFloor.getItems().add(f.getFloorName());
         }
 
         cbFloor.setOnAction(event -> Slots.allocateSlot(cbFloor.getValue().replace(" ", "") + "Slots", tSlotNo));
