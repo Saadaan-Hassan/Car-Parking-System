@@ -1,7 +1,6 @@
 package com.Project;
 
 import javafx.scene.control.Pagination;
-import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 import java.io.*;
@@ -11,11 +10,13 @@ import java.util.ArrayList;
 public class Slots implements Serializable {
     @Serial
     private static final long serialVersionUID = 4494659944483709061L;
+    private int id;
     private boolean reserved;
 
     /*======================================== Constructors ========================================*/
-    Slots() {
-        this.reserved = false;
+    Slots(int id, boolean reserved) {
+        this.id = id;
+        this.reserved = reserved;
     }
 
     //==============================================================================================//
@@ -24,7 +25,7 @@ public class Slots implements Serializable {
 
     //This method show the slots on the screen
     public static void showSlots(Pagination pagination, Text floorName){
-        pagination.setPageCount(FileHandling.readFromFile(Files.getFloorFile()).size());
+        pagination.setPageCount(DatabaseHandling.readFromFloorsTable().size());
         pagination.setPageFactory(pageIndex -> Floor.showFloor(pageIndex, floorName));
     }
 
@@ -33,34 +34,30 @@ public class Slots implements Serializable {
     /*========================================= Allocate Slots =========================================*/
 
     //This method allots the slot number to vehicles for parking
-    public static void allocateSlot(String selectedFloor, Text slotNo){
+    public static void allocateSlot(String selectedFloor, Text slotNo) {
         SecureRandom random = new SecureRandom();
 
         //Reading the floors data from the FloorsData.ser
-        ArrayList<Floor> floors = FileHandling.readFromFile(Files.getFloorFile());
-
+        ArrayList<Slots> slots = DatabaseHandling.readFromSlotsTable(selectedFloor);
         int assignSlot;
-        for (Floor f:
-                floors) {
-            if (f.getFloorName().equals(selectedFloor)){
-                int slots = f.getNoOfSlots();
-
-                assignSlot = random.nextInt(0,slots);
-
-                //Checking if the slot being assigned is reserved ot not
-                if (!(f.getSlots().get(assignSlot).isReserved()))
-                    slotNo.setText(Integer.toString(assignSlot));
-
+        for (Slots a :
+                slots) {
+            assignSlot = random.nextInt(0, slots.size());
+            //Checking if the slot being assigned is reserved ot not
+            if (!(slots.get(assignSlot).isReserved())) {
+                slotNo.setText(Integer.toString(assignSlot));
+                break;
             }
+
         }
     }
 
-    public static boolean checkAvailability(ArrayList<Slots> slots){
-        boolean status = false;
+    public static int checkAvailability(ArrayList<Slots> slots){
+        int status = 0;
         for (Slots s :
                 slots) {
             if (!(s.isReserved()))
-                status = true;
+                status = 1;
         }
 
         return status;

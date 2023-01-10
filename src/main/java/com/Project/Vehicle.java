@@ -4,8 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.Serial;
 import java.io.Serializable;
 import java.security.SecureRandom;
@@ -16,7 +14,7 @@ public class Vehicle implements Serializable {
     private static final long serialVersionUID = 12L;
     private int id;
     private final String customerName;
-    private final long mobileNumber;
+    private final String  mobileNumber;
     private final String vehicleNo;
     private final String vehicleType;
     private final String timeIn;
@@ -26,12 +24,12 @@ public class Vehicle implements Serializable {
     private final int slotNo;
 
     /*======================================== Constructors ========================================*/
-    public Vehicle(String customerName, long mobileNumber, String vehicleNo, String vehicleType, String timeIn, String date, String floorName, int slotNo) {
+    public Vehicle(String customerName, String mobileNumber, String vehicleNo, String vehicleType, String timeIn, String date, String floorName, int slotNo) {
 
         SecureRandom random = new SecureRandom();
 
         //Reading vehicles data from the file to keep in check that same id is not being assigned
-        ArrayList<Vehicle> vehicles = FileHandling.readFromFile(Files.getVehiclesFile());
+        ArrayList<Vehicle> vehicles = DatabaseHandling.readFromVehiclesEntryTable();
 
         //Assigning random id and keeping in record that same id is not being assigned
         int ran = random.nextInt(1,100000);
@@ -55,7 +53,20 @@ public class Vehicle implements Serializable {
         this.slotNo = slotNo;
     }
 
-    public Vehicle(String customerName, long mobileNumber, String vehicleNo, String vehicleType, String timeIn, String timeOut, String date, String floorName, int slotNo) {
+    public Vehicle(int id, String customerName, String mobileNumber, String vehicleNo, String vehicleType, String timeIn, String date, String floorName, int slotNo) {
+        this.id = id;
+        this.customerName = customerName;
+        this.mobileNumber = mobileNumber;
+        this.vehicleNo = vehicleNo;
+        this.vehicleType = vehicleType;
+        this.timeIn = timeIn;
+//        this.timeOut = timeOut;
+        this.date = date;
+        this.floorName = floorName;
+        this.slotNo = slotNo;
+    }
+
+    public Vehicle(String customerName, String mobileNumber, String vehicleNo, String vehicleType, String timeIn, String timeOut, String date, String floorName, int slotNo) {
 
         this.customerName = customerName;
         this.mobileNumber = mobileNumber;
@@ -75,31 +86,34 @@ public class Vehicle implements Serializable {
     //Adding new vehicle entry
     public static void addVehicle(Vehicle newVehicle, TableView<Vehicle> table){
         //Writing new vehicle to VehicleData.ser
-        FileHandling.writeToFile(Files.getVehiclesFile(), newVehicle);
+        DatabaseHandling.writeToVehiclesEntryTable(newVehicle);
 
         //Showing newly added vehicle on table of Un-Park Vehicle Pane
         table.getItems().add(newVehicle);
 
         //Reading Floors data from FloorsData.ser
-        ArrayList<Floor> floors = FileHandling.readFromFile(Files.getFloorFile());
+//        ArrayList<Floor> floors = DatabaseHandling.readFromFloorsTable();
 
+        DatabaseHandling.performQuery("update " + newVehicle.floorName.replace(" ", "") + "Slots set ReservedStatus ='1' where SlotsID=" + newVehicle.slotNo);
         //Setting the status of slot to reserved
-        for (Floor f :
-                floors) {
-            if (f.getFloorName().equals(newVehicle.floorName)) {
-                f.getSlots().get(newVehicle.slotNo).setReserved(true);
-                break;
-            }
-        }
+//        for (Floor f :
+//                floors) {
+//            if (f.getFloorName().equals(newVehicle.floorName)) {
+//                f.getSlots().get(newVehicle.slotNo).setReserved(true);
+////                DatabaseHandling.editFloorInfo("update Floors set FloorName='" + tfName.getText() + "' ,UserPassword='");
+//                break;
+//            }
+//        }
 
-        //Deleting the FloorData.ser
-        new File(Files.getFloorFile()).delete();
 
-        //Rewriting the floors data in the FloorData File
-        for (Floor f :
-                floors) {
-            FileHandling.writeToFile(Files.getFloorFile(),f);
-        }
+//        //Deleting the FloorData.ser
+//        new File(Files.getFloorFile()).delete();
+//
+//        //Rewriting the floors data in the FloorData File
+//        for (Floor f :
+//                floors) {
+//            FileHandling.writeToFile(Files.getFloorFile(),f);
+//        }
 
 
         Boxes.alertBox("", "New Vehicle Added Successfully");
@@ -111,61 +125,66 @@ public class Vehicle implements Serializable {
     /*========================================= Un-Park Vehicle ==========================================*/
 
     /*Un-park Vehicle Function
-    * This function is used to remove/un-park a vehicle from the slot/system*/
+    * This function is used to remove/un-park a vehicle from the slot/system */
     public static void unparkVehicle(TableView<Vehicle> tbUnpark, TableView<Vehicle> tbVehicleHistory, Vehicle unparkVehicle, String timeOut){
-        //Reading vehicles data from VehicleData.ser
-        ArrayList<Vehicle> vehiclesArray = FileHandling.readFromFile(Files.getVehiclesFile());
 
-        //Deleting the VehicleData.ser
-        File file = new File(Files.getVehiclesFile());
-        file.delete();
+        DatabaseHandling.deleteVehiclesEntry("delete from VehicleEntry where VehicleID=" + unparkVehicle.id);
+        DatabaseHandling.performQuery("update " + unparkVehicle.floorName.replace(" ", "") + "Slots set ReservedStatus ='0' where SlotsID=" + unparkVehicle.slotNo);
 
-        //Rewriting VehicleData.ser File
-        for (Vehicle v :
-                vehiclesArray) {
-            if (!(v.id == unparkVehicle.getId())) {
-                FileHandling.writeToFile(Files.getVehiclesFile(), v);
-            }
 
-        }
+//        //Reading vehicles data from VehicleData.ser
+//        ArrayList<Vehicle> vehiclesArray = FileHandling.readFromFile(Files.getVehiclesFile());
+//
+//        //Deleting the VehicleData.ser
+//        File file = new File(Files.getVehiclesFile());
+//        file.delete();
+//
+//        //Rewriting VehicleData.ser File
+//        for (Vehicle v :
+//                vehiclesArray) {
+//            if (!(v.id == unparkVehicle.getId())) {
+//                FileHandling.writeToFile(Files.getVehiclesFile(), v);
+//            }
+//
+//        }
 
-        //Reading Floors data from FloorsData.ser
-        ArrayList<Floor> floors = FileHandling.readFromFile(Files.getFloorFile());
-
-        //Setting the status of slot to available
-        for (Floor f :
-                floors) {
-            if (f.getFloorName().equals(unparkVehicle.floorName)) {
-                f.getSlots().get(unparkVehicle.slotNo).setReserved(false);
-                break;
-            }
-        }
-
-        //Deleting the FloorData.ser
-        new File(Files.getFloorFile()).delete();
-
-        //Rewriting the floors data in the FloorData File
-        for (Floor f :
-                floors) {
-            FileHandling.writeToFile(Files.getFloorFile(),f);
-        }
-
-        //Creating VehicleData.ser file if it does not exist
-        if (!(file.exists())) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
+//        //Reading Floors data from FloorsData.ser
+//        ArrayList<Floor> floors = DatabaseHandling.readFromFloorsTable();
+//
+//        //Setting the status of slot to available
+//        for (Floor f :
+//                floors) {
+//            if (f.getFloorName().equals(unparkVehicle.floorName)) {
+//                f.getSlots().get(unparkVehicle.slotNo).setReserved(false);
+//                break;
+//            }
+//        }
+//
+//        //Deleting the FloorData.ser
+//        new File(Files.getFloorFile()).delete();
+//
+//        //Rewriting the floors data in the FloorData File
+//        for (Floor f :
+//                floors) {
+//            FileHandling.writeToFile(Files.getFloorFile(),f);
+//        }
+//
+//        //Creating VehicleData.ser file if it does not exist
+//        if (!(file.exists())) {
+//            try {
+//                file.createNewFile();
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
 
 
         tbUnpark.getItems().clear();   //Clearing the vehicles data in table of Un-Park Vehicle Pane
         tbUnpark.setItems(Vehicle.showVehicles()); //Showing the vehicles data in the table of Un-Park Vehicle Pane
 
         Vehicle vehicleHistory = new Vehicle(unparkVehicle.customerName, unparkVehicle.mobileNumber, unparkVehicle.vehicleNo, unparkVehicle.vehicleType, unparkVehicle.timeIn, timeOut,unparkVehicle.date, unparkVehicle.floorName, unparkVehicle.slotNo);
-        FileHandling.writeToFile(Files.getVehiclesHistoryFile(), vehicleHistory);
-
+//        FileHandling.writeToFile(Files.getVehiclesHistoryFile(), vehicleHistory);
+        DatabaseHandling.writeToVehiclesHistoryTable(vehicleHistory);
         tbVehicleHistory.getItems().add(vehicleHistory);
 
     }
@@ -177,7 +196,7 @@ public class Vehicle implements Serializable {
     /*Show Vehicles
     * This function returns the Observable list of Vehicle to show data in the table*/
     public static ObservableList<Vehicle> showVehicles() {
-        ArrayList<Vehicle> vehicles = FileHandling.readFromFile(Files.getVehiclesFile());
+        ArrayList<Vehicle> vehicles = DatabaseHandling.readFromVehiclesEntryTable();
         return FXCollections.observableList(vehicles);
     }
 
@@ -188,7 +207,8 @@ public class Vehicle implements Serializable {
     /*Show Vehicles History
      * This function returns the Observable list of Vehicles History to show data in the table*/
     public static ObservableList<Vehicle> showVehiclesHistory() {
-        ArrayList<Vehicle> vehicles = FileHandling.readFromFile(Files.getVehiclesHistoryFile());
+//        ArrayList<Vehicle> vehicles = FileHandling.readFromFile(Files.getVehiclesHistoryFile());
+        ArrayList<Vehicle> vehicles = DatabaseHandling.readFromVehiclesHistoryTable();
         return FXCollections.observableList(vehicles);
     }
 
@@ -232,7 +252,7 @@ public class Vehicle implements Serializable {
         return customerName;
     }
 
-    public long getMobileNumber() {
+    public String getMobileNumber() {
         return mobileNumber;
     }
 
@@ -266,6 +286,6 @@ public class Vehicle implements Serializable {
     //toString function
     @Override
     public String toString() {
-        return String.format("%d %s %d %s %s %s %s %s %d", id, customerName, mobileNumber, vehicleNo, vehicleType, timeIn, date, floorName, slotNo);
+        return String.format("%d %s %s %s %s %s %s %s %d", id, customerName, mobileNumber, vehicleNo, vehicleType, timeIn, date, floorName, slotNo);
     }
 }

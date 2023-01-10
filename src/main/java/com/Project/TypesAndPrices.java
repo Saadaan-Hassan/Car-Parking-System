@@ -13,8 +13,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.Serial;
 import java.io.Serializable;
 import java.security.SecureRandom;
@@ -36,7 +34,7 @@ public class TypesAndPrices implements Serializable {
 
     public TypesAndPrices(String vehicleType, double pricePerHour) {
         SecureRandom random = new SecureRandom();
-        ArrayList<TypesAndPrices> typesAndPrices = FileHandling.readFromFile(Files.getTypesAndPricesFile());
+        ArrayList<TypesAndPrices> typesAndPrices = DatabaseHandling.readFromTypesAndPricesTable();
         int ran = random.nextInt(1,500);
 
         for (TypesAndPrices tp :
@@ -52,7 +50,7 @@ public class TypesAndPrices implements Serializable {
     /*========================================= Add TypesAndPrices ==========================================*/
     public static void addTypesAndPrices(TypesAndPrices newTypeAndPrice, TableView<TypesAndPrices> table, ComboBox<String> cbVehicleType) {
         //Write new User data on TypesAndPrice
-        FileHandling.writeToFile(Files.getTypesAndPricesFile(), newTypeAndPrice);
+        DatabaseHandling.writeToTypesAndPricesTable(newTypeAndPrice);
 
         //Add new Floor to Combo Box of Vehicle Entry Pane
         cbVehicleType.getItems().add(newTypeAndPrice.getVehicleType());
@@ -69,7 +67,7 @@ public class TypesAndPrices implements Serializable {
 
     //Reads all the TypesAndPrices from the TypesAndPricesData.ser and return them as ObservableList
     public static ObservableList<TypesAndPrices> showTypesAndPrices() {
-        ArrayList<TypesAndPrices> typesAndPrices = FileHandling.readFromFile(Files.getTypesAndPricesFile());
+        ArrayList<TypesAndPrices> typesAndPrices = DatabaseHandling.readFromTypesAndPricesTable();
         return FXCollections.observableList(typesAndPrices);
     }
 
@@ -131,19 +129,7 @@ public class TypesAndPrices implements Serializable {
             else {
 
                 if (Boxes.confirmBox("Edit Vehicle Type And Price", "Do you want to save changes?")) {
-                    //Reading the TypesAndPrices data from TypesAndPricesData.ser
-                    ArrayList<TypesAndPrices> typesAndPrices = FileHandling.readFromFile(Files.getTypesAndPricesFile());
-
-                    File file = new File(Files.getTypesAndPricesFile());
-                    file.delete();
-
-                    for (TypesAndPrices tp :
-                            typesAndPrices) {
-                        if (tp.id == Integer.parseInt(tId.getText())) {
-                            FileHandling.writeToFile(Files.getTypesAndPricesFile(), new TypesAndPrices(tp.id, tfType.getText(), Double.parseDouble(tfPrice.getText())));
-                        } else
-                            FileHandling.writeToFile(Files.getTypesAndPricesFile(), tp);
-                    }
+                    DatabaseHandling.editTypesAndPricesInfo("update TypesAndPrices set VehicleType='" + tfType.getText() + "' ,PricePerHour='" + tfPrice.getText() + "' where ID=" + Integer.parseInt(tId.getText()));
 
                     //Updating the Types And Prices Table in Types And Prices Pane
                     table.getItems().clear();
@@ -189,37 +175,21 @@ public class TypesAndPrices implements Serializable {
             }
             else {
                 //Reading the users data from TypesAndPricesData.ser
-                ArrayList<TypesAndPrices> typesAndPrices = FileHandling.readFromFile(Files.getTypesAndPricesFile());
+                ArrayList<TypesAndPrices> typesAndPrices = DatabaseHandling.readFromTypesAndPricesTable();
 
                 if (validateId(typesAndPrices, Integer.parseInt(textField.getText()))) {
                     if (typesAndPrices.size() == 1) {
                         Boxes.alertBox("", "At least one Type is required!");
                     } else {
                         if (Boxes.confirmBox("Delete Type And Price", "Are you sure you want to delete Vehicle Type and Price?")) {
-
-
-                            File file = new File(Files.getTypesAndPricesFile());
-                            file.delete();
-
+                            DatabaseHandling.deleteTypeAndPrice("delete from TypesAndPrices where ID=" + Integer.parseInt(textField.getText()));
                             for (TypesAndPrices tp :
                                     typesAndPrices) {
-                                if (tp.id == Integer.parseInt(textField.getText()))
-                                    //Removing the Type from the ComboBox in Vehicle Type And Price Pane
+                                if (tp.id == Integer.parseInt(textField.getText())) {
                                     cbVehicleType.getItems().remove(tp.vehicleType);
-
-                                if (!(tp.id == Integer.parseInt(textField.getText())))
-                                    FileHandling.writeToFile(Files.getTypesAndPricesFile(), tp);
-                            }
-
-
-                            if (!(file.exists())) {
-                                try {
-                                    file.createNewFile();
-                                } catch (IOException ex) {
-                                    throw new RuntimeException(ex);
+                                    break;
                                 }
                             }
-
                             //Clearing the text field
                             textField.clear();
 

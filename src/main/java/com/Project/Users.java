@@ -13,8 +13,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.Serial;
 import java.io.Serializable;
 import java.security.SecureRandom;
@@ -39,7 +37,7 @@ public class Users implements Serializable {
     }
     public Users(String name, String password, String role) {
         SecureRandom random = new SecureRandom();
-        ArrayList<Users> users = FileHandling.readFromFile(Files.getUsersFile());
+        ArrayList<Users> users = DatabaseHandling.readFromUsersTable();
         int ran = random.nextInt(1,10000);
 
         for (Users u :
@@ -57,8 +55,8 @@ public class Users implements Serializable {
 
     /*========================================= Add User ==========================================*/
     public static void addUser(Users newUser, TableView<Users> table) {
-        //Write new User data on UserData.ser
-        FileHandling.writeToFile(Files.getUsersFile(), newUser);
+        //Write new user info in Users Table of database
+        DatabaseHandling.writeToUsersTable(newUser);
 
         //Add new Floor to Table of Floor Pane
         table.getItems().add(newUser);
@@ -73,7 +71,7 @@ public class Users implements Serializable {
 
     //Reads all the Users from the UserData.ser and return them as ObservableList
     public static ObservableList<Users> showUsers() {
-        ArrayList<Users> usersArray = FileHandling.readFromFile(Files.getUsersFile());
+        ArrayList<Users> usersArray = DatabaseHandling.readFromUsersTable();
         return FXCollections.observableList(usersArray);
     }
 
@@ -143,19 +141,9 @@ public class Users implements Serializable {
             else {
 
                 if (Boxes.confirmBox("Edit User", "Do you want to save changes?")) {
-                    //Reading the users data from UserData.ser
-                    ArrayList<Users> usersArray = FileHandling.readFromFile(Files.getUsersFile());
 
-                    File file = new File(Files.getUsersFile());
-                    file.delete();
-
-                    for (Users u :
-                            usersArray) {
-                        if (u.id == Integer.parseInt(tId.getText())) {
-                            FileHandling.writeToFile(Files.getUsersFile(), new Users(u.id, tfName.getText(), tfPassword.getText(), comboBox.getValue()));
-                        } else
-                            FileHandling.writeToFile(Files.getUsersFile(), u);
-                    }
+                    //Updating user info in the Users Table of database
+                    DatabaseHandling.editUserInfo("update Users set UserName='" + tfName.getText() + "' ,UserPassword='" + tfPassword.getText() + "' ,UserRole='" + comboBox.getValue() +"' where UserID=" + Integer.parseInt(tId.getText()));
 
                     //Updating the User Table in User Pane
                     table.getItems().clear();
@@ -200,32 +188,14 @@ public class Users implements Serializable {
                 Boxes.alertBox("Empty Field", "Enter the ID!");
             }
             else {
-                //Reading the users data from UserData.ser
-                ArrayList<Users> users = FileHandling.readFromFile(Files.getUsersFile());
+                ArrayList<Users> users = DatabaseHandling.readFromUsersTable();
 
                 if (validateId(users, Integer.parseInt(textField.getText()))) {
                     if (users.size() == 1 && users.get(0).role.equals("Admin")) {
                         Boxes.alertBox("", "At least one Admin is required!");
                     } else {
                         if (Boxes.confirmBox("Delete User", "Are you sure you want to delete User?")) {
-
-
-                            File file = new File(Files.getUsersFile());
-                            file.delete();
-
-                            for (Users u :
-                                    users) {
-                                if (!(u.id == Integer.parseInt(textField.getText())))
-                                    FileHandling.writeToFile(Files.getUsersFile(), u);
-                            }
-
-                            if (!(file.exists())) {
-                                try {
-                                    file.createNewFile();
-                                } catch (IOException ex) {
-                                    throw new RuntimeException(ex);
-                                }
-                            }
+                            DatabaseHandling.deleteUser("delete from Users where UserID=" + Integer.parseInt(textField.getText()));
 
                             //Clearing the text field
                             textField.clear();

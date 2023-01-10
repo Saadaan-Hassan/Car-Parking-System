@@ -1,7 +1,6 @@
 package com.Project;
 
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,6 +12,7 @@ import javafx.scene.text.Text;
 
 import java.io.*;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -154,17 +154,25 @@ public class SystemController implements Initializable, Serializable {
     private static String status = null;
 
     //If user is entered as "Admin"
-    public static Scene getAdminControl() throws IOException {
+    public static Scene getAdminControl() {
         status = "Admin";
-        FXMLLoader fxmlLoader = new FXMLLoader(Driver.class.getResource("/com/Project/System.fxml"));
-        return new Scene(fxmlLoader.load());
+        FXMLLoader fxmlLoader = new FXMLLoader(Driver.class.getResource("System.fxml"));
+        try {
+            return new Scene(fxmlLoader.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     //If user is entered as "Controller"
-    public static Scene getControllerControl() throws IOException {
+    public static Scene getControllerControl() {
         status = "Controller";
-        FXMLLoader fxmlLoader = new FXMLLoader(Driver.class.getResource("/com/Project/System.fxml"));
-        return new Scene(fxmlLoader.load());
+        FXMLLoader fxmlLoader = new FXMLLoader(Driver.class.getResource("System.fxml"));
+        try {
+            return new Scene(fxmlLoader.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     //Disable options for "Controller"
@@ -231,11 +239,16 @@ public class SystemController implements Initializable, Serializable {
     }
 
     //Logout Btn Action
-    public void logoutBtnAction() throws IOException {
+    public void logoutBtnAction() {
 
         if (Boxes.confirmBox("Logout", "Are you sure you want to logout?")) {
-            FXMLLoader fxmlLoader = new FXMLLoader(Driver.class.getResource("Login.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
+            FXMLLoader fxmlLoader = new FXMLLoader(SystemController.class.getResource("Login.fxml"));
+            Scene scene;
+            try {
+                scene = new Scene(fxmlLoader.load());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
             Driver.windowSetting();
             Driver.getWindow().setResizable(false);
@@ -244,9 +257,15 @@ public class SystemController implements Initializable, Serializable {
     }
 
     //Exit Button Action
-    public void handleExit(){
-        if (Boxes.confirmBox("Exit", "Are you sure you want to exit?"))
+    public void handleExit() {
+        if (Boxes.confirmBox("Exit", "Are you sure you want to exit?")) {
+            try {
+                DatabaseHandling.getCon().close();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
             Platform.exit();
+        }
     }
 
     //====================================================================================================//
@@ -258,7 +277,7 @@ public class SystemController implements Initializable, Serializable {
         if (tfPersonName.getText().equals("") || tfMobileNo.getText().equals("") || tfVehiclePlateNo.getText().equals("") || tfTimeIn.getText().equals("") || cbVehicleType.getValue() == null)
             Boxes.alertBox("Empty Fields", "Fields are empty!");
         else if (DateTime.timeValidity(tfTimeIn.getText())){
-            Vehicle.addVehicle(new Vehicle(tfPersonName.getText(), Long.parseLong(tfMobileNo.getText()), tfVehiclePlateNo.getText(), cbVehicleType.getValue(), tfTimeIn.getText(), DateTime.setDate(), cbFloor.getValue(), Integer.parseInt(tSlotNo.getText())), tbUnparkVehicle);
+            Vehicle.addVehicle(new Vehicle(tfPersonName.getText(), tfMobileNo.getText(), tfVehiclePlateNo.getText(), cbVehicleType.getValue(), tfTimeIn.getText(), DateTime.setDate(), cbFloor.getValue(), Integer.parseInt(tSlotNo.getText())), tbUnparkVehicle);
 
             //Clearing the fields after entering the Vehicle data
             tfPersonName.clear();
@@ -306,7 +325,7 @@ public class SystemController implements Initializable, Serializable {
                 if (Boxes.confirmBox("Pay Bill", "Does bill has been paid?")) {
                     Vehicle.unparkVehicle(tbUnparkVehicle, tbVehicleHistory, selectUnparkTableRow(), tfTimeOut.getText());   //Calls the unparkVehicle Function from the Vehicle Class
 
-                    ArrayList<Floor> floors = FileHandling.readFromFile(Files.getFloorFile());
+                    ArrayList<Floor> floors = DatabaseHandling.readFromFloorsTable();
                     ArrayList<Slots> slots;
 
                     for (Floor f :
@@ -314,7 +333,7 @@ public class SystemController implements Initializable, Serializable {
                         slots = f.getSlots();
 
                             if(!(cbFloor.getItems().contains(f.getFloorName()))){
-                                    if (Slots.checkAvailability(slots))
+                                    if (Slots.checkAvailability(slots) > 1)
                                         cbFloor.getItems().add(f.getFloorName());
                         }
                     }
@@ -343,21 +362,22 @@ public class SystemController implements Initializable, Serializable {
         //Sets the values of selected vehicle in the Un-Park Vehicle Pane text fields and texts
         if (selectedVehicle != null){
             tCustomerName.setText(selectedVehicle.getCustomerName());
-            tMobileNo.setText(Long.toString(selectedVehicle.getMobileNumber()));
+            tMobileNo.setText(selectedVehicle.getMobileNumber());
             tVehiclePlateNo.setText(selectedVehicle.getVehicleNo());
             tVehicleType.setText(selectedVehicle.getVehicleType());
             tFloor.setText(selectedVehicle.getFloorName());
             tUnparkSlotNo.setText(Integer.toString(selectedVehicle.getSlotNo()));
             tTimeIn.setText(selectedVehicle.getTimeIn());
 
-            if (tVehicleType.getText().equals("Rickshaw"))
-                tPricePerHour.setText("Rs. 75");
-            else if (tVehicleType.getText().equals("Bike"))
-                tPricePerHour.setText("Rs. 100");
-            else if (tVehicleType.getText().equals("Car"))
-                tPricePerHour.setText("Rs. 150");
-            else if (tVehicleType.getText().equals("Commercial Vehicle"))
-                tPricePerHour.setText("Rs. 200");
+            ArrayList<TypesAndPrices> typesAndPricesArrayList = DatabaseHandling.readFromTypesAndPricesTable();
+
+            for (TypesAndPrices tp :
+                    typesAndPricesArrayList) {
+                if (tVehicleType.getText().equals(tp.getVehicleType())) {
+                    tPricePerHour.setText("Rs. " + tp.getPricePerHour());
+                    break;
+                }
+            }
 
         }
         return selectedVehicle;
@@ -452,7 +472,7 @@ public class SystemController implements Initializable, Serializable {
     //Delete Floor Button Action
     public void deleteFloorBtnAction(){
         //Calls the delFloor Function from the Floor Class
-        Floor.delFloor(tbFloors, cbFloor, pagination, floorName);
+        Floor.delFloor(tbFloors, pagination, floorName, cbFloor);
     }
 
     //============================================================================================//
@@ -531,32 +551,31 @@ public class SystemController implements Initializable, Serializable {
         /*==================== Initializing Combo Boxes on Vehicle Entry Pane ====================*/
 
         //Adding items to "Floor No." Combo box on Vehicle Entry Pane
-        ArrayList<Floor> floors = FileHandling.readFromFile(Files.getFloorFile());
+        ArrayList<Floor> floors = DatabaseHandling.readFromFloorsTable();
         ArrayList<Slots> slots;
         for (Floor f :
                 floors) {
             slots = f.getSlots();
 
-            if (Slots.checkAvailability(slots))
+            if (Slots.checkAvailability(slots) >  1) {
+                System.out.println(f.getFloorName());
                 cbFloor.getItems().add(f.getFloorName());
+            }
         }
 
-        cbFloor.setOnAction(event -> Slots.allocateSlot(cbFloor.getValue(), tSlotNo));
+        cbFloor.setOnAction(event -> Slots.allocateSlot(cbFloor.getValue().replace(" ", "") + "Slots", tSlotNo));
 
         //Adding items to "Vehicle Type" Combo Box on Vehicle Entry Pane
-        ArrayList<TypesAndPrices> typesAndPrices = FileHandling.readFromFile(Files.getTypesAndPricesFile());
+        ArrayList<TypesAndPrices> typesAndPrices = DatabaseHandling.readFromTypesAndPricesTable();
         for (TypesAndPrices tp :
                 typesAndPrices) {
             cbVehicleType.getItems().add(tp.getVehicleType());
 
         }
 
-//        cbVehicleType.getItems().addAll("Car", "Bike", "Rickshaw", "Commercial Vehicle");
-
-
         //Setting prices of vehicle
         cbVehicleType.setOnAction(event -> {
-            ArrayList<TypesAndPrices> typesAndPricesArrayList = FileHandling.readFromFile(Files.getTypesAndPricesFile());
+            ArrayList<TypesAndPrices> typesAndPricesArrayList = DatabaseHandling.readFromTypesAndPricesTable();
 
             for (TypesAndPrices tp :
                     typesAndPricesArrayList) {

@@ -10,6 +10,11 @@ import java.util.ArrayList;
 
 public class LoginController {
 
+    private static final ArrayList<Users> usersArray;
+    static {
+        usersArray = DatabaseHandling.readFromUsersTable();
+    }
+
     public Button loginBtn;
     @FXML
     private TextField usernameTextField, passwordTextField;
@@ -24,7 +29,7 @@ public class LoginController {
     String successStyle = "-fx-border-color: #A9A9A9; -fx-border-width: 1; -fx-border-radius: 5;";
 
     @FXML
-    public void checkValidity() throws IOException {
+    public void checkValidity() {
         // In case the Username and Password fields are left blank then display the error message
         if (usernameTextField.getText().isBlank() || passwordTextField.getText().isBlank()) {
             invalidDetails.setStyle(errorMessage);
@@ -47,8 +52,7 @@ public class LoginController {
                 String password = passwordTextField.getText();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
 
                 //Reading users data from the UserData.ser
-                ArrayList<Users> usersArray = FileHandling.readFromFile(Files.getUsersFile());
-//                ArrayList<Users> usersArray = FileHandling.readFromFile("Files/UserData.ser");
+//                ArrayList<Users> usersArray = FileHandling.readFromFile(Files.getUsersFile());
 
                 boolean status = false;
 

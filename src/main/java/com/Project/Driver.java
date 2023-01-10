@@ -9,6 +9,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class Driver extends Application {
 
@@ -22,7 +23,7 @@ public class Driver extends Application {
 
     public void start(Stage stage) throws IOException {
         window = stage;
-        FXMLLoader fxmlLoader = new FXMLLoader(Driver.class.getResource("/com/Project/Login.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Driver.class.getResource("Login.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
         window.setMinWidth(450);
@@ -36,6 +37,11 @@ public class Driver extends Application {
 
         window.setOnCloseRequest(e ->{
             e.consume();
+            try {
+                DatabaseHandling.getCon().close();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
             closeProgram();
         });
 
